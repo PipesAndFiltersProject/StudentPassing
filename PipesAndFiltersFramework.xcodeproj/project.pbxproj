@@ -6,8 +6,34 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		311D23BD17EC678C00F6AA61 /* Networker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 311D23BC17EC678C00F6AA61 /* Networker.cpp */; };
+		311D23C117EC6BA600F6AA61 /* NetworkReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 311D23BF17EC6BA600F6AA61 /* NetworkReader.cpp */; };
+		311D23C217EC6BA600F6AA61 /* NetworkReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 311D23C017EC6BA600F6AA61 /* NetworkReader.h */; };
+		311D23C517EC6BE000F6AA61 /* NetworkWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 311D23C317EC6BE000F6AA61 /* NetworkWriter.cpp */; };
+		311D23C617EC6BE000F6AA61 /* NetworkWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 311D23C417EC6BE000F6AA61 /* NetworkWriter.h */; };
+		31306F97180BE63B00798AF8 /* DataHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31306F95180BE63B00798AF8 /* DataHandler.cpp */; };
+		31306F98180BE63B00798AF8 /* DataHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 31306F96180BE63B00798AF8 /* DataHandler.h */; };
+		31323CB0181518CD002F33D7 /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31323CAE181518CD002F33D7 /* Log.cpp */; };
+		31323CB1181518CD002F33D7 /* Log.h in Headers */ = {isa = PBXBuildFile; fileRef = 31323CAF181518CD002F33D7 /* Log.h */; };
+		3197F6A517EAEE1600F9BF5E /* ProcessorNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3197F6A417EAEE1600F9BF5E /* ProcessorNode.cpp */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		311D23BC17EC678C00F6AA61 /* Networker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Networker.cpp; sourceTree = "<group>"; };
+		311D23BE17EC6B2600F6AA61 /* NetworkReaderObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkReaderObserver.h; sourceTree = "<group>"; };
+		311D23BF17EC6BA600F6AA61 /* NetworkReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NetworkReader.cpp; sourceTree = "<group>"; };
+		311D23C017EC6BA600F6AA61 /* NetworkReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkReader.h; sourceTree = "<group>"; };
+		311D23C317EC6BE000F6AA61 /* NetworkWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NetworkWriter.cpp; sourceTree = "<group>"; };
+		311D23C417EC6BE000F6AA61 /* NetworkWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkWriter.h; sourceTree = "<group>"; };
+		31306F95180BE63B00798AF8 /* DataHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataHandler.cpp; sourceTree = "<group>"; };
+		31306F96180BE63B00798AF8 /* DataHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataHandler.h; sourceTree = "<group>"; };
+		31323CAE181518CD002F33D7 /* Log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Log.cpp; sourceTree = "<group>"; };
+		31323CAF181518CD002F33D7 /* Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
 		3197F69A17EAE5AF00F9BF5E /* libPipesAndFiltersFramework.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPipesAndFiltersFramework.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3197F6A317EAE5F300F9BF5E /* ProcessorNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProcessorNode.h; sourceTree = "<group>"; };
+		3197F6A417EAEE1600F9BF5E /* ProcessorNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProcessorNode.cpp; sourceTree = "<group>"; };
+		3197F6A617EAF31F00F9BF5E /* Networker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Networker.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -24,6 +50,8 @@
 		3197F68F17EAE5AF00F9BF5E = {
 			isa = PBXGroup;
 			children = (
+				3197F6A217EAE5CB00F9BF5E /* src */,
+				3197F6A117EAE5C400F9BF5E /* inc */,
 				3197F69B17EAE5AF00F9BF5E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -36,6 +64,33 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		3197F6A117EAE5C400F9BF5E /* inc */ = {
+			isa = PBXGroup;
+			children = (
+				31323CAF181518CD002F33D7 /* Log.h */,
+				311D23C017EC6BA600F6AA61 /* NetworkReader.h */,
+				311D23C417EC6BE000F6AA61 /* NetworkWriter.h */,
+				3197F6A617EAF31F00F9BF5E /* Networker.h */,
+				3197F6A317EAE5F300F9BF5E /* ProcessorNode.h */,
+				31306F96180BE63B00798AF8 /* DataHandler.h */,
+				311D23BE17EC6B2600F6AA61 /* NetworkReaderObserver.h */,
+			);
+			name = inc;
+			sourceTree = "<group>";
+		};
+		3197F6A217EAE5CB00F9BF5E /* src */ = {
+			isa = PBXGroup;
+			children = (
+				3197F6A417EAEE1600F9BF5E /* ProcessorNode.cpp */,
+				311D23BF17EC6BA600F6AA61 /* NetworkReader.cpp */,
+				311D23C317EC6BE000F6AA61 /* NetworkWriter.cpp */,
+				311D23BC17EC678C00F6AA61 /* Networker.cpp */,
+				31306F95180BE63B00798AF8 /* DataHandler.cpp */,
+				31323CAE181518CD002F33D7 /* Log.cpp */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -43,6 +98,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				311D23C617EC6BE000F6AA61 /* NetworkWriter.h in Headers */,
+				31323CB1181518CD002F33D7 /* Log.h in Headers */,
+				31306F98180BE63B00798AF8 /* DataHandler.h in Headers */,
+				311D23C217EC6BA600F6AA61 /* NetworkReader.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,7 +131,7 @@
 		3197F69117EAE5AF00F9BF5E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Antti Juustila";
 			};
 			buildConfigurationList = 3197F69417EAE5AF00F9BF5E /* Build configuration list for PBXProject "PipesAndFiltersFramework" */;
@@ -97,6 +156,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				31323CB0181518CD002F33D7 /* Log.cpp in Sources */,
+				3197F6A517EAEE1600F9BF5E /* ProcessorNode.cpp in Sources */,
+				311D23C517EC6BE000F6AA61 /* NetworkWriter.cpp in Sources */,
+				311D23BD17EC678C00F6AA61 /* Networker.cpp in Sources */,
+				311D23C117EC6BA600F6AA61 /* NetworkReader.cpp in Sources */,
+				31306F97180BE63B00798AF8 /* DataHandler.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,8 +171,7 @@
 		3197F69C17EAE5AF00F9BF5E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -126,6 +190,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /Users/juustila/boost_1_54_0;
+				"HEADER_SEARCH_PATHS[arch=*]" = /Users/juustila/boost_1_54_0;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -135,8 +201,7 @@
 		3197F69D17EAE5AF00F9BF5E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -149,6 +214,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /Users/juustila/boost_1_54_0;
+				"HEADER_SEARCH_PATHS[arch=*]" = /Users/juustila/boost_1_54_0;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
 			};
@@ -189,6 +256,7 @@
 				3197F6A017EAE5AF00F9BF5E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
