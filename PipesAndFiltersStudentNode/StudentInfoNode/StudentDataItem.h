@@ -9,6 +9,64 @@
 #ifndef __PipesAndFiltersFramework__StudentDataItem__
 #define __PipesAndFiltersFramework__StudentDataItem__
 
-#include <iostream>
+#include <ostream>
 
+#include "DataItem.h"
+
+
+namespace ohar_pipes {
+
+	
+class GradeCalculator;
+
+class StudentDataItem : public DataItem {
+public:
+   StudentDataItem();
+   StudentDataItem(const StudentDataItem & another);
+   virtual ~StudentDataItem();
+   
+   DataItem * copy() const;
+   
+   bool parse(const std::string & fromString, const std::string & contentType);
+   bool addFrom(const DataItem & another);
+
+   const std::string & getName() const;
+   const std::string & getDept() const;
+   int getExamPoints() const;
+   int getExercisePoints() const;
+   int getExerciseWorkPoints() const;
+   int getGrade() const;
+   
+   void setName(const std::string & theName);
+   void setDept(const std::string & theDept);
+   void setExamPoints(int pts);
+   void setExercisePoints(int pts);
+   void setExerciseWorkPoints(int pts);
+   
+   void calculateGrade();
+   
+   bool operator == (const StudentDataItem & item) const;
+   bool operator != (const StudentDataItem & item) const;
+   
+   static void setGradeCalculator(GradeCalculator * calc);
+   
+protected:
+   
+private:
+   std::string name;
+   std::string department;
+   int         examPoints;
+   int         exercisePoints;
+   int         exerciseWorkPoints;
+   int         grade;
+   
+   static GradeCalculator * calculator;
+   
+   const std::string TAG;
+};
+
+std::ostream & operator << (std::ostream & ostr, const StudentDataItem & item);
+
+
+} //namespace
 #endif /* defined(__PipesAndFiltersFramework__StudentDataItem__) */

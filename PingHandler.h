@@ -9,6 +9,36 @@
 #ifndef __PipesAndFiltersStudentNode__PingHandler__
 #define __PipesAndFiltersStudentNode__PingHandler__
 
-#include <iostream>
+
+#include "DataHandler.h"
+
+namespace ohar_pipes {
+	
+	
+	class ProcessorNode;
+	class Package;
+	
+	/**
+	 PingHandler handles ping messages.
+	 @author Antti Juustila
+	 @version $Revision $
+	 @see DataHandler
+	 */
+	class PingHandler : public DataHandler {
+	public:
+		PingHandler(ProcessorNode & myNode);
+		virtual ~PingHandler();
+		
+		bool consume(Package & data);
+		
+	private:
+		/** The processor node used to forward the ping message. */
+		ProcessorNode & node;
+		/** The tag used in the logging to indicate which object is logging now. */
+		const std::string TAG;
+	};
+	
+	
+}
 
 #endif /* defined(__PipesAndFiltersStudentNode__PingHandler__) */

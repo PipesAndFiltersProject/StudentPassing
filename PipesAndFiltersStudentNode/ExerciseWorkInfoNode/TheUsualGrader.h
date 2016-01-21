@@ -9,6 +9,17 @@
 #ifndef __PipesAndFiltersFramework__TheUsualGrader__
 #define __PipesAndFiltersFramework__TheUsualGrader__
 
-#include <iostream>
+#include "GradeCalculator.h"
+
+namespace ohar_pipes {
+
+	
+class TheUsualGrader : public GradeCalculator {
+public:
+   int calculate(const StudentDataItem & source);
+};
+
+	
+} //namespace
 
 #endif /* defined(__PipesAndFiltersFramework__TheUsualGrader__) */

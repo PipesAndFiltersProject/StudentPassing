@@ -9,6 +9,17 @@
 #ifndef __PipesAndFiltersFramework__GraderFactory__
 #define __PipesAndFiltersFramework__GraderFactory__
 
-#include <iostream>
+namespace ohar_pipes {
+
+	
+class GradeCalculator;
+
+class GraderFactory {
+public:
+   static GradeCalculator * makeGrader();
+};
+
+	
+} //namespace
 
 #endif /* defined(__PipesAndFiltersFramework__GraderFactory__) */

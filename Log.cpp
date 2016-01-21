@@ -6,56 +6,62 @@
 //  Copyright (c) 2013 Antti Juustila. All rights reserved.
 //
 
+#include <cstdio>
+#include <chrono>
+#include <iomanip>
+
 #include "Log.h"
 
+namespace ohar_pipes {
+	
+	
+	/** Destructor deallocates the char buffer used in logging. */
+	Log::~Log() {
+		delete [] buffer;
+	}
+	
+	/** The class method for retrieving the single instance of the logger.
+	 @return The singleton logger object. */
+	Log & Log::getInstance() {
+		static Log logInstance;
+		return logInstance;
+	}
+	
+	/** Use this method to set the output stream of the logger.
+	 @param os The output stream to use in logging. */
+	void Log::setStream(std::ostream & os) {
+		stream = &os;
+	}
+	
 
-Log & Log::getInstance() {
-   static Log logInstance;
-   return logInstance;
-}
-
-void Log::setStream(std::ostream & os) {
-   stream = &os;
-}
-
-
-Log::Log()
-: stream(&std::cout)
-{
-
-}
-
-void Log::entry(const std::string & str)
-{
-   const char *s = str.c_str();
-   while (*s) {
-      if (*s == '%') {
-         if (*(s + 1) == '%') {
-            ++s;
-         }
-         else {
-            throw std::runtime_error("invalid format string: missing arguments");
-         }
-      }
-      *stream << *s++;
-   }
-}
-
-template<typename... Args>
-void Log::entry(const std::string & tag, const std::string & format, Args... args){
-   *stream << tag << " ";
-   const char *s = format.c_str();
-   while (*s) {
-      if (*s == '%') {
-         if (*(s + 1) == '%') {
-            ++s;
-         }
-         else {
-            printf(s + 1, args...); // call even when *s == 0 to detect extra arguments
-            return;
-         }
-      }
-      std::cout << *s++;
-   }
-   throw std::logic_error("extra arguments provided to printf");
-}
+	/** The hidden default constructor prevents instantiating from elsewhere
+	 than the getInstance() method. */
+	Log::Log()
+	: bufSize(1000), stream(&std::cout)
+	{
+		buffer = new char[bufSize];
+		started = std::chrono::system_clock::now();
+	}
+	
+	/** The actual logging method. Use the common printf formatting.
+	 @param The tag to use in logging, usually indicates who is logging (class, component,...).
+	 @param format The character string containing text and format characters.
+	 @param ... The parameters to the formatting string. */
+	void Log::entry(const std::string & tag, const char * format, ...) {
+		guard.lock();
+		va_list argptr;
+		va_start(argptr, format);
+		vsnprintf(buffer, bufSize, format, argptr);
+		va_end(argptr);
+		
+		std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
+		
+		*stream << std::setw(10) << std::chrono::duration_cast<std::chrono::milliseconds>(now - started).count();
+		*stream << " " << tag << " " << buffer << std::endl;
+		
+		guard.unlock();
+	}
+	
+	
+	
+}	// namespace

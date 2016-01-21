@@ -9,6 +9,16 @@
 #ifndef PipesAndFiltersFramework_DataReaderObserver_h
 #define PipesAndFiltersFramework_DataReaderObserver_h
 
+namespace ohar_pipes {
 
+	
+class DataItem;
 
+class DataReaderObserver {
+public:
+   virtual void handleNewItem(DataItem * item) = 0;
+};
+
+	
+} //namespace
 #endif

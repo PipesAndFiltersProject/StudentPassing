@@ -9,6 +9,41 @@
 #ifndef __PipesAndFiltersFramework__ExerciseMergerHandler__
 #define __PipesAndFiltersFramework__ExerciseMergerHandler__
 
-#include <iostream>
+#include <list>
+
+#include "DataHandler.h"
+#include "DataReaderObserver.h"
+
+
+namespace ohar_pipes {
+
+	
+class ProcessorNode;
+class Package;
+class StudentDataItem;
+
+class StudentHandler : public DataHandler, public DataReaderObserver {
+public:
+   StudentHandler(ProcessorNode & myNode);
+   virtual ~StudentHandler();
+   
+   bool consume(Package & data);
+
+   // From DataReaderObserver
+   void handleNewItem(DataItem * item);
+   
+private:
+   void readFile();
+   
+   StudentDataItem * findStudent(const StudentDataItem & which) const;
+   
+   ProcessorNode & node;
+   const std::string TAG;
+   std::list<DataItem*> dataItems;
+   
+};
+
+	
+} //namespace
 
 #endif /* defined(__PipesAndFiltersFramework__ExerciseMergerHandler__) */

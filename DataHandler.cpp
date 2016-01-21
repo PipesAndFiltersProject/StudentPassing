@@ -7,3 +7,23 @@
 //
 
 #include "DataHandler.h"
+
+namespace ohar_pipes {
+
+	DataHandler::DataHandler() {
+	}
+	
+	DataHandler::~DataHandler() {
+	}
+	
+	/**
+	 Consumes a data package offered to the handler.
+	 @param data The data to handle.
+	 @return true if data was handled and/or it should not be offered to any other handler. False otherwise.
+	 Default implementation returns false;
+	 */
+	bool DataHandler::consume(Package & data) {
+		return false;
+	}
+
+}

@@ -9,6 +9,29 @@
 #ifndef __PipesAndFiltersFramework__StudentWriterHandler__
 #define __PipesAndFiltersFramework__StudentWriterHandler__
 
-#include <iostream>
+#include "DataHandler.h"
 
+
+namespace ohar_pipes {
+
+	
+class ProcessorNode;
+class Package;
+class StudentFileWriter;
+
+class StudentWriterHandler : public DataHandler {
+public:
+   StudentWriterHandler(ProcessorNode & myNode);
+   virtual ~StudentWriterHandler();
+   
+   bool consume(Package & data);
+   
+private:
+   ProcessorNode & node;
+   StudentFileWriter * writer;
+   const std::string TAG;
+};
+
+
+} //namespace
 #endif /* defined(__PipesAndFiltersFramework__StudentWriterHandler__) */

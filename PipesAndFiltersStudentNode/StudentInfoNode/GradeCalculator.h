@@ -9,6 +9,17 @@
 #ifndef PipesAndFiltersFramework_GradeCalculator_h
 #define PipesAndFiltersFramework_GradeCalculator_h
 
+namespace ohar_pipes {
 
+	
+class StudentDataItem;
 
+class GradeCalculator {
+public:
+   virtual int calculate(const StudentDataItem & source) = 0;
+   virtual ~GradeCalculator() {};
+};
+	
+	
+} //namespace
 #endif

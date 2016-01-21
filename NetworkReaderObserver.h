@@ -9,9 +9,24 @@
 #ifndef PipesAndFiltersFramework_NetworkObserver_h
 #define PipesAndFiltersFramework_NetworkObserver_h
 
-class NetworkReaderObserver {
-public:
-   virtual void receivedData() = 0;
-};
+namespace ohar_pipes {
+	
+	
+	/** Interface for observing the NetworkReader. Network reader notifies
+	 the observer using this interface when data has arrived and is ready
+	 for handling. 
+	 @author Antti Juustila
+	 @version $Revision $
+	 */
+	class NetworkReaderObserver {
+	public:
+		/** NetworkReader calls this interface method when data has been received.
+		 The observer then reads the data from the NetworkReader. */
+		virtual void receivedData() = 0;
+	};
+	
+	
+} // namespace
+
 
 #endif

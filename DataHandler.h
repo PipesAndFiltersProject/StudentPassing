@@ -11,15 +11,33 @@
 
 #include <string>
 
-class DataHandler {
-public:
-   DataHandler();
-   virtual ~DataHandler();
-   
-   virtual void handleData(const std::string & data);
-   
-private:
-   
-};
+namespace ohar_pipes {
+	class Package;
+	
+	/**
+	 DataHandler is an abstract class for handling data arriving to a Filter.
+	 Datahandler consumes data packages the Filter (the ProcessorNode) offers to it.
+	 Create new data handlers by inheriting DataHandler and implementing the consume method.
+	 @author Antti Juustila
+	 @version $Revision $
+	 */
+	class DataHandler {
+	public:
+		DataHandler(const DataHandler &) = delete;
+		const DataHandler & operator =(const DataHandler &) = delete;
+		
+		virtual ~DataHandler();
+		virtual bool consume(Package & data) = 0;
+		
+	protected:
+		DataHandler();
+		
+	private:
+		
+	};
+	
+	
+}
+
 
 #endif /* defined(__PipesAndFiltersFramework__DataHandler__) */

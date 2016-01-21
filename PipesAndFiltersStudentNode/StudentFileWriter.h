@@ -9,6 +9,28 @@
 #ifndef __PipesAndFiltersFramework__StudentFileWriter__
 #define __PipesAndFiltersFramework__StudentFileWriter__
 
-#include <iostream>
+#include <fstream>
+
+
+namespace ohar_pipes {
+
+	
+class StudentDataItem;
+
+class StudentFileWriter {
+public:
+   StudentFileWriter(const std::string & fileName);
+   virtual ~StudentFileWriter();
+   
+   virtual void write(const StudentDataItem * student);
+   
+private:
+   
+   std::ofstream file;
+   
+};
+	
+	
+} //namespace
 
 #endif /* defined(__PipesAndFiltersFramework__StudentFileWriter__) */
