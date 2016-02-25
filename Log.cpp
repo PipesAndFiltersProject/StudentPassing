@@ -12,7 +12,7 @@
 
 #include "Log.h"
 
-namespace ohar_pipes {
+namespace OHARBase {
 	
 	
 	/** Destructor deallocates the char buffer used in logging. */
@@ -44,7 +44,7 @@ namespace ohar_pipes {
 	}
 	
 	/** The actual logging method. Use the common printf formatting.
-	 @param The tag to use in logging, usually indicates who is logging (class, component,...).
+	 @param tag The tag to use in logging, usually indicates who is logging (class, component,...).
 	 @param format The character string containing text and format characters.
 	 @param ... The parameters to the formatting string. */
 	void Log::entry(const std::string & tag, const char * format, ...) {

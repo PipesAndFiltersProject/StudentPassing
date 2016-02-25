@@ -14,7 +14,7 @@
 #include "Log.h"
 
 
-namespace ohar_pipes {
+namespace OHARBase {
 	
 	/** Constructor for the processor node.
 	 @param aName The name of the processor node. */

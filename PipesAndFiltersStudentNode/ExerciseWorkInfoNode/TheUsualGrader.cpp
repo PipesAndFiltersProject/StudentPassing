@@ -10,7 +10,7 @@
 
 #include "TheUsualGrader.h"
 
-namespace ohar_pipes {
+namespace OHARStudent {
 
 	
 int TheUsualGrader::calculate(const StudentDataItem & source) {

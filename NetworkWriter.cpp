@@ -17,7 +17,7 @@
 #include "NetworkWriter.h"
 #include "Log.h"
 
-namespace ohar_pipes {
+namespace OHARBase {
 	
 	/**
 	 Constructor to create the writer with host name. See the

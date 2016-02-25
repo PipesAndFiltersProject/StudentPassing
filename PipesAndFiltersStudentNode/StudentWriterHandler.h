@@ -11,23 +11,24 @@
 
 #include "DataHandler.h"
 
+namespace OHARBase {
+	class ProcessorNode;
+	class Package;
+}
 
-namespace ohar_pipes {
-
+namespace OHARStudent {
 	
-class ProcessorNode;
-class Package;
 class StudentFileWriter;
 
-class StudentWriterHandler : public DataHandler {
+class StudentWriterHandler : public OHARBase::DataHandler {
 public:
-   StudentWriterHandler(ProcessorNode & myNode);
+   StudentWriterHandler(OHARBase::ProcessorNode & myNode);
    virtual ~StudentWriterHandler();
    
-   bool consume(Package & data);
+   bool consume(OHARBase::Package & data);
    
 private:
-   ProcessorNode & node;
+   OHARBase::ProcessorNode & node;
    StudentFileWriter * writer;
    const std::string TAG;
 };

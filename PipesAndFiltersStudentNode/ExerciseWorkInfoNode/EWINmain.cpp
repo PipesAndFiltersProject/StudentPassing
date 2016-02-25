@@ -9,7 +9,7 @@
 #include <iostream>
 
 #include "ProcessorNode.h"
-#include "NetInputHandler.h"
+#include "StudentNetInputHandler.h"
 #include "StudentDataItem.h"
 #include "StudentHandler.h"
 #include "GradingHandler.h"
@@ -18,7 +18,7 @@
 
 int main(int argc, const char * argv[])
 {
-	using namespace ohar_pipes;
+	using namespace OHARBase;
 	
    Log::getInstance().entry("main", "Launching %s", argv[0]);
    Log::getInstance().entry("main", "Arguments: %d", argc);
@@ -58,8 +58,9 @@ int main(int argc, const char * argv[])
    } else {
       processor->setOutputFileName("default.out.txt");
    }
-   
-   processor->addHandler(new NetInputHandler(*processor));
+	
+	using namespace OHARStudent;
+   processor->addHandler(new StudentNetInputHandler());
    processor->addHandler(new StudentHandler(*processor));
    processor->addHandler(new GradingHandler(*processor));
    processor->addHandler(new StudentWriterHandler(*processor));

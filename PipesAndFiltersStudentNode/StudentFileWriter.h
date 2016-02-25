@@ -12,7 +12,7 @@
 #include <fstream>
 
 
-namespace ohar_pipes {
+namespace OHARStudent {
 
 	
 class StudentDataItem;

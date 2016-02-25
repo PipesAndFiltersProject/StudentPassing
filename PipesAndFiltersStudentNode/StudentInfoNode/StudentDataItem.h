@@ -14,21 +14,21 @@
 #include "DataItem.h"
 
 
-namespace ohar_pipes {
+namespace OHARStudent {
 
 	
 class GradeCalculator;
 
-class StudentDataItem : public DataItem {
+class StudentDataItem : public OHARBase::DataItem {
 public:
    StudentDataItem();
    StudentDataItem(const StudentDataItem & another);
    virtual ~StudentDataItem();
    
-   DataItem * copy() const;
+   OHARBase::DataItem * copy() const;
    
    bool parse(const std::string & fromString, const std::string & contentType);
-   bool addFrom(const DataItem & another);
+   bool addFrom(const OHARBase::DataItem & another);
 
    const std::string & getName() const;
    const std::string & getDept() const;

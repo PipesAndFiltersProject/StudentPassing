@@ -8,40 +8,40 @@
 
 #include <sstream>
 
-#include "NetOutputHandler.h"
+#include "StudentNetOutputHandler.h"
 #include "StudentDataItem.h"
 #include "ProcessorNode.h"
 #include "Log.h"
 #include "Package.h"
 
 
-namespace ohar_pipes {
+namespace OHARStudent {
 
 	
-NetOutputHandler::NetOutputHandler(ProcessorNode & myNode)
+StudentNetOutputHandler::StudentNetOutputHandler(OHARBase::ProcessorNode & myNode)
 : node(myNode), TAG("NetOutputHandler")
 {
 }
 
-NetOutputHandler::~NetOutputHandler() {
+StudentNetOutputHandler::~StudentNetOutputHandler() {
    
 }
 
-bool NetOutputHandler::consume(Package & data) {
-   Log::getInstance().entry(TAG, "Starting to send a package");
-	if (data.getType() == Package::Data) {
-      DataItem * item = data.getDataItem();
+bool StudentNetOutputHandler::consume(OHARBase::Package & data) {
+   OHARBase::Log::getInstance().entry(TAG, "Starting to send a package");
+	if (data.getType() == OHARBase::Package::Data) {
+      OHARBase::DataItem * item = data.getDataItem();
       if (item) {
          const StudentDataItem * student = dynamic_cast<const StudentDataItem*>(item);
          if (student) {
-            Log::getInstance().entry(TAG, "It is a student so creating payload");
+            OHARBase::Log::getInstance().entry(TAG, "It is a student so creating payload");
             std::stringstream stream;
             std::string payload;
             stream << *(student);
             payload = stream.str();
             data.setData(payload);
             data.setDataItem(0);
-            Log::getInstance().entry(TAG, "And telling the processornode to send.");
+            OHARBase::Log::getInstance().entry(TAG, "And telling the processornode to send.");
             node.sendData(data);
          }
       }

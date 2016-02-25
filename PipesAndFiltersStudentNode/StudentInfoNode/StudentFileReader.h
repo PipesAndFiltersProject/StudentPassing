@@ -14,19 +14,21 @@
 
 #include "DataFileReader.h"
 
+namespace OHARBase {
+	class DataItem;
+}
 
-namespace ohar_pipes {
 
-	
-class DataItem;
+namespace OHARStudent {
 
-class StudentFileReader : public DataFileReader {
+
+class StudentFileReader : public OHARBase::DataFileReader {
 public:
-   StudentFileReader(DataReaderObserver & obs);
+   StudentFileReader(OHARBase::DataReaderObserver & obs);
    virtual ~StudentFileReader();
    
 protected:
-   DataItem * parse(const std::string & str, const std::string & contentType);
+	OHARBase::DataItem * parse(const std::string & str, const std::string & contentType);
    
 private:
    const std::string TAG;

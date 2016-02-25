@@ -15,7 +15,7 @@
 #include "DataItem.h"
 
 
-namespace ohar_pipes {
+namespace OHARBase {
 	
 	
 	const std::string Package::separatorStr("\\");
@@ -34,6 +34,16 @@ namespace ohar_pipes {
 	: uid(p.uid), type(p.type), data(p.data), dataItem(0)
 	{
 		setDataItem(p.getDataItem());
+	}
+	
+	/** Move constructor for Package. Moves data from
+	 the passed object, transferring the ownership to this object.
+	 */
+	Package::Package(Package && p)
+	: uid(std::move(p.uid)), type(std::move(p.type)), data(std::move(p.data))
+	{
+		dataItem = std::move(p.dataItem);
+		p.dataItem = 0;
 	}
 	
 	/** A constructor giving an uuid for the otherwise empty package.
@@ -90,6 +100,10 @@ namespace ohar_pipes {
 		type = t;
 	}
 	
+	/** Use the method to get a string representation of the type of the data
+	 item. Used in externalizing and internalizing Package objects to/from
+	 a stream (file, network).
+	 @return the Package type as string.*/
 	const std::string & Package::getTypeAsString() const {
 		static const std::string empty = "";
 		switch (type) {
@@ -106,18 +120,30 @@ namespace ohar_pipes {
 	}
 	
 
-	const std::string Package::getData() const {
+	/** Get the unparsed data contents for the Package.
+	 @return the data of the package. */
+	const std::string & Package::getData() const {
 		return data;
 	}
 	
+	/** Sets the unparsed data for the Package.
+	 @param d The data for this Package. */
 	void Package::setData(const std::string & d) {
 		data = d;
 	}
 	
+	/** Use for getting the parsed, structured DataItem of
+	 the Package. May be null if there is no data or it has not
+	 been parsed from the data member variable. 
+	 @return The pointer to the data item object. */
 	const DataItem * Package::getDataItem() const {
 		return dataItem;
 	}
 	
+	/** Use for getting the modifiable pointer to the parsed, 
+	 structured DataItem of the Package. May be null if there
+	 is no data or it has not been parsed from the data member variable.
+	 @return The pointer to the data item object. */
 	DataItem * Package::getDataItem() {
 		return dataItem;
 	}
@@ -138,13 +164,27 @@ namespace ohar_pipes {
 	}
 	
 	const Package & Package::operator = (const Package & p) {
-		uid = p.uid;
-		type = p.type;
-		data = p.data;
-		this->setDataItem(p.getDataItem());
+		if (this != &p) {
+			uid = p.uid;
+			type = p.type;
+			data = p.data;
+			this->setDataItem(p.getDataItem());
+		}
+		return *this;
+	}
+
+	const Package & Package::operator = (Package && p) {
+		if (this != &p) {
+			uid = std::move(p.uid);
+			type = std::move(p.type);
+			data = std::move(p.data);
+			dataItem = std::move(p.dataItem);
+			p.setDataItem(0);
+		}
 		return *this;
 	}
 	
+
 	bool Package::operator == (const Package & pkg) const {
 		return (uid == pkg.uid);
 	}

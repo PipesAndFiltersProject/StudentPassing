@@ -11,23 +11,26 @@
 
 #include "DataHandler.h"
 
-namespace ohar_pipes {
+namespace OHARBase {
+	class ProcessorNode;
+	class Package;
+}
 
+
+namespace OHARStudent {
 	
-class ProcessorNode;
-class Package;
-
-class GradingHandler : public DataHandler {
-public:
-   GradingHandler(ProcessorNode & myNode);
-   virtual ~GradingHandler();
-   
-   bool consume(Package & data);
-   
-private:
-   ProcessorNode & node;
-   const std::string TAG;
-};
+	
+	class GradingHandler : public OHARBase::DataHandler {
+	public:
+		GradingHandler(OHARBase::ProcessorNode & myNode);
+		virtual ~GradingHandler();
+		
+		bool consume(OHARBase::Package & data);
+		
+	private:
+		OHARBase::ProcessorNode & node;
+		const std::string TAG;
+	};
 	
 	
 } //namespace

@@ -11,7 +11,7 @@
 
 #include <string>
 
-namespace ohar_pipes {
+namespace OHARBase {
 	class Package;
 	
 	/**
@@ -19,7 +19,6 @@ namespace ohar_pipes {
 	 Datahandler consumes data packages the Filter (the ProcessorNode) offers to it.
 	 Create new data handlers by inheriting DataHandler and implementing the consume method.
 	 @author Antti Juustila
-	 @version $Revision $
 	 */
 	class DataHandler {
 	public:

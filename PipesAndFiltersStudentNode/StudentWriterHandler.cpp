@@ -16,10 +16,10 @@
 #include "StudentFileWriter.h"
 
 
-namespace ohar_pipes {
+namespace OHARStudent {
 
 
-StudentWriterHandler::StudentWriterHandler(ProcessorNode & myNode)
+StudentWriterHandler::StudentWriterHandler(OHARBase::ProcessorNode & myNode)
 : node(myNode), TAG("StudentWriterHandler")
 {
    writer = new StudentFileWriter(node.getOutputFileName());
@@ -29,10 +29,10 @@ StudentWriterHandler::~StudentWriterHandler() {
    delete writer;
 }
 
-bool StudentWriterHandler::consume(Package & data) {
-   Log::getInstance().entry(TAG, "Starting to write a package");
-	if (data.getType() == Package::Data) {
-      DataItem * item = data.getDataItem();
+bool StudentWriterHandler::consume(OHARBase::Package & data) {
+   OHARBase::Log::getInstance().entry(TAG, "Starting to write a package");
+	if (data.getType() == OHARBase::Package::Data) {
+      OHARBase::DataItem * item = data.getDataItem();
       if (item) {
          const StudentDataItem * student = dynamic_cast<const StudentDataItem*>(item);
          if (student) {

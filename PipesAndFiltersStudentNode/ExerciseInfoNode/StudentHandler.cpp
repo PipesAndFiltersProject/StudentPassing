@@ -16,10 +16,10 @@
 #include "Log.h"
 
 
-namespace ohar_pipes {
+namespace OHARStudent {
 
 	
-StudentHandler::StudentHandler(ProcessorNode & myNode)
+StudentHandler::StudentHandler(OHARBase::ProcessorNode & myNode)
 : node(myNode), TAG("StudentHandler")
 {
 }
@@ -33,28 +33,28 @@ void StudentHandler::readFile() {
    reader.read(node.getDataFileName());
 }
 
-bool StudentHandler::consume(Package & data) {
+bool StudentHandler::consume(OHARBase::Package & data) {
    bool retval = false; // didn't consume, pass to next handler.
-	if (data.getType() == Package::Data) {
-      DataItem * item = data.getDataItem();
+	if (data.getType() == OHARBase::Package::Data) {
+      OHARBase::DataItem * item = data.getDataItem();
       if (item) {
          StudentDataItem * newStudent = dynamic_cast<StudentDataItem*>(item);
          if (newStudent) {
-            Log::getInstance().entry(TAG, "Consuming data from network");
+            OHARBase::Log::getInstance().entry(TAG, "Consuming data from network");
             StudentDataItem * containerStudent = findStudent(*newStudent);
             if (containerStudent) {
-               Log::getInstance().entry(TAG, "Student data from file, net merged now.");
+               OHARBase::Log::getInstance().entry(TAG, "Student data from file, net merged now.");
                newStudent->addFrom(*containerStudent);
                dataItems.remove(containerStudent);
                delete containerStudent;
             } else {
-               Log::getInstance().entry(TAG, "No matching student data from file yet, hold it in container.");
+               OHARBase::Log::getInstance().entry(TAG, "No matching student data from file yet, hold it in container.");
                dataItems.push_back(newStudent->copy());
                retval = true; // consumed the item and keeping it until additional data found.
             }
          }
       }
-	} else if (data.getType() == Package::Control) {
+	} else if (data.getType() == OHARBase::Package::Control) {
       if (data.getData() == "readfile") {
          readFile();
       }
@@ -62,28 +62,28 @@ bool StudentHandler::consume(Package & data) {
    return retval; // false: pass to next handler. true: do not pass to next handler.
 }
 
-void StudentHandler::handleNewItem(DataItem * item) {
+void StudentHandler::handleNewItem(OHARBase::DataItem * item) {
    // Check if the item is already in the container.
-   Log::getInstance().entry(TAG, "One new data item from file");
+   OHARBase::Log::getInstance().entry(TAG, "One new data item from file");
    StudentDataItem * newStudent = dynamic_cast<StudentDataItem*>(item);
    StudentDataItem * containerStudent = findStudent(*newStudent);
    if (containerStudent) {
-      Log::getInstance().entry(TAG, "Student already in container, combine and pass on!");
+      OHARBase::Log::getInstance().entry(TAG, "Student already in container, combine and pass on!");
       newStudent->addFrom(*containerStudent);
-      Package p;
-		p.setType(Package::Data);
+      OHARBase::Package p;
+		p.setType(OHARBase::Package::Data);
       p.setDataItem(newStudent);
       node.passToNextHandlers(this, p);
       dataItems.remove(containerStudent);
       delete containerStudent;
    } else {
-      Log::getInstance().entry(TAG, "No matching student data from network, hold it in container.");
+      OHARBase::Log::getInstance().entry(TAG, "No matching student data from network, hold it in container.");
       dataItems.push_back(newStudent);
    }
 }
 
 StudentDataItem * StudentHandler::findStudent(const StudentDataItem & which) const {
-   for (std::list<DataItem*>::const_iterator iter = dataItems.begin(); iter != dataItems.end(); iter++) {
+   for (std::list<OHARBase::DataItem*>::const_iterator iter = dataItems.begin(); iter != dataItems.end(); iter++) {
       StudentDataItem * containerStudent = dynamic_cast<StudentDataItem*>(*iter);
       if (which == *containerStudent) {
          return containerStudent;

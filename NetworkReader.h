@@ -15,7 +15,7 @@
 #include "Networker.h"
 #include "Package.h"
 
-namespace ohar_pipes {
+namespace OHARBase {
 	
 	// Forward declaration.
 	class NetworkReaderObserver;
@@ -25,7 +25,6 @@ namespace ohar_pipes {
 	 Implementation is based on the Networker class which defines the common functionality of
 	 reading and writing of data from/to another ProcessorNode.
 	 @author Antti Juustila
-	 @version $Revision $
 	 */
 	class NetworkReader : public Networker {
 	public:
@@ -33,8 +32,8 @@ namespace ohar_pipes {
 		NetworkReader(const std::string & hostName, int portNumber, NetworkReaderObserver & obs);
 		~NetworkReader();
 		
-		virtual void start();
-		virtual void stop();
+		virtual void start() override;
+		virtual void stop() override;
 		
 		Package read();
 		

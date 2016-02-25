@@ -14,7 +14,7 @@
 #include "Log.h"
 
 
-namespace ohar_pipes {
+namespace OHARStudent {
 
 	
 GradeCalculator * GraderFactory::makeGrader() {
@@ -23,10 +23,10 @@ GradeCalculator * GraderFactory::makeGrader() {
    int dice_roll = distribution(generator);
    
    if (dice_roll == 0) {
-      Log::getInstance().entry("GradeFactory", "Created the usual grader.");
+		OHARBase::Log::getInstance().entry("GradeFactory", "Created the usual grader.");
       return new TheUsualGrader();
    }
-   Log::getInstance().entry("GradeFactory", "Created the cruel grader :/");
+   OHARBase::Log::getInstance().entry("GradeFactory", "Created the cruel grader :/");
    return new CruelGrader();
 }
 

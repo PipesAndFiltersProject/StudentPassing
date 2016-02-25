@@ -15,26 +15,29 @@
 #include "DataReaderObserver.h"
 
 
-namespace ohar_pipes {
+namespace OHARBase {
+	class ProcessorNode;
+	class Package;
+}
 
+
+namespace OHARStudent {
 	
-class ProcessorNode;
-class Package;
 
-class PlainStudentFileHandler : public DataHandler, public DataReaderObserver {
+class PlainStudentFileHandler : public OHARBase::DataHandler, public OHARBase::DataReaderObserver {
 public:
-   PlainStudentFileHandler(ProcessorNode & myNode);
+   PlainStudentFileHandler(OHARBase::ProcessorNode & myNode);
    virtual ~PlainStudentFileHandler();
    
-   bool consume(Package & data);
+   bool consume(OHARBase::Package & data);
    
    // From DataReaderObserver
-   void handleNewItem(DataItem * item);
+   void handleNewItem(OHARBase::DataItem * item);
    
 private:
    void readFile();
    
-   ProcessorNode & node;
+   OHARBase::ProcessorNode & node;
    const std::string TAG;
 };
 

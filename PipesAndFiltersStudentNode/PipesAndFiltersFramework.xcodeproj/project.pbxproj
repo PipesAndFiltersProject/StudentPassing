@@ -32,7 +32,7 @@
 		312BF12318911B28009BBB9B /* DataFileReader.h in Sources */ = {isa = PBXBuildFile; fileRef = 3158238718508DE10039D83F /* DataFileReader.h */; };
 		312BF12A18911F6F009BBB9B /* StudentDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31D65B481887EDE300356258 /* StudentDataItem.cpp */; };
 		312BF12B18911F6F009BBB9B /* StudentDataItem.h in Sources */ = {isa = PBXBuildFile; fileRef = 31D65B491887EDE300356258 /* StudentDataItem.h */; };
-		312BF12E18912926009BBB9B /* NetInputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 312BF12C18912926009BBB9B /* NetInputHandler.cpp */; };
+		312BF12E18912926009BBB9B /* StudentNetInputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 312BF12C18912926009BBB9B /* StudentNetInputHandler.cpp */; };
 		312BF1371896DA0D009BBB9B /* EINmain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 312BF1361896DA0D009BBB9B /* EINmain.cpp */; };
 		312BF1391896DA0D009BBB9B /* ExamInfoNode.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 312BF1381896DA0D009BBB9B /* ExamInfoNode.1 */; };
 		312BF14618979A2C009BBB9B /* DataHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31323CD418152754002F33D7 /* DataHandler.cpp */; };
@@ -86,7 +86,7 @@
 		312BF18B1897C7CE009BBB9B /* StudentDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31D65B481887EDE300356258 /* StudentDataItem.cpp */; };
 		312BF18C1897C7CE009BBB9B /* StudentDataItem.h in Sources */ = {isa = PBXBuildFile; fileRef = 31D65B491887EDE300356258 /* StudentDataItem.h */; };
 		312BF18F1897C9D0009BBB9B /* GradingHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 312BF18D1897C9D0009BBB9B /* GradingHandler.cpp */; };
-		312BF1921897FE7F009BBB9B /* NetOutputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 312BF1901897FE7F009BBB9B /* NetOutputHandler.cpp */; };
+		312BF1921897FE7F009BBB9B /* StudentNetOutputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 312BF1901897FE7F009BBB9B /* StudentNetOutputHandler.cpp */; };
 		312BF19518980D9A009BBB9B /* StudentHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 312BF19318980D9A009BBB9B /* StudentHandler.cpp */; };
 		315823931850A30A0039D83F /* StudentInfoNode.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 315823921850A30A0039D83F /* StudentInfoNode.1 */; };
 		315823971850A3870039D83F /* DataHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31323CD418152754002F33D7 /* DataHandler.cpp */; };
@@ -112,22 +112,30 @@
 		315823AB1850A3870039D83F /* DataFileReader.h in Sources */ = {isa = PBXBuildFile; fileRef = 3158238718508DE10039D83F /* DataFileReader.h */; };
 		315823AC1850A3870039D83F /* SImain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31323CBE181526EE002F33D7 /* SImain.cpp */; };
 		315823AE1850A42D0039D83F /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 315823AD1850A42D0039D83F /* libstdc++.6.0.9.dylib */; };
-		318D6419189A59570056F85C /* NetInputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 312BF12C18912926009BBB9B /* NetInputHandler.cpp */; };
-		318D641A189A59570056F85C /* NetInputHandler.h in Sources */ = {isa = PBXBuildFile; fileRef = 312BF12D18912926009BBB9B /* NetInputHandler.h */; };
-		318D641B189A59570056F85C /* NetOutputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 312BF1901897FE7F009BBB9B /* NetOutputHandler.cpp */; };
-		318D641C189A59570056F85C /* NetOutputHandler.h in Sources */ = {isa = PBXBuildFile; fileRef = 312BF1911897FE7F009BBB9B /* NetOutputHandler.h */; };
+		3168893D1C58C7540065A5AB /* ConfigurationFileReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3168893C1C58C7540065A5AB /* ConfigurationFileReader.cpp */; };
+		3168893E1C58C7540065A5AB /* ConfigurationFileReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3168893C1C58C7540065A5AB /* ConfigurationFileReader.cpp */; };
+		3168893F1C58C7540065A5AB /* ConfigurationFileReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3168893C1C58C7540065A5AB /* ConfigurationFileReader.cpp */; };
+		316889401C58C7540065A5AB /* ConfigurationFileReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3168893C1C58C7540065A5AB /* ConfigurationFileReader.cpp */; };
+		318B69B51C7F38CA0088E152 /* ConfigurationDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 318B69B31C7F38CA0088E152 /* ConfigurationDataItem.cpp */; };
+		318B69B61C7F38CA0088E152 /* ConfigurationDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 318B69B31C7F38CA0088E152 /* ConfigurationDataItem.cpp */; };
+		318B69B71C7F38CA0088E152 /* ConfigurationDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 318B69B31C7F38CA0088E152 /* ConfigurationDataItem.cpp */; };
+		318B69B81C7F38CA0088E152 /* ConfigurationDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 318B69B31C7F38CA0088E152 /* ConfigurationDataItem.cpp */; };
+		318D6419189A59570056F85C /* StudentNetInputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 312BF12C18912926009BBB9B /* StudentNetInputHandler.cpp */; };
+		318D641A189A59570056F85C /* StudentNetInputHandler.h in Sources */ = {isa = PBXBuildFile; fileRef = 312BF12D18912926009BBB9B /* StudentNetInputHandler.h */; };
+		318D641B189A59570056F85C /* StudentNetOutputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 312BF1901897FE7F009BBB9B /* StudentNetOutputHandler.cpp */; };
+		318D641C189A59570056F85C /* StudentNetOutputHandler.h in Sources */ = {isa = PBXBuildFile; fileRef = 312BF1911897FE7F009BBB9B /* StudentNetOutputHandler.h */; };
 		318D641E189A5EAD0056F85C /* StudentFileReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31D65B451887ECDF00356258 /* StudentFileReader.cpp */; };
 		318D641F189A5F5D0056F85C /* StudentHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 312BF19318980D9A009BBB9B /* StudentHandler.cpp */; };
 		318D6420189A5FB20056F85C /* StudentFileReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31D65B451887ECDF00356258 /* StudentFileReader.cpp */; };
-		318D6421189A60910056F85C /* NetInputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 312BF12C18912926009BBB9B /* NetInputHandler.cpp */; };
-		318D6422189A60910056F85C /* NetInputHandler.h in Sources */ = {isa = PBXBuildFile; fileRef = 312BF12D18912926009BBB9B /* NetInputHandler.h */; };
-		318D6423189A60910056F85C /* NetOutputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 312BF1901897FE7F009BBB9B /* NetOutputHandler.cpp */; };
-		318D6424189A60910056F85C /* NetOutputHandler.h in Sources */ = {isa = PBXBuildFile; fileRef = 312BF1911897FE7F009BBB9B /* NetOutputHandler.h */; };
+		318D6421189A60910056F85C /* StudentNetInputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 312BF12C18912926009BBB9B /* StudentNetInputHandler.cpp */; };
+		318D6422189A60910056F85C /* StudentNetInputHandler.h in Sources */ = {isa = PBXBuildFile; fileRef = 312BF12D18912926009BBB9B /* StudentNetInputHandler.h */; };
+		318D6423189A60910056F85C /* StudentNetOutputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 312BF1901897FE7F009BBB9B /* StudentNetOutputHandler.cpp */; };
+		318D6424189A60910056F85C /* StudentNetOutputHandler.h in Sources */ = {isa = PBXBuildFile; fileRef = 312BF1911897FE7F009BBB9B /* StudentNetOutputHandler.h */; };
 		318D6425189A60910056F85C /* StudentFileReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31D65B451887ECDF00356258 /* StudentFileReader.cpp */; };
 		318D6426189A60910056F85C /* StudentFileReader.h in Sources */ = {isa = PBXBuildFile; fileRef = 31D65B461887ECDF00356258 /* StudentFileReader.h */; };
 		318D6427189A60910056F85C /* StudentHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 312BF19318980D9A009BBB9B /* StudentHandler.cpp */; };
 		318D6428189A60910056F85C /* StudentHandler.h in Sources */ = {isa = PBXBuildFile; fileRef = 312BF19418980D9A009BBB9B /* StudentHandler.h */; };
-		318D6429189A6E760056F85C /* NetOutputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 312BF1901897FE7F009BBB9B /* NetOutputHandler.cpp */; };
+		318D6429189A6E760056F85C /* StudentNetOutputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 312BF1901897FE7F009BBB9B /* StudentNetOutputHandler.cpp */; };
 		318D642A189A6E760056F85C /* StudentHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 312BF19318980D9A009BBB9B /* StudentHandler.cpp */; };
 		318D642D189A77B30056F85C /* PlainStudentFileHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 318D642B189A77B30056F85C /* PlainStudentFileHandler.cpp */; };
 		318D642E189A77B30056F85C /* PlainStudentFileHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 318D642B189A77B30056F85C /* PlainStudentFileHandler.cpp */; };
@@ -189,8 +197,8 @@
 		312BF10618911B08009BBB9B /* ExerciseInfoNode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ExerciseInfoNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		312BF10818911B08009BBB9B /* EImain.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EImain.cpp; sourceTree = "<group>"; };
 		312BF10A18911B08009BBB9B /* ExerciseInfoNode.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = ExerciseInfoNode.1; sourceTree = "<group>"; };
-		312BF12C18912926009BBB9B /* NetInputHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NetInputHandler.cpp; path = ExerciseInfoNode/NetInputHandler.cpp; sourceTree = "<group>"; };
-		312BF12D18912926009BBB9B /* NetInputHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetInputHandler.h; path = ExerciseInfoNode/NetInputHandler.h; sourceTree = "<group>"; };
+		312BF12C18912926009BBB9B /* StudentNetInputHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StudentNetInputHandler.cpp; path = ExerciseInfoNode/StudentNetInputHandler.cpp; sourceTree = "<group>"; };
+		312BF12D18912926009BBB9B /* StudentNetInputHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StudentNetInputHandler.h; path = ExerciseInfoNode/StudentNetInputHandler.h; sourceTree = "<group>"; };
 		312BF12F18968AB1009BBB9B /* DataReaderObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataReaderObserver.h; sourceTree = "<group>"; };
 		312BF1341896DA0D009BBB9B /* ExamInfoNode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ExamInfoNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		312BF1361896DA0D009BBB9B /* EINmain.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EINmain.cpp; sourceTree = "<group>"; };
@@ -201,8 +209,8 @@
 		312BF1671897BFAE009BBB9B /* ExerciseWorkInfoNode.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = ExerciseWorkInfoNode.1; sourceTree = "<group>"; };
 		312BF18D1897C9D0009BBB9B /* GradingHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GradingHandler.cpp; sourceTree = "<group>"; };
 		312BF18E1897C9D0009BBB9B /* GradingHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradingHandler.h; sourceTree = "<group>"; };
-		312BF1901897FE7F009BBB9B /* NetOutputHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NetOutputHandler.cpp; path = ExerciseInfoNode/NetOutputHandler.cpp; sourceTree = "<group>"; };
-		312BF1911897FE7F009BBB9B /* NetOutputHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetOutputHandler.h; path = ExerciseInfoNode/NetOutputHandler.h; sourceTree = "<group>"; };
+		312BF1901897FE7F009BBB9B /* StudentNetOutputHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StudentNetOutputHandler.cpp; path = ExerciseInfoNode/StudentNetOutputHandler.cpp; sourceTree = "<group>"; };
+		312BF1911897FE7F009BBB9B /* StudentNetOutputHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StudentNetOutputHandler.h; path = ExerciseInfoNode/StudentNetOutputHandler.h; sourceTree = "<group>"; };
 		312BF19318980D9A009BBB9B /* StudentHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StudentHandler.cpp; path = ExerciseInfoNode/StudentHandler.cpp; sourceTree = "<group>"; };
 		312BF19418980D9A009BBB9B /* StudentHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StudentHandler.h; path = ExerciseInfoNode/StudentHandler.h; sourceTree = "<group>"; };
 		31323CBE181526EE002F33D7 /* SImain.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SImain.cpp; path = ../PipesAndFiltersStudentNode/SImain.cpp; sourceTree = "<group>"; };
@@ -231,6 +239,10 @@
 		3158238E1850A30A0039D83F /* StudentInfoNode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = StudentInfoNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		315823921850A30A0039D83F /* StudentInfoNode.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = StudentInfoNode.1; sourceTree = "<group>"; };
 		315823AD1850A42D0039D83F /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
+		3168893B1C58C6870065A5AB /* ConfigurationFileReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConfigurationFileReader.h; path = ../../ConfigurationFileReader.h; sourceTree = "<group>"; };
+		3168893C1C58C7540065A5AB /* ConfigurationFileReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConfigurationFileReader.cpp; path = ../../ConfigurationFileReader.cpp; sourceTree = "<group>"; };
+		318B69B31C7F38CA0088E152 /* ConfigurationDataItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConfigurationDataItem.cpp; path = ../../ConfigurationDataItem.cpp; sourceTree = "<group>"; };
+		318B69B41C7F38CA0088E152 /* ConfigurationDataItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConfigurationDataItem.h; path = ../../ConfigurationDataItem.h; sourceTree = "<group>"; };
 		318D642B189A77B30056F85C /* PlainStudentFileHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlainStudentFileHandler.cpp; sourceTree = "<group>"; };
 		318D642C189A77B30056F85C /* PlainStudentFileHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlainStudentFileHandler.h; sourceTree = "<group>"; };
 		318D6431189ACD170056F85C /* CruelGrader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CruelGrader.cpp; sourceTree = "<group>"; };
@@ -365,6 +377,10 @@
 				3158238618508DE10039D83F /* DataFileReader.cpp */,
 				3158238718508DE10039D83F /* DataFileReader.h */,
 				312BF12F18968AB1009BBB9B /* DataReaderObserver.h */,
+				3168893B1C58C6870065A5AB /* ConfigurationFileReader.h */,
+				3168893C1C58C7540065A5AB /* ConfigurationFileReader.cpp */,
+				318B69B31C7F38CA0088E152 /* ConfigurationDataItem.cpp */,
+				318B69B41C7F38CA0088E152 /* ConfigurationDataItem.h */,
 			);
 			name = PipesAndFiltersFramework;
 			path = PipesAndFiltersStudentNode;
@@ -393,10 +409,10 @@
 		318D641D189A5B9B0056F85C /* StudentFramework */ = {
 			isa = PBXGroup;
 			children = (
-				312BF12C18912926009BBB9B /* NetInputHandler.cpp */,
-				312BF12D18912926009BBB9B /* NetInputHandler.h */,
-				312BF1901897FE7F009BBB9B /* NetOutputHandler.cpp */,
-				312BF1911897FE7F009BBB9B /* NetOutputHandler.h */,
+				312BF12C18912926009BBB9B /* StudentNetInputHandler.cpp */,
+				312BF12D18912926009BBB9B /* StudentNetInputHandler.h */,
+				312BF1901897FE7F009BBB9B /* StudentNetOutputHandler.cpp */,
+				312BF1911897FE7F009BBB9B /* StudentNetOutputHandler.h */,
 				31D65B451887ECDF00356258 /* StudentFileReader.cpp */,
 				31D65B461887ECDF00356258 /* StudentFileReader.h */,
 				31D65B481887EDE300356258 /* StudentDataItem.cpp */,
@@ -526,6 +542,7 @@
 				312BF11018911B28009BBB9B /* DataHandler.h in Sources */,
 				312BF11118911B28009BBB9B /* PingHandler.cpp in Sources */,
 				312BF11218911B28009BBB9B /* PingHandler.h in Sources */,
+				3168893E1C58C7540065A5AB /* ConfigurationFileReader.cpp in Sources */,
 				312BF11318911B28009BBB9B /* NetworkWriter.cpp in Sources */,
 				312BF11418911B28009BBB9B /* NetworkWriter.h in Sources */,
 				312BF11518911B28009BBB9B /* NetworkReader.cpp in Sources */,
@@ -538,12 +555,13 @@
 				318D642E189A77B30056F85C /* PlainStudentFileHandler.cpp in Sources */,
 				312BF11C18911B28009BBB9B /* Log.cpp in Sources */,
 				312BF11D18911B28009BBB9B /* Log.h in Sources */,
+				318B69B61C7F38CA0088E152 /* ConfigurationDataItem.cpp in Sources */,
 				312BF11E18911B28009BBB9B /* Package.cpp in Sources */,
 				312BF11F18911B28009BBB9B /* Package.h in Sources */,
 				312BF12018911B28009BBB9B /* DataItem.cpp in Sources */,
 				312BF12118911B28009BBB9B /* DataItem.h in Sources */,
-				312BF1921897FE7F009BBB9B /* NetOutputHandler.cpp in Sources */,
-				312BF12E18912926009BBB9B /* NetInputHandler.cpp in Sources */,
+				312BF1921897FE7F009BBB9B /* StudentNetOutputHandler.cpp in Sources */,
+				312BF12E18912926009BBB9B /* StudentNetInputHandler.cpp in Sources */,
 				312BF12218911B28009BBB9B /* DataFileReader.cpp in Sources */,
 				312BF19518980D9A009BBB9B /* StudentHandler.cpp in Sources */,
 				312BF12318911B28009BBB9B /* DataFileReader.h in Sources */,
@@ -557,11 +575,12 @@
 			files = (
 				318D6420189A5FB20056F85C /* StudentFileReader.cpp in Sources */,
 				318D641F189A5F5D0056F85C /* StudentHandler.cpp in Sources */,
-				318D6419189A59570056F85C /* NetInputHandler.cpp in Sources */,
-				318D641A189A59570056F85C /* NetInputHandler.h in Sources */,
-				318D641B189A59570056F85C /* NetOutputHandler.cpp in Sources */,
-				318D641C189A59570056F85C /* NetOutputHandler.h in Sources */,
+				318D6419189A59570056F85C /* StudentNetInputHandler.cpp in Sources */,
+				318D641A189A59570056F85C /* StudentNetInputHandler.h in Sources */,
+				318D641B189A59570056F85C /* StudentNetOutputHandler.cpp in Sources */,
+				318D641C189A59570056F85C /* StudentNetOutputHandler.h in Sources */,
 				312BF14618979A2C009BBB9B /* DataHandler.cpp in Sources */,
+				3168893F1C58C7540065A5AB /* ConfigurationFileReader.cpp in Sources */,
 				312BF14718979A2C009BBB9B /* DataHandler.h in Sources */,
 				318D642F189A77B30056F85C /* PlainStudentFileHandler.cpp in Sources */,
 				312BF14818979A2C009BBB9B /* PingHandler.cpp in Sources */,
@@ -575,6 +594,7 @@
 				312BF15018979A2C009BBB9B /* Networker.cpp in Sources */,
 				312BF15118979A2C009BBB9B /* Networker.h in Sources */,
 				312BF15218979A2C009BBB9B /* NetworkReaderObserver.h in Sources */,
+				318B69B71C7F38CA0088E152 /* ConfigurationDataItem.cpp in Sources */,
 				312BF15318979A2C009BBB9B /* Log.cpp in Sources */,
 				312BF15418979A2C009BBB9B /* Log.h in Sources */,
 				312BF15518979A2C009BBB9B /* Package.cpp in Sources */,
@@ -594,10 +614,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				318D6421189A60910056F85C /* NetInputHandler.cpp in Sources */,
-				318D6422189A60910056F85C /* NetInputHandler.h in Sources */,
-				318D6423189A60910056F85C /* NetOutputHandler.cpp in Sources */,
-				318D6424189A60910056F85C /* NetOutputHandler.h in Sources */,
+				318D6421189A60910056F85C /* StudentNetInputHandler.cpp in Sources */,
+				318D6422189A60910056F85C /* StudentNetInputHandler.h in Sources */,
+				318D6423189A60910056F85C /* StudentNetOutputHandler.cpp in Sources */,
+				318D6424189A60910056F85C /* StudentNetOutputHandler.h in Sources */,
 				318D6425189A60910056F85C /* StudentFileReader.cpp in Sources */,
 				318D6426189A60910056F85C /* StudentFileReader.h in Sources */,
 				318D6427189A60910056F85C /* StudentHandler.cpp in Sources */,
@@ -618,6 +638,7 @@
 				318D6433189ACD170056F85C /* CruelGrader.cpp in Sources */,
 				312BF17E1897C7CE009BBB9B /* ProcessorNode.h in Sources */,
 				312BF17F1897C7CE009BBB9B /* Networker.cpp in Sources */,
+				316889401C58C7540065A5AB /* ConfigurationFileReader.cpp in Sources */,
 				312BF1801897C7CE009BBB9B /* Networker.h in Sources */,
 				312BF1811897C7CE009BBB9B /* NetworkReaderObserver.h in Sources */,
 				312BF1821897C7CE009BBB9B /* Log.cpp in Sources */,
@@ -628,6 +649,7 @@
 				312BF1871897C7CE009BBB9B /* DataItem.h in Sources */,
 				318D6439189AD2F00056F85C /* GraderFactory.cpp in Sources */,
 				312BF1881897C7CE009BBB9B /* DataFileReader.cpp in Sources */,
+				318B69B81C7F38CA0088E152 /* ConfigurationDataItem.cpp in Sources */,
 				312BF18F1897C9D0009BBB9B /* GradingHandler.cpp in Sources */,
 				312BF1891897C7CE009BBB9B /* DataFileReader.h in Sources */,
 				312BF18A1897C7CE009BBB9B /* DataReaderObserver.h in Sources */,
@@ -641,7 +663,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				318D6429189A6E760056F85C /* NetOutputHandler.cpp in Sources */,
+				318D6429189A6E760056F85C /* StudentNetOutputHandler.cpp in Sources */,
 				318D642A189A6E760056F85C /* StudentHandler.cpp in Sources */,
 				315823971850A3870039D83F /* DataHandler.cpp in Sources */,
 				315823981850A3870039D83F /* DataHandler.h in Sources */,
@@ -664,9 +686,11 @@
 				315823A71850A3870039D83F /* Package.h in Sources */,
 				318D642D189A77B30056F85C /* PlainStudentFileHandler.cpp in Sources */,
 				315823A81850A3870039D83F /* DataItem.cpp in Sources */,
+				3168893D1C58C7540065A5AB /* ConfigurationFileReader.cpp in Sources */,
 				315823A91850A3870039D83F /* DataItem.h in Sources */,
 				315823AA1850A3870039D83F /* DataFileReader.cpp in Sources */,
 				315823AB1850A3870039D83F /* DataFileReader.h in Sources */,
+				318B69B51C7F38CA0088E152 /* ConfigurationDataItem.cpp in Sources */,
 				315823AC1850A3870039D83F /* SImain.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

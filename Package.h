@@ -12,7 +12,7 @@
 #include <string>
 #include <boost/uuid/uuid.hpp>
 
-namespace ohar_pipes {
+namespace OHARBase {
 	
 	// Forward declaration.
 	class DataItem;
@@ -25,19 +25,23 @@ namespace ohar_pipes {
 	 Package also has a type, indicating is the package containing actual data to be
 	 handled, or is the package containing a control message. Control messages influence
 	 on the way the Node behaves. These include e.g. shutting down the node.
+	 @todo Add a "corrupt" flat for packages that have bad content. These packages
+	 are just passed through the Filters, logging their presence, and they are not
+	 handled by any Handler.
 	 @author Antti Juustila
-	 @version $Revision $
 	 */
 	class Package {
 	public:
+		/*! The type of the package. */
 		enum Type {
-			NoType,
-			Control,
-			Data
+			NoType,   /*!< The package has no type (yet); it is uninitialized. */
+			Control,  /*!< The package contains a control message. */
+			Data      /*!< The package contains actual application specific data. */
 		};
 
 		Package();
 		Package(const Package & p);
+		Package(Package && p);
 		Package(const boost::uuids::uuid & id);
 		Package(Type ptype, const std::string & data);
 		Package(const boost::uuids::uuid & id, Type ptype, const std::string & data);
@@ -47,7 +51,7 @@ namespace ohar_pipes {
 		void setUuid(const boost::uuids::uuid & id);
 		Type getType() const;
 		void setType(Type ptype);
-		const std::string getData() const;
+		const std::string & getData() const;
 		void setData(const std::string & d);
 		const DataItem * getDataItem() const;
 		DataItem * getDataItem();
@@ -55,6 +59,7 @@ namespace ohar_pipes {
 		
 		bool isEmpty() const;
 		const Package & operator = (const Package & p);
+		const Package & operator = (Package && p);
 		bool operator == (const Package & pkg) const;
 		bool operator == (const std::string & str) const;
 		
@@ -72,7 +77,8 @@ namespace ohar_pipes {
 		 <ul><li>ping, which causes the Node to print out a ping command,</li>
 		 <li>readfile, which causes the Node to read it's data file if it has been configured to do so,</li>
 		 <li>shutdown, which causes the node to shut down itself in a controlled way.</li></ul>
-		 All the commands are also forwarded to the next Node in the Pipes & Filters architecture.<p>
+		 All the commands are also forwarded to the next Node in the Pipes & Filters architecture.
+		 Thus all Nodes can be shut down by writing the command "shutdown" in the console of the first Node.<p>
 		 Data packages are application specific data items. */
 		Type type;
 		/** Data as received from the network/sent to the network.*/

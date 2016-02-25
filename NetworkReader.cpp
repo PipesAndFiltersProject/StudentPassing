@@ -16,7 +16,7 @@
 #include "NetworkReaderObserver.h"
 #include "Log.h"
 
-namespace ohar_pipes {
+namespace OHARBase {
 	
 	/**
 	 Constructor to create the reader with host name. See the

@@ -8,7 +8,7 @@
 
 #include "DataHandler.h"
 
-namespace ohar_pipes {
+namespace OHARBase {
 
 	DataHandler::DataHandler() {
 	}

@@ -12,7 +12,7 @@
 #include <string>
 #include <thread>
 
-namespace ohar_pipes {
+namespace OHARBase {
 	
 	
 	/** An abstract base class for implementing networking in the architecture.
@@ -23,7 +23,6 @@ namespace ohar_pipes {
 	 The initialization happens in the constructors (where the addresses are set) and in
 	 start() method.
 	 @author Antti Juustila
-	 @version $Revision $
 	 @todo Update to using std lib networking classes, as well as IPv6.
 	 */
 	class Networker {

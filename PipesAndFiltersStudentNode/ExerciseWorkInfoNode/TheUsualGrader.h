@@ -11,7 +11,7 @@
 
 #include "GradeCalculator.h"
 
-namespace ohar_pipes {
+namespace OHARStudent {
 
 	
 class TheUsualGrader : public GradeCalculator {

@@ -11,24 +11,25 @@
 
 #include "DataHandler.h"
 
+namespace OHARBase {
+	class ProcessorNode;
+	class Package;
+}
 
-namespace ohar_pipes {
-
+namespace OHARStudent {
 	
-class ProcessorNode;
-class Package;
-
-class NetOutputHandler : public DataHandler {
-public:
-   NetOutputHandler(ProcessorNode & myNode);
-   virtual ~NetOutputHandler();
-   
-   bool consume(Package & data);
-   
-private:
-   ProcessorNode & node;
-   const std::string TAG;
-};
+	
+	class StudentNetOutputHandler : public OHARBase::DataHandler {
+	public:
+		StudentNetOutputHandler(OHARBase::ProcessorNode & myNode);
+		virtual ~StudentNetOutputHandler();
+		
+		bool consume(OHARBase::Package & data);
+		
+	private:
+		OHARBase::ProcessorNode & node;
+		const std::string TAG;
+	};
 	
 	
 } //namespace

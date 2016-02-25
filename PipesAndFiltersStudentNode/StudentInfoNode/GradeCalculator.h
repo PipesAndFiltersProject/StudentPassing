@@ -9,7 +9,7 @@
 #ifndef PipesAndFiltersFramework_GradeCalculator_h
 #define PipesAndFiltersFramework_GradeCalculator_h
 
-namespace ohar_pipes {
+namespace OHARStudent {
 
 	
 class StudentDataItem;

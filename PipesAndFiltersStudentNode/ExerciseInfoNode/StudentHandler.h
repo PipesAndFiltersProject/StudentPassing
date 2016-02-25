@@ -14,32 +14,47 @@
 #include "DataHandler.h"
 #include "DataReaderObserver.h"
 
+namespace OHARBase {
+	class ProcessorNode;
+	class Package;
+}
 
-namespace ohar_pipes {
+
+/** @brief Namespace supports handling student
+ related information in the Pipes & Filters architectural style.<p>
+ OHARStudent namespace contains support for handling student
+ related information in the Pipes & Filters architectural style.
+ This is a higher layer build on top of OHARBase layer. OHARBase
+ supports handling any kind of data on Pipes & Filters, as 
+ OHARStudent layer adds on top of that, support for handling
+ data on student course passing information. OHARStudent is also
+ a layer that does not execute anything by itself, but application
+ developers use OHARBase and OHARStudent together to implement actual
+ applications handling the data.
+ */
+namespace OHARStudent {
 
 	
-class ProcessorNode;
-class Package;
 class StudentDataItem;
 
-class StudentHandler : public DataHandler, public DataReaderObserver {
+class StudentHandler : public OHARBase::DataHandler, public OHARBase::DataReaderObserver {
 public:
-   StudentHandler(ProcessorNode & myNode);
+   StudentHandler(OHARBase::ProcessorNode & myNode);
    virtual ~StudentHandler();
    
-   bool consume(Package & data);
+   bool consume(OHARBase::Package & data);
 
    // From DataReaderObserver
-   void handleNewItem(DataItem * item);
+   void handleNewItem(OHARBase::DataItem * item);
    
 private:
    void readFile();
    
    StudentDataItem * findStudent(const StudentDataItem & which) const;
    
-   ProcessorNode & node;
+   OHARBase::ProcessorNode & node;
    const std::string TAG;
-   std::list<DataItem*> dataItems;
+   std::list<OHARBase::DataItem*> dataItems;
    
 };
 

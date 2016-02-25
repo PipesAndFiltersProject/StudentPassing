@@ -18,7 +18,24 @@
 #include "Package.h"
 
 
-namespace ohar_pipes {
+/** @brief Namespace contains basic classes for
+ building distributed applications based on the Pipes & Filters
+ architectural style.<p>
+ OHARBase namespace contains the basic classes for
+ building distributed applications based on the Pipes & Filters
+ architectural style. In this implementation of this style,
+ Filters (a.k.a. Nodes, ProcessorNodes) receive data from
+ the network using datagrams, process the data (including reading
+ data from a file) and send the processed data to the next Node,
+ again using datagrams. A Node may or may not have all these three
+ elements (network input, file, network output), but may have some of
+ them. Usually a Node has either input or output or both, and possibly
+ a file also. A Node can only have one of each of these three, currently.
+ Though since datagrams are used, it would be relatively simple to add support
+ for receiving datagrams from multiple sources and send broadcast messages to
+ larger set of recipients.
+ */
+namespace OHARBase {
 	
 	// Forward declarations
 	class NetworkReader;
@@ -53,7 +70,6 @@ namespace ohar_pipes {
 	 Just create the reader and/or writer, and create the necessary handler objects and add them into the
 	 ProcessorNode, and start running the processor.
 	 @author Antti Juustila
-	 @version $Revision $
 	 */
 	class ProcessorNode : public NetworkReaderObserver {
 	public:
@@ -92,6 +108,9 @@ namespace ohar_pipes {
 		 This thread is started in the Node's start() method. Locks are used to guard access to the
 		 network reader's queue of incoming data packages. */
 		void threadFunc();
+		
+		ProcessorNode(const ProcessorNode &) = delete;
+		const ProcessorNode & operator = (const ProcessorNode &) = delete;
 		
 	protected:
 		

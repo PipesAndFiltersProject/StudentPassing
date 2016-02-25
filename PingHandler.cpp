@@ -11,7 +11,7 @@
 #include "Log.h"
 #include "Package.h"
 
-namespace ohar_pipes {
+namespace OHARBase {
 	
 	/**
 	 Constructs a PingHandler object. Ping handler must now about the ProcessorNode

@@ -12,7 +12,7 @@
 #include "StudentDataItem.h"
 
 
-namespace ohar_pipes {
+namespace OHARStudent {
 
 	
 	

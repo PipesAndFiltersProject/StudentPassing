@@ -9,7 +9,7 @@
 #include "CruelGrader.h"
 #include "StudentDataItem.h"
 
-namespace ohar_pipes {
+namespace OHARStudent {
 
 	
 int CruelGrader::calculate(const StudentDataItem & source) {

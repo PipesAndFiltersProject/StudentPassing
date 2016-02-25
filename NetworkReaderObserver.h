@@ -9,14 +9,13 @@
 #ifndef PipesAndFiltersFramework_NetworkObserver_h
 #define PipesAndFiltersFramework_NetworkObserver_h
 
-namespace ohar_pipes {
+namespace OHARBase {
 	
 	
 	/** Interface for observing the NetworkReader. Network reader notifies
 	 the observer using this interface when data has arrived and is ready
 	 for handling. 
 	 @author Antti Juustila
-	 @version $Revision $
 	 */
 	class NetworkReaderObserver {
 	public:

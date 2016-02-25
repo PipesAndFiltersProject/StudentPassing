@@ -9,7 +9,7 @@
 #ifndef __PipesAndFiltersFramework__GraderFactory__
 #define __PipesAndFiltersFramework__GraderFactory__
 
-namespace ohar_pipes {
+namespace OHARStudent {
 
 	
 class GradeCalculator;

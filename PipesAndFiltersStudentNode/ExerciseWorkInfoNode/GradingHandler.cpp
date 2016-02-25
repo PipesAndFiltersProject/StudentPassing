@@ -13,10 +13,10 @@
 #include "Package.h"
 #include "GraderFactory.h"
 
-namespace ohar_pipes {
+namespace OHARStudent {
 
 	
-GradingHandler::GradingHandler(ProcessorNode & myNode)
+GradingHandler::GradingHandler(OHARBase::ProcessorNode & myNode)
 : node(myNode), TAG("GradingHandler")
 {
    StudentDataItem::setGradeCalculator(GraderFactory::makeGrader());
@@ -26,13 +26,13 @@ GradingHandler::~GradingHandler() {
    StudentDataItem::setGradeCalculator(0);
 }
 
-bool GradingHandler::consume(Package & data) {
-	if (data.getType() == Package::Data) {
-      DataItem * item = data.getDataItem();
+bool GradingHandler::consume(OHARBase::Package & data) {
+	if (data.getType() == OHARBase::Package::Data) {
+      OHARBase::DataItem * item = data.getDataItem();
       if (item) {
          StudentDataItem * student = dynamic_cast<StudentDataItem*>(item);
          if (student) {
-            Log::getInstance().entry(TAG, "Calculating a grade for the student.");
+            OHARBase::Log::getInstance().entry(TAG, "Calculating a grade for the student.");
             student->calculateGrade();
          }
       }

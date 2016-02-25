@@ -14,14 +14,13 @@
 #include <chrono>
 
 
-namespace ohar_pipes {
+namespace OHARBase {
 	
 	/** A class for logging data in the Nodes. Is implemented following
 	 the Singleton design pattern. The output stream can be changed by setStream() but
 	 is usually the console (std::cout).
 	 @todo Reimplement stream writing and formatting using C++11 paremetrisized templates. 
 	 @author Antti Juustila
-	 @version $Revision $
 	 */
 	class Log {
 	public:

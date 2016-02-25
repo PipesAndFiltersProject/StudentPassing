@@ -17,10 +17,10 @@
 #include "Log.h"
 
 
-namespace ohar_pipes {
+namespace OHARStudent {
 
 	
-PlainStudentFileHandler::PlainStudentFileHandler(ProcessorNode & myNode)
+PlainStudentFileHandler::PlainStudentFileHandler(OHARBase::ProcessorNode & myNode)
 : node(myNode), TAG("PlainFileHandler")
 {
 }
@@ -34,8 +34,8 @@ void PlainStudentFileHandler::readFile() {
    reader.read(node.getDataFileName());
 }
 
-bool PlainStudentFileHandler::consume(Package & data) {
-	if (data.getType() == Package::Control) {
+bool PlainStudentFileHandler::consume(OHARBase::Package & data) {
+	if (data.getType() == OHARBase::Package::Control) {
       if (data.getData() == "readfile") {
          readFile();
       }
@@ -43,17 +43,17 @@ bool PlainStudentFileHandler::consume(Package & data) {
    return false; // false: pass to next handler. true: do not pass to next handler.
 }
 
-void PlainStudentFileHandler::handleNewItem(DataItem * item) {
+void PlainStudentFileHandler::handleNewItem(OHARBase::DataItem * item) {
    // Check if the item is already in the container.
-   Log::getInstance().entry(TAG, "One new file data item received");
+   OHARBase::Log::getInstance().entry(TAG, "One new file data item received");
    StudentDataItem * newStudent = dynamic_cast<StudentDataItem*>(item);
    if (newStudent) {
-      Log::getInstance().entry(TAG, "Creating a package to send ahead...");
-      Package p;
-		p.setType(Package::Data);
+      OHARBase::Log::getInstance().entry(TAG, "Creating a package to send ahead...");
+      OHARBase::Package p;
+		p.setType(OHARBase::Package::Data);
       p.setDataItem(newStudent);
       delete newStudent;
-      Log::getInstance().entry(TAG, "Pass to next handler.");
+      OHARBase::Log::getInstance().entry(TAG, "Pass to next handler.");
       node.passToNextHandlers(this, p);
    }
 }

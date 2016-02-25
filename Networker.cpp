@@ -12,7 +12,7 @@
 
 #include "Networker.h"
 
-namespace ohar_pipes {
+namespace OHARBase {
 	
 	
 	/**

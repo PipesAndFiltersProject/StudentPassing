@@ -14,7 +14,7 @@
 #include "GradeCalculator.h"
 
 
-namespace ohar_pipes {
+namespace OHARStudent {
 
 	
 GradeCalculator * StudentDataItem::calculator = 0;
@@ -26,7 +26,7 @@ StudentDataItem::StudentDataItem()
 }
 
 StudentDataItem::StudentDataItem(const StudentDataItem & another)
-: DataItem(another), name(another.name), department(another.department),
+: OHARBase::DataItem(another), name(another.name), department(another.department),
   examPoints(another.examPoints), exercisePoints(another.exercisePoints),
   exerciseWorkPoints(another.exerciseWorkPoints), grade(another.grade),
   TAG("SDataItem")
@@ -34,7 +34,7 @@ StudentDataItem::StudentDataItem(const StudentDataItem & another)
    
 }
 
-DataItem * StudentDataItem::copy() const {
+OHARBase::DataItem * StudentDataItem::copy() const {
    return new StudentDataItem(*this);
 }
 
@@ -94,9 +94,9 @@ void StudentDataItem::setExerciseWorkPoints(int pts) {
 void StudentDataItem::calculateGrade() {
    if (calculator) {
       grade = calculator->calculate(*this);
-      Log::getInstance().entry(TAG, "Calculated grade %d for the student", grade);
+      OHARBase::Log::getInstance().entry(TAG, "Calculated grade %d for the student", grade);
    } else {
-      Log::getInstance().entry(TAG, "No calculator to grade!!");
+      OHARBase::Log::getInstance().entry(TAG, "No calculator to grade!!");
    }
 }
 
@@ -104,7 +104,7 @@ void StudentDataItem::calculateGrade() {
 bool StudentDataItem::parse(const std::string & fromString, const std::string & contentType) {
    std::vector<std::string> strings;
    boost::split(strings, fromString, boost::is_any_of("\t"));
-   Log::getInstance().entry(TAG, "String item count: %d", strings.size());
+   OHARBase::Log::getInstance().entry(TAG, "String item count: %d", strings.size());
    if (contentType == "summarydata") {
       setId(strings.at(0));
       setName(strings.at(1));
@@ -139,7 +139,7 @@ bool StudentDataItem::parse(const std::string & fromString, const std::string & 
    return false;
 }
 
-bool StudentDataItem::addFrom(const DataItem & another) {
+bool StudentDataItem::addFrom(const OHARBase::DataItem & another) {
    const StudentDataItem * item = dynamic_cast<const StudentDataItem*>(&another);
    if (item) {
       if (item->id == id) {

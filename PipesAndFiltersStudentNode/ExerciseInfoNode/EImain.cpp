@@ -10,14 +10,15 @@
 
 #include "ProcessorNode.h"
 #include "StudentDataItem.h"
-#include "NetInputHandler.h"
-#include "NetOutputHandler.h"
+#include "StudentNetInputHandler.h"
+#include "StudentNetOutputHandler.h"
 #include "StudentHandler.h"
 #include "Log.h"
 
 int main(int argc, const char * argv[])
 {
-	using namespace ohar_pipes;
+	using namespace OHARBase;
+	
    Log::getInstance().entry("main", "Launching %s", argv[0]);
    Log::getInstance().entry("main", "Arguments: %d", argc);
    ProcessorNode * processor = new ProcessorNode(argv[0]);
@@ -45,10 +46,11 @@ int main(int argc, const char * argv[])
    if (dataFile.length()>0) {
       processor->setDataFileName(dataFile);
    }
-   
-   processor->addHandler(new NetInputHandler(*processor));
+	
+	using namespace OHARStudent;
+   processor->addHandler(new StudentNetInputHandler());
    processor->addHandler(new StudentHandler(*processor));
-   processor->addHandler(new NetOutputHandler(*processor));
+   processor->addHandler(new StudentNetOutputHandler(*processor));
 
    processor->start();
    

@@ -15,14 +15,13 @@
 #include "Networker.h"
 #include "Package.h"
 
-namespace ohar_pipes {
+namespace OHARBase {
 	
 	/** NetworkWriter handles the sending of the data packages to the next node.
 	 It contains a queue of data packages to send. Sending happens in a separate thread
 	 in order to keep the main thread of the processornode responsive to user actions as well
 	 as to enable handling and receiving the data from other node separately.
 	 @author Antti Juustila
-	 @version $Revision $
 	 */
 	class NetworkWriter : public Networker {
 	public:
@@ -30,8 +29,8 @@ namespace ohar_pipes {
 		NetworkWriter(const std::string & hostName, int portNumber);
 		~NetworkWriter();
 		
-		virtual void start();
-		virtual void stop();
+		virtual void start() override;
+		virtual void stop() override;
 		
 		void write(const Package & data);
 		

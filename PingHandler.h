@@ -12,7 +12,7 @@
 
 #include "DataHandler.h"
 
-namespace ohar_pipes {
+namespace OHARBase {
 	
 	
 	class ProcessorNode;
@@ -21,7 +21,6 @@ namespace ohar_pipes {
 	/**
 	 PingHandler handles ping messages.
 	 @author Antti Juustila
-	 @version $Revision $
 	 @see DataHandler
 	 */
 	class PingHandler : public DataHandler {
@@ -29,7 +28,7 @@ namespace ohar_pipes {
 		PingHandler(ProcessorNode & myNode);
 		virtual ~PingHandler();
 		
-		bool consume(Package & data);
+		bool consume(Package & data) override;
 		
 	private:
 		/** The processor node used to forward the ping message. */

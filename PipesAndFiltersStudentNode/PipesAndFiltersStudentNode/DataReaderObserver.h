@@ -9,16 +9,23 @@
 #ifndef PipesAndFiltersFramework_DataReaderObserver_h
 #define PipesAndFiltersFramework_DataReaderObserver_h
 
-namespace ohar_pipes {
-
+namespace OHARBase {
 	
-class DataItem;
-
-class DataReaderObserver {
-public:
-   virtual void handleNewItem(DataItem * item) = 0;
-};
-
+	// Forward declaration.
+	class DataItem;
+	
+	/** Defines the interface for observing the reading of data items.
+	 The observer will get a notification when data items are read.
+	 */
+	class DataReaderObserver {
+	public:
+		/** This method is called in the observer when a new data item was
+		 successfully created. The ownership of the data item object is transferred
+		 to the observer.
+		 @param item The new data item object created, owned now by the observer. */
+		virtual void handleNewItem(DataItem * item) = 0;
+	};
+	
 	
 } //namespace
 #endif

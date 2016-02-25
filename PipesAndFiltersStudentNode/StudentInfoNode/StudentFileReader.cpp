@@ -12,11 +12,11 @@
 #include "Log.h"
 
 
-namespace ohar_pipes {
+namespace OHARStudent {
 
 	
-StudentFileReader::StudentFileReader(DataReaderObserver & obs)
-: DataFileReader(obs), TAG("SFileReader") {
+StudentFileReader::StudentFileReader(OHARBase::DataReaderObserver & obs)
+: OHARBase::DataFileReader(obs), TAG("SFileReader") {
    
 }
 
@@ -24,13 +24,13 @@ StudentFileReader::~StudentFileReader() {
    
 }
    
-DataItem * StudentFileReader::parse(const std::string & str, const std::string & contentType) {
+OHARBase::DataItem * StudentFileReader::parse(const std::string & str, const std::string & contentType) {
    StudentDataItem * item = 0;
    if (str.length() > 0) {
-      Log::getInstance().entry(TAG, "Parsing line: %s", str.c_str());
+		OHARBase::Log::getInstance().entry(TAG, "Parsing line: %s", str.c_str());
       item = new StudentDataItem();
       if (!item->parse(str, contentType)) {
-         Log::getInstance().entry(TAG, "SDataItem failed to parse!");
+         OHARBase::Log::getInstance().entry(TAG, "SDataItem failed to parse!");
          delete item;
          item = 0;
       }
