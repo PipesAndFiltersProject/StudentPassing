@@ -135,7 +135,9 @@ namespace OHARBase {
 	
 	/** Stops the writer. In practise this ends the loop in the send thread. */
 	void NetworkWriter::stop() {
+		Log::getInstance().entry(TAG, "Shutting down the socket.");
 		running = false;
+		condition.notify_all();
 	}
 	
 	

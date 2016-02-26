@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Antti Juustila. All rights reserved.
 //
 
+#include <sstream>
+
 #include "ProcessorNode.h"
 #include "NetworkReader.h"
 #include "NetworkWriter.h"
@@ -33,8 +35,15 @@ namespace OHARBase {
 			delete handlers.front();
 			handlers.pop_front();
 		}
-		delete netInput;
-		delete netOutput;
+		if (netInput) {
+			netInput->stop();
+			delete netInput;
+		}
+		// Close and destroy the sending network object
+		if (netOutput) {
+			netOutput->stop();
+			delete netOutput;
+		}
 		delete config;
 	}
 	
@@ -184,7 +193,7 @@ namespace OHARBase {
 		threader = std::thread(&ProcessorNode::threadFunc, this);
 		
 		std::string command;
-		while ((netInput && netInput->isRunning()) || (netOutput && netOutput->isRunning()))
+		while (running && ((netInput && netInput->isRunning()) || (netOutput && netOutput->isRunning())))
 		{
 			std::cout << "Enter command > ";
 			getline(std::cin, command);
@@ -214,19 +223,19 @@ namespace OHARBase {
 	 and setting the running flag to false. These operations finishes the data handling thread
 	 as well as the main thread loop running in the start() method. */
 	void ProcessorNode::stop() {
-		// Close all, destroy all.
 		if (netInput) {
 			netInput->stop();
-			delete netInput;
-			netInput = nullptr;
 		}
 		// Close and destroy the sending network object
 		if (netOutput) {
 			netOutput->stop();
-			delete netOutput;
-			netOutput = nullptr;
 		}
 		running = false;
+		condition.notify_all();
+		delete netOutput;
+		netOutput = nullptr;
+		delete netInput;
+		netInput = nullptr;
 	}
 	
 	
@@ -268,7 +277,7 @@ namespace OHARBase {
 	}
 	
 	/**
-	 Node's thread function runs in a loop and waits for incoming data packages from the 
+	 Node's thread function runs in a loop and waits for incoming data packages from the
 	 NetworkReader. mutexes and condition variables are used to notify of such situation
 	 as well as guard the incoming message queue. As packages arrive, the function
 	 passes the package to Handlers. It also checks if the package is a shutdown control
@@ -282,22 +291,27 @@ namespace OHARBase {
 				condition.wait(ulock);
 			}
 			Log::getInstance().entry(TAG, "Received data!");
-			Package package = netInput->read();
-			Log::getInstance().entry(TAG, "Received package %s : %s", package.getTypeAsString().c_str(), package.getData().c_str());
-			while (!package.isEmpty()) {
-				passToHandlers(package);
-				if (package.getType() == Package::Control && package.getData() == "shutdown") {
-					sendData(package);
-					std::this_thread::sleep_for(std::chrono::milliseconds(500));
-					running = false;
-					stop();
-					break;
-				} else {
-					package = netInput->read();
+			if (netInput) {
+				Package package = netInput->read();
+				Log::getInstance().entry(TAG, "Received package %s : %s", package.getTypeAsString().c_str(), package.getData().c_str());
+				while (!package.isEmpty()) {
+					if (package.getType() == Package::Control && package.getData() == "shutdown") {
+						sendData(package);
+						std::this_thread::sleep_for(std::chrono::milliseconds(500));
+						running = false;
+						stop();
+						std::istringstream input("shutdown");
+						std::cin.rdbuf(input.rdbuf());
+						break;
+					} else {
+						passToHandlers(package);
+						package = netInput->read();
+					}
 				}
 			}
 			hasIncoming = false;
 		}
+		Log::getInstance().entry(TAG, "Exit thread in ProcessorNode!");
 	}
 	
 	/** This method takes the incoming data and passes it to be handled by the

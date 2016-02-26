@@ -53,6 +53,9 @@ namespace OHARBase {
 		/** A mutex guards the access to the queue so that many threads do not manipulate the
 		 queue simultaneously. */
 		std::mutex guard;
+
+		/** The socket descriptor used to read data from network. */
+		int sockd;
 		
 		/** The observer of the reader. When the reader receives data from the network,
 		 it will notify the reader about the data. The observer can then retrieve the data by using

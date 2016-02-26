@@ -48,7 +48,6 @@ namespace OHARBase {
 	
 	/** The thread function doing most of the relevant work for receiving data. */
 	void NetworkReader::threadFunc() {
-		int sockd;
 		struct sockaddr_in my_name, cli_name;
 		ssize_t status;
 		socklen_t addrlen;
@@ -84,10 +83,10 @@ namespace OHARBase {
 							guard.lock();
 							msgQueue.push(p);
 							guard.unlock();
+							// And when data has been received, notify the observer.
+							observer.receivedData();
 						}
 					}
-					// And when data has been received, notify the observer.
-					observer.receivedData();
 				}
 			} else {
 				Log::getInstance().entry(TAG, "bind() failed with code: %d ", status);
@@ -116,6 +115,8 @@ namespace OHARBase {
 	void NetworkReader::stop() {
 		Log::getInstance().entry(TAG, "Stop the thread...");
 		running = false;
+		Log::getInstance().entry(TAG, "Shutting down the socket.");
+		shutdown(sockd, SHUT_RDWR);
 	}
 	
 	/** Allows another object to read the package object received from the network.
