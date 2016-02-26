@@ -35,16 +35,16 @@ namespace OHARBase {
 			delete handlers.front();
 			handlers.pop_front();
 		}
-		if (netInput) {
-			netInput->stop();
-			delete netInput;
-		}
+		delete config;
 		// Close and destroy the sending network object
 		if (netOutput) {
 			netOutput->stop();
 			delete netOutput;
 		}
-		delete config;
+		if (netInput) {
+			netInput->stop();
+			delete netInput;
+		}
 	}
 	
 	
