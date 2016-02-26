@@ -12,14 +12,15 @@
 #include "PingHandler.h"
 #include "DataFileReader.h"
 #include "Log.h"
-
+#include "NodeConfiguration.h"
+#include "ConfigurationFileReader.h"
 
 namespace OHARBase {
 	
 	/** Constructor for the processor node.
 	 @param aName The name of the processor node. */
 	ProcessorNode::ProcessorNode(const std::string & aName)
-	: name(aName), netInput(0), netOutput(0), running(false), hasIncoming(false), TAG("PNode")
+	: name(aName), netInput(0), netOutput(0), config(0), running(false), hasIncoming(false), TAG("PNode")
 	{
 		Log::getInstance().entry(TAG, "Creating ProcessorNode.");
 		handlers.push_back(new PingHandler(*this));
@@ -34,6 +35,26 @@ namespace OHARBase {
 		}
 		delete netInput;
 		delete netOutput;
+		delete config;
+	}
+	
+	
+	void ProcessorNode::configure(const std::string & configFile) {
+		if (configFile.length() > 0) {
+			delete config;
+			config = nullptr;
+			config = new NodeConfiguration();
+			ConfigurationFileReader reader(*config);
+			reader.read(configFile);
+			std::string cvalue = config->getValue(ConfigurationDataItem::CONF_INPUTADDR);
+			setInputSource(cvalue);
+			cvalue = config->getValue(ConfigurationDataItem::CONF_OUTPUTADDR);
+			setOutputSink(cvalue);
+			cvalue = config->getValue(ConfigurationDataItem::CONF_INPUTFILE);
+			setDataFileName(cvalue);
+			cvalue = config->getValue(ConfigurationDataItem::CONF_OUTPUTFILE);
+			setOutputFileName(cvalue);
+		}
 	}
 	
 	/** Sets the address of the input source for the Node. This is the hostname and port where
@@ -43,9 +64,9 @@ namespace OHARBase {
 	void ProcessorNode::setInputSource(const std::string & hostName) {
 		if (netInput) {
 			delete netInput;
-			netInput = 0;
+			netInput = nullptr;
 		}
-		if (hostName != "null") {
+		if (hostName.length() && hostName != "null") {
 			Log::getInstance().entry(TAG, "Setting input: %s", hostName.c_str());
 			netInput = new NetworkReader(hostName, *this);
 		}
@@ -58,9 +79,9 @@ namespace OHARBase {
 		// Create a new Network object for sending data to the datagram socket.
 		if (netOutput) {
 			delete netOutput;
-			netOutput = 0;
+			netOutput = nullptr;
 		}
-		if (hostName != "null") {
+		if (hostName.length() && hostName != "null") {
 			Log::getInstance().entry(TAG, "Setting output: %s", hostName.c_str());
 			netOutput = new NetworkWriter(hostName);
 		}
@@ -75,10 +96,12 @@ namespace OHARBase {
 	void ProcessorNode::setInputSource(const std::string & hostName, int portNumber) {
 		if (netInput) {
 			delete netInput;
-			netInput = 0;
+			netInput = nullptr;
 		}
-		Log::getInstance().entry(TAG, "Setting input: %s:%d", hostName.c_str(), portNumber);
-		netInput = new NetworkReader(hostName, portNumber, *this);
+		if (hostName.length() && hostName != "null") {
+			Log::getInstance().entry(TAG, "Setting input: %s:%d", hostName.c_str(), portNumber);
+			netInput = new NetworkReader(hostName, portNumber, *this);
+		}
 	}
 	
 	/** Sets the address of the output sink for the Node. This is the hostname and port where
@@ -89,9 +112,12 @@ namespace OHARBase {
 		// Create a new Network object for sending data to the datagram socket.
 		if (netOutput) {
 			delete netOutput;
-			netOutput = 0;
+			netOutput = nullptr;
 		}
-		netOutput = new NetworkWriter(hostName, portNumber);
+		if (hostName.length() && hostName != "null") {
+			Log::getInstance().entry(TAG, "Setting output: %s:%d", hostName.c_str(), portNumber);
+			netOutput = new NetworkWriter(hostName, portNumber);
+		}
 	}
 	
 	
@@ -168,8 +194,8 @@ namespace OHARBase {
 				p.setData(command);
 				sendData(p);
 			} else if (command == "readfile") {
-				Log::getInstance().entry(TAG, "Reading data file.. %s", dataFileName.c_str());
 				if (dataFileName.length() > 0) {
+					Log::getInstance().entry(TAG, "Reading data file.. %s", dataFileName.c_str());
 					p.setType(Package::Control);
 					p.setData(command);
 					passToHandlers(p);
@@ -192,13 +218,13 @@ namespace OHARBase {
 		if (netInput) {
 			netInput->stop();
 			delete netInput;
-			netInput = 0;
+			netInput = nullptr;
 		}
 		// Close and destroy the sending network object
 		if (netOutput) {
 			netOutput->stop();
 			delete netOutput;
-			netOutput = 0;
+			netOutput = nullptr;
 		}
 		running = false;
 	}
@@ -265,6 +291,7 @@ namespace OHARBase {
 					std::this_thread::sleep_for(std::chrono::milliseconds(500));
 					running = false;
 					stop();
+					break;
 				} else {
 					package = netInput->read();
 				}

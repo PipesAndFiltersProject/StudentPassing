@@ -16,6 +16,10 @@
 namespace OHARBase {
 
 	const std::string ConfigurationDataItem::TAG{"ConfigReader"};
+	const std::string ConfigurationDataItem::CONF_INPUTADDR{"input"};
+	const std::string ConfigurationDataItem::CONF_OUTPUTADDR{"output"};
+	const std::string ConfigurationDataItem::CONF_INPUTFILE{"filein"};
+	const std::string ConfigurationDataItem::CONF_OUTPUTFILE{"fileout"};
 	
 	void ConfigurationDataItem::setItemName(const std::string &item) {
 		itemName = item;
@@ -39,8 +43,8 @@ namespace OHARBase {
 		boost::split(strings, fromString, boost::is_any_of("\t"));
 		Log::getInstance().entry(TAG, "String item count: %d", strings.size());
 		if (contentType == "nodeconfiguration") {
-			setItemName(strings.at(1));
-			setItemValue(strings.at(2));
+			setItemName(strings.at(0));
+			setItemValue(strings.at(1));
 			return true;
 		}
 		return false;

@@ -18,6 +18,7 @@
 #include "Package.h"
 
 
+
 /** @brief Namespace contains basic classes for
  building distributed applications based on the Pipes & Filters
  architectural style.<p>
@@ -42,6 +43,7 @@ namespace OHARBase {
 	class NetworkWriter;
 	class DataHandler;
 	class DataItem;
+	class NodeConfiguration;
 	
 	/**
 	 ProcessorNode is a central class in the architecture. It acts as the Filter
@@ -71,10 +73,12 @@ namespace OHARBase {
 	 ProcessorNode, and start running the processor.
 	 @author Antti Juustila
 	 */
-	class ProcessorNode : public NetworkReaderObserver {
+	class ProcessorNode final : public NetworkReaderObserver {
 	public:
 		ProcessorNode(const std::string & aName);
 		virtual ~ProcessorNode();
+		
+		void configure(const std::string & configFile);
 		
 		void setInputSource(const std::string & hostName);
 		void setOutputSink(const std::string & hostName);
@@ -119,6 +123,10 @@ namespace OHARBase {
 		/** The file name of the data file Node uses to write output data. */
 		std::string outputFileName;
 		
+		/** The configuration object for the node. Contains information about the config
+		 of the node, including IP addresses to use when sending and receiving data. */
+		NodeConfiguration * config;
+
 	private:
 		/** The name of the Node. */
 		std::string name;

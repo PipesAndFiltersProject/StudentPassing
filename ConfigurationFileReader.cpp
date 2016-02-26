@@ -22,12 +22,12 @@ namespace OHARBase {
 	}
 	
 	OHARBase::DataItem * OHARBase::ConfigurationFileReader::parse(const std::string & str, const std::string & contentType) {
-		ConfigurationDataItem * item = 0;
+		ConfigurationDataItem * item = nullptr;
 		if (str.length() > 0) {
 			Log::getInstance().entry(TAG, "Parsing line: %s", str.c_str());
 			item = new ConfigurationDataItem();
 			if (!item->parse(str, contentType)) {
-				Log::getInstance().entry(TAG, "SDataItem failed to parse!");
+				Log::getInstance().entry(TAG, "Configuration failed to parse!");
 				delete item;
 				item = 0;
 			}

@@ -7,7 +7,6 @@
 //
 
 #include <boost/algorithm/string.hpp>
-#include <boost/lexical_cast.hpp>
 #include <vector>
 
 #include "Networker.h"
@@ -62,7 +61,7 @@ namespace OHARBase {
 	
 	/**
 	 Sets the host IP address of the networking object.
-	 @param hostName The address of the host (IPv4 number format, e.g. 130.231.98.123).
+	 @param hostName The address of the host (IPv4 number format, e.g. 130.231.98.123:1111).
 	 */
 	void Networker::setHost(const std::string & hostName) {
 		std::vector<std::string> strs;
@@ -70,7 +69,7 @@ namespace OHARBase {
 		if (strs.size() > 0) {
 			host = strs.at(0);
 			if (strs.size() > 1) {
-				port = boost::lexical_cast<int>(strs.at(1));
+				port = std::stoi(strs.at(1));
 			}
 		}
 	}

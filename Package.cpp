@@ -24,7 +24,7 @@ namespace OHARBase {
 	
 	/** Default constructor for Package. Generates a random uuid for the Package. */
 	Package::Package()
-	: uid(boost::uuids::random_generator()()), dataItem(0)
+	: uid(boost::uuids::random_generator()()), type(Package::Type::NoType), dataItem(0)
 	{
 	}
 	
@@ -49,7 +49,7 @@ namespace OHARBase {
 	/** A constructor giving an uuid for the otherwise empty package.
 	 @param id The uuid for the package. */
 	Package::Package(const boost::uuids::uuid & id)
-	: uid(id), dataItem(0)
+	: uid(id), type(Package::Type::NoType), dataItem(0)
 	{
 	}
 	

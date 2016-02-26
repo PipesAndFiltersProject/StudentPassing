@@ -9,7 +9,6 @@
 #ifndef ConfigurationDataItem_h
 #define ConfigurationDataItem_h
 
-#include <stdio.h>
 
 #include "DataItem.h"
 
@@ -18,6 +17,11 @@ namespace OHARBase {
 	class ConfigurationDataItem : public DataItem {
 
 	public:
+		
+		static const std::string CONF_INPUTADDR;
+		static const std::string CONF_OUTPUTADDR;
+		static const std::string CONF_INPUTFILE;
+		static const std::string CONF_OUTPUTFILE;
 		
 		void setItemName(const std::string &item);
 		void setItemValue(const std::string &value);

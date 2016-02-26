@@ -120,6 +120,10 @@
 		318B69B61C7F38CA0088E152 /* ConfigurationDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 318B69B31C7F38CA0088E152 /* ConfigurationDataItem.cpp */; };
 		318B69B71C7F38CA0088E152 /* ConfigurationDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 318B69B31C7F38CA0088E152 /* ConfigurationDataItem.cpp */; };
 		318B69B81C7F38CA0088E152 /* ConfigurationDataItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 318B69B31C7F38CA0088E152 /* ConfigurationDataItem.cpp */; };
+		318B69BB1C7F3F270088E152 /* NodeConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 318B69B91C7F3F270088E152 /* NodeConfiguration.cpp */; };
+		318B69BC1C7F3F270088E152 /* NodeConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 318B69B91C7F3F270088E152 /* NodeConfiguration.cpp */; };
+		318B69BD1C7F3F270088E152 /* NodeConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 318B69B91C7F3F270088E152 /* NodeConfiguration.cpp */; };
+		318B69BE1C7F3F270088E152 /* NodeConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 318B69B91C7F3F270088E152 /* NodeConfiguration.cpp */; };
 		318D6419189A59570056F85C /* StudentNetInputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 312BF12C18912926009BBB9B /* StudentNetInputHandler.cpp */; };
 		318D641A189A59570056F85C /* StudentNetInputHandler.h in Sources */ = {isa = PBXBuildFile; fileRef = 312BF12D18912926009BBB9B /* StudentNetInputHandler.h */; };
 		318D641B189A59570056F85C /* StudentNetOutputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 312BF1901897FE7F009BBB9B /* StudentNetOutputHandler.cpp */; };
@@ -243,6 +247,8 @@
 		3168893C1C58C7540065A5AB /* ConfigurationFileReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConfigurationFileReader.cpp; path = ../../ConfigurationFileReader.cpp; sourceTree = "<group>"; };
 		318B69B31C7F38CA0088E152 /* ConfigurationDataItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConfigurationDataItem.cpp; path = ../../ConfigurationDataItem.cpp; sourceTree = "<group>"; };
 		318B69B41C7F38CA0088E152 /* ConfigurationDataItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConfigurationDataItem.h; path = ../../ConfigurationDataItem.h; sourceTree = "<group>"; };
+		318B69B91C7F3F270088E152 /* NodeConfiguration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NodeConfiguration.cpp; path = ../../NodeConfiguration.cpp; sourceTree = "<group>"; };
+		318B69BA1C7F3F270088E152 /* NodeConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NodeConfiguration.h; path = ../../NodeConfiguration.h; sourceTree = "<group>"; };
 		318D642B189A77B30056F85C /* PlainStudentFileHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlainStudentFileHandler.cpp; sourceTree = "<group>"; };
 		318D642C189A77B30056F85C /* PlainStudentFileHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlainStudentFileHandler.h; sourceTree = "<group>"; };
 		318D6431189ACD170056F85C /* CruelGrader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CruelGrader.cpp; sourceTree = "<group>"; };
@@ -381,6 +387,8 @@
 				3168893C1C58C7540065A5AB /* ConfigurationFileReader.cpp */,
 				318B69B31C7F38CA0088E152 /* ConfigurationDataItem.cpp */,
 				318B69B41C7F38CA0088E152 /* ConfigurationDataItem.h */,
+				318B69B91C7F3F270088E152 /* NodeConfiguration.cpp */,
+				318B69BA1C7F3F270088E152 /* NodeConfiguration.h */,
 			);
 			name = PipesAndFiltersFramework;
 			path = PipesAndFiltersStudentNode;
@@ -539,6 +547,7 @@
 				312BF12A18911F6F009BBB9B /* StudentDataItem.cpp in Sources */,
 				312BF12B18911F6F009BBB9B /* StudentDataItem.h in Sources */,
 				312BF10F18911B28009BBB9B /* DataHandler.cpp in Sources */,
+				318B69BC1C7F3F270088E152 /* NodeConfiguration.cpp in Sources */,
 				312BF11018911B28009BBB9B /* DataHandler.h in Sources */,
 				312BF11118911B28009BBB9B /* PingHandler.cpp in Sources */,
 				312BF11218911B28009BBB9B /* PingHandler.h in Sources */,
@@ -606,6 +615,7 @@
 				312BF15B18979A2C009BBB9B /* DataReaderObserver.h in Sources */,
 				312BF15C18979A2C009BBB9B /* StudentDataItem.cpp in Sources */,
 				312BF15D18979A2C009BBB9B /* StudentDataItem.h in Sources */,
+				318B69BD1C7F3F270088E152 /* NodeConfiguration.cpp in Sources */,
 				312BF1371896DA0D009BBB9B /* EINmain.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -633,6 +643,7 @@
 				312BF17B1897C7CE009BBB9B /* NetworkReader.cpp in Sources */,
 				318D6436189AD1140056F85C /* TheUsualGrader.cpp in Sources */,
 				312BF17C1897C7CE009BBB9B /* NetworkReader.h in Sources */,
+				318B69BE1C7F3F270088E152 /* NodeConfiguration.cpp in Sources */,
 				312BF17D1897C7CE009BBB9B /* ProcessorNode.cpp in Sources */,
 				318D6430189A77B30056F85C /* PlainStudentFileHandler.cpp in Sources */,
 				318D6433189ACD170056F85C /* CruelGrader.cpp in Sources */,
@@ -681,6 +692,7 @@
 				315823A31850A3870039D83F /* NetworkReaderObserver.h in Sources */,
 				315823A41850A3870039D83F /* Log.cpp in Sources */,
 				315823A51850A3870039D83F /* Log.h in Sources */,
+				318B69BB1C7F3F270088E152 /* NodeConfiguration.cpp in Sources */,
 				315823A61850A3870039D83F /* Package.cpp in Sources */,
 				31D65B471887ECDF00356258 /* StudentFileReader.cpp in Sources */,
 				315823A71850A3870039D83F /* Package.h in Sources */,

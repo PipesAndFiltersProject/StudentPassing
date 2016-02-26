@@ -97,12 +97,12 @@ namespace OHARBase {
 					currentlySending += Package::separator() + p.getTypeAsString();
 					currentlySending += Package::separator() + p.getData();
 					Log::getInstance().entry(TAG, "Sending: %s", currentlySending.c_str());
+					msgQueue.pop();
 					sent = sendto(sockd, currentlySending.c_str(), currentlySending.length()+1, 0,
 									  (struct sockaddr*)&srv_addr, sizeof(srv_addr));
 					if (sent == -1) {
 						Log::getInstance().entry(TAG, "ERROR in sending data: %d", errno);
 					}
-					msgQueue.pop();
 					guard.unlock();
 				} else {
 					guard.unlock();
@@ -146,8 +146,9 @@ namespace OHARBase {
 	 */
 	void NetworkWriter::write(const Package & data)
 	{
-		std::unique_lock<std::mutex> ulock(guard);
+		guard.lock();
 		msgQueue.push(data);
+		guard.unlock();
 		// Notify the writer thread there's something to send.
 		condition.notify_one();
 	}
