@@ -223,6 +223,8 @@ namespace OHARBase {
 	 and setting the running flag to false. These operations finishes the data handling thread
 	 as well as the main thread loop running in the start() method. */
 	void ProcessorNode::stop() {
+		running = false;
+		condition.notify_all();
 		if (netInput) {
 			netInput->stop();
 		}
@@ -230,8 +232,6 @@ namespace OHARBase {
 		if (netOutput) {
 			netOutput->stop();
 		}
-		running = false;
-		condition.notify_all();
 		delete netOutput;
 		netOutput = nullptr;
 		delete netInput;
@@ -300,8 +300,6 @@ namespace OHARBase {
 						std::this_thread::sleep_for(std::chrono::milliseconds(500));
 						running = false;
 						stop();
-						std::istringstream input("shutdown");
-						std::cin.rdbuf(input.rdbuf());
 						break;
 					} else {
 						passToHandlers(package);
