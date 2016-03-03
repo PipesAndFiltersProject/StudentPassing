@@ -46,7 +46,8 @@ namespace OHARBase {
 	}
 	
 	
-	/** The thread function doing most of the relevant work for receiving data. */
+	/** The thread function doing most of the relevant work for receiving data.
+	 @todo Reimplement using std networking. */
 	void NetworkReader::threadFunc() {
 		struct sockaddr_in my_name, cli_name;
 		ssize_t status;
@@ -114,9 +115,12 @@ namespace OHARBase {
 	 loop in the threadFunc(). */
 	void NetworkReader::stop() {
 		Log::getInstance().entry(TAG, "Stop the thread...");
-		running = false;
-		Log::getInstance().entry(TAG, "Shutting down the socket.");
-		shutdown(sockd, SHUT_RDWR);
+		if (running) {
+			running = false;
+			Log::getInstance().entry(TAG, "Shutting down the socket.");
+			shutdown(sockd, SHUT_RDWR);
+			threader.join();
+		}
 	}
 	
 	/** Allows another object to read the package object received from the network.

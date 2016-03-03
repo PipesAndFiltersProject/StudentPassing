@@ -38,13 +38,16 @@ namespace OHARBase {
 		delete config;
 		// Close and destroy the sending network object
 		if (netOutput) {
-			netOutput->stop();
+			if (netOutput->isRunning())
+				netOutput->stop();
 			delete netOutput;
 		}
 		if (netInput) {
-			netInput->stop();
+			if (netInput->isRunning())
+				netInput->stop();
 			delete netInput;
 		}
+		Log::getInstance().entry(TAG, "Destroyed ProcessorNode.");
 	}
 	
 	
@@ -224,7 +227,6 @@ namespace OHARBase {
 	 as well as the main thread loop running in the start() method. */
 	void ProcessorNode::stop() {
 		running = false;
-		condition.notify_all();
 		if (netInput) {
 			netInput->stop();
 		}
@@ -232,10 +234,9 @@ namespace OHARBase {
 		if (netOutput) {
 			netOutput->stop();
 		}
-		delete netOutput;
-		netOutput = nullptr;
-		delete netInput;
-		netInput = nullptr;
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+		condition.notify_all();
+		threader.join();
 	}
 	
 	
@@ -286,28 +287,35 @@ namespace OHARBase {
 	void ProcessorNode::threadFunc() {
 		while (running) {
 			Log::getInstance().entry(TAG, "Receive queue empty, waiting...");
-			std::unique_lock<std::mutex> ulock(guard);
-			while (!hasIncoming) {
-				condition.wait(ulock);
+
+			{
+				std::unique_lock<std::mutex> ulock(guard);
+				condition.wait(ulock, [this] { return this->hasIncoming || !running; });
 			}
-			Log::getInstance().entry(TAG, "Received data!");
-			if (netInput) {
-				Package package = netInput->read();
-				Log::getInstance().entry(TAG, "Received package %s : %s", package.getTypeAsString().c_str(), package.getData().c_str());
-				while (!package.isEmpty()) {
-					if (package.getType() == Package::Control && package.getData() == "shutdown") {
-						sendData(package);
-						std::this_thread::sleep_for(std::chrono::milliseconds(500));
-						running = false;
-						stop();
-						break;
-					} else {
-						passToHandlers(package);
-						package = netInput->read();
+			
+			if (running) {
+				Log::getInstance().entry(TAG, "Received data!");
+				if (netInput) {
+					guard.lock();
+					Package package = netInput->read();
+					guard.unlock();
+					Log::getInstance().entry(TAG, "Received package %s : %s", package.getTypeAsString().c_str(), package.getData().c_str());
+					while (!package.isEmpty()) {
+						if (package.getType() == Package::Control && package.getData() == "shutdown") {
+							sendData(package);
+							std::this_thread::sleep_for(std::chrono::milliseconds(500));
+							stop();
+							break;
+						} else {
+							passToHandlers(package);
+							if (netInput) {
+								package = netInput->read();
+							}
+						}
 					}
 				}
+				hasIncoming = false;
 			}
-			hasIncoming = false;
 		}
 		Log::getInstance().entry(TAG, "Exit thread in ProcessorNode!");
 	}

@@ -98,19 +98,17 @@ namespace OHARBase {
 					currentlySending += Package::separator() + p.getData();
 					Log::getInstance().entry(TAG, "Sending: %s", currentlySending.c_str());
 					msgQueue.pop();
+					guard.unlock();
 					sent = sendto(sockd, currentlySending.c_str(), currentlySending.length()+1, 0,
 									  (struct sockaddr*)&srv_addr, sizeof(srv_addr));
 					if (sent == -1) {
 						Log::getInstance().entry(TAG, "ERROR in sending data: %d", errno);
 					}
-					guard.unlock();
 				} else {
 					guard.unlock();
 					Log::getInstance().entry(TAG, "Send queue empty, waiting...");
 					std::unique_lock<std::mutex> ulock(guard);
-					while (msgQueue.empty()) {
-						condition.wait(ulock);
-					}
+					condition.wait(ulock, [this] {return !msgQueue.empty() || !running; } );
 				}
 			}
 			Log::getInstance().entry(TAG, "Shutting down the socket.");
@@ -135,9 +133,12 @@ namespace OHARBase {
 	
 	/** Stops the writer. In practise this ends the loop in the send thread. */
 	void NetworkWriter::stop() {
-		Log::getInstance().entry(TAG, "Shutting down the socket.");
-		running = false;
-		condition.notify_all();
+		Log::getInstance().entry(TAG, "In NetworkWriter::stop.");
+		if (running) {
+			running = false;
+			condition.notify_all();
+			threader.join();
+		}
 	}
 	
 	
