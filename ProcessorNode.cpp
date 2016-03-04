@@ -80,7 +80,7 @@ namespace OHARBase {
 		}
 		if (hostName.length() && hostName != "null") {
 			Log::getInstance().entry(TAG, "Setting input: %s", hostName.c_str());
-			netInput = new NetworkReader(hostName, *this);
+			netInput = new NetworkReader(hostName, *this, io_service);
 		}
 	}
 	
@@ -112,7 +112,7 @@ namespace OHARBase {
 		}
 		if (hostName.length() && hostName != "null") {
 			Log::getInstance().entry(TAG, "Setting input: %s:%d", hostName.c_str(), portNumber);
-			netInput = new NetworkReader(hostName, portNumber, *this);
+			netInput = new NetworkReader(hostName, portNumber, *this, io_service);
 		}
 	}
 	
@@ -195,6 +195,8 @@ namespace OHARBase {
 		running = true;
 		threader = std::thread(&ProcessorNode::threadFunc, this);
 		
+		new std::thread([this] {return io_service.run();} );
+		
 		std::string command;
 		while (running && ((netInput && netInput->isRunning()) || (netOutput && netOutput->isRunning())))
 		{
@@ -234,6 +236,7 @@ namespace OHARBase {
 		if (netOutput) {
 			netOutput->stop();
 		}
+		io_service.stop();
 		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 		condition.notify_all();
 		threader.join();

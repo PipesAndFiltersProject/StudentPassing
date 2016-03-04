@@ -14,6 +14,8 @@
 #include <list>
 #include <thread>
 
+#include <boost/asio.hpp>
+
 #include "NetworkReaderObserver.h"
 #include "Package.h"
 
@@ -128,6 +130,9 @@ namespace OHARBase {
 		NodeConfiguration * config;
 
 	private:
+		
+		boost::asio::io_service io_service;
+		
 		/** The name of the Node. */
 		std::string name;
 		/** The host name. */

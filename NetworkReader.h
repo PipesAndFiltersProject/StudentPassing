@@ -12,6 +12,9 @@
 #include <queue>
 #include <sys/socket.h>
 
+#include <boost/array.hpp>
+#include <boost/asio.hpp>
+
 #include "Networker.h"
 #include "Package.h"
 
@@ -28,8 +31,8 @@ namespace OHARBase {
 	 */
 	class NetworkReader : public Networker {
 	public:
-		NetworkReader(const std::string & hostName, NetworkReaderObserver & obs);
-		NetworkReader(const std::string & hostName, int portNumber, NetworkReaderObserver & obs);
+		NetworkReader(const std::string & hostName, NetworkReaderObserver & obs, boost::asio::io_service & io_s);
+		NetworkReader(const std::string & hostName, int portNumber, NetworkReaderObserver & obs, boost::asio::io_service & io_s);
 		~NetworkReader();
 		
 		virtual void start() override;
@@ -37,15 +40,23 @@ namespace OHARBase {
 		
 		Package read();
 		
-		void threadFunc();
+//		void threadFunc();
 		
 	private:
 		NetworkReader() = delete;
 		NetworkReader(const NetworkReader &) = delete;
+		NetworkReader(const NetworkReader &&) = delete;
 		const NetworkReader & operator =(const NetworkReader &) = delete;
 		
+		void handleReceive(const boost::system::error_code & error,
+								 std::size_t bytes_transferred);
 		
 	private:
+		
+		boost::asio::ip::udp::socket socket;
+		boost::asio::ip::udp::endpoint remote_endpoint;
+		boost::array<char, 2048> recv_buffer;
+
 		/** A queue containing the data as Packages, received from the network.
 		 As more data could be received as this node could handle at a time, a queue is necessary to hold
 		 the data so that the node can handle them without loosing any data. */
@@ -55,7 +66,7 @@ namespace OHARBase {
 		std::mutex guard;
 
 		/** The socket descriptor used to read data from network. */
-		int sockd;
+//		int sockd;
 		
 		/** The observer of the reader. When the reader receives data from the network,
 		 it will notify the reader about the data. The observer can then retrieve the data by using
@@ -69,7 +80,7 @@ namespace OHARBase {
 		 be used to tell other ProcessorNodes in other machines, what is the address of this node.
 		 @param buffer The buffer to where the IP address of the node is written to.
 		 @param buflen The length of the buffer. */
-		void getPrimaryIp(char* buffer, socklen_t buflen);
+//		void getPrimaryIp(char* buffer, socklen_t buflen);
 	};
 	
 	
