@@ -12,6 +12,10 @@
 #include <string>
 #include <thread>
 
+#include <boost/array.hpp>
+#include <boost/asio.hpp>
+
+
 namespace OHARBase {
 	
 	
@@ -27,12 +31,10 @@ namespace OHARBase {
 	 */
 	class Networker {
 	public:
-		Networker(const std::string & hostName);
-		Networker(const std::string & hostName, int portNumber);
+		Networker(const std::string & hostName, boost::asio::io_service & io_s);
+		Networker(const std::string & hostName, int portNumber, boost::asio::io_service & io_s);
 		virtual ~Networker();
 		
-		void setHost(const std::string & hostName);
-		void setPort(int p);
 		const std::string getHost() const;
 		int getPort() const;
 		
@@ -53,7 +55,10 @@ namespace OHARBase {
 		Networker() = delete;
 		Networker(const Networker &) = delete;
 		const Networker & operator =(const Networker &) = delete;
-		
+
+		void setHost(const std::string & hostName);
+		void setPort(int p);
+
 	protected:
 		/** Host name of the networker. If this is an object receiving data in the
 		 ProcessorNode, this is the local IP address of the machine. If this is a sending
@@ -70,8 +75,11 @@ namespace OHARBase {
 		 </ul>
 		 */
 		bool running;
-		/** The thread object within the context of which all networking code is executed.*/
-		std::thread threader;
+
+		/** The boost socket to use when sending or receiving data. */
+		std::unique_ptr<boost::asio::ip::udp::socket> socket;
+		/** The buffer where incoming or outgoing data is stored into. */
+		std::shared_ptr<boost::array<char, 2048>> buffer;
 	};
 	
 	

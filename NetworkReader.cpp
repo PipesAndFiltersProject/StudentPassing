@@ -31,11 +31,12 @@ namespace OHARBase {
 	NetworkReader::NetworkReader(const std::string & hostName,
 										  NetworkReaderObserver & obs,
 										  boost::asio::io_service & io_s)
-	:		Networker(hostName),
+	:		Networker(hostName, io_s),
 			observer(obs),
-			socket(io_s, boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), port)),
 			TAG("NetworkReader")
 	{
+		remote_endpoint = std::unique_ptr<boost::asio::ip::udp::endpoint>(new boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), port));
+		socket = std::unique_ptr<boost::asio::ip::udp::socket>(new boost::asio::ip::udp::socket(io_s, *remote_endpoint));
 	}
 	
 	/**
@@ -49,111 +50,68 @@ namespace OHARBase {
 										  int portNumber,
 										  NetworkReaderObserver & obs,
 										  boost::asio::io_service & io_s)
-	:		Networker(hostName, portNumber),
+	:		Networker(hostName, portNumber, io_s),
 			observer(obs),
-			socket(io_s, boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), port)),
 			TAG("NetworkReader")
 	{
+		remote_endpoint = std::unique_ptr<boost::asio::ip::udp::endpoint>(new boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), port));
+		socket = std::unique_ptr<boost::asio::ip::udp::socket>(new boost::asio::ip::udp::socket(io_s, *remote_endpoint));
 	}
 	
 	NetworkReader::~NetworkReader() {
-		
 	}
 	
 	
-	/** The thread function doing most of the relevant work for receiving data.
-	 @todo Reimplement using std networking. */
-//	void NetworkReader::threadFunc() {
-//		struct sockaddr_in my_name, cli_name;
-//		ssize_t status;
-//		socklen_t addrlen;
-//		const size_t MAX_BUF=2048;
-//		char buf[MAX_BUF];
-//		
-//		// Show local ip to user for connecting filters.
-//		getPrimaryIp(buf, sizeof(buf));
-//		Log::getInstance().entry(TAG, ">>>>> Local address is: %s:%d <<<<<", buf, getPort());
-//		// create a socket
-//		Log::getInstance().entry(TAG, "Start creating a socket");
-//		sockd = socket(AF_INET, SOCK_DGRAM, 0);
-//		if (sockd >= 0)
-//		{
-//			// server address
-//			Log::getInstance().entry(TAG, "Socket created, do bind().");
-//			my_name.sin_family = AF_INET;
-//			my_name.sin_addr.s_addr = INADDR_ANY;
-//			my_name.sin_port = htons(getPort());
-//			status = bind(sockd, (struct sockaddr*)&my_name, sizeof(my_name));
-//			if (status == 0) {
-//				Log::getInstance().entry(TAG, "bind() succeeded");
-//				addrlen = sizeof(cli_name);
-//				while (running) {
-//					// Start reading for data...
-//					Log::getInstance().entry(TAG, "Start reading for data...");
-//					status = recvfrom(sockd, buf, MAX_BUF, 0, (struct sockaddr*)&cli_name, &addrlen);
-//					Log::getInstance().entry(TAG, "Received data: %s", buf);
-//					std::string str(buf);
-//					if (str.length()>0) {
-//						Package p;
-//						if (p.parse(str)) {
-//							guard.lock();
-//							msgQueue.push(p);
-//							guard.unlock();
-//							// And when data has been received, notify the observer.
-//							observer.receivedData();
-//						}
-//					}
-//				}
-//			} else {
-//				Log::getInstance().entry(TAG, "bind() failed with code: %d ", status);
-//				running = false;
-//			}
-//			Log::getInstance().entry(TAG, "Shutting down the socket.");
-//			shutdown(sockd, SHUT_RDWR);
-//		} else {
-//			Log::getInstance().entry(TAG, "socket() failed with code: %d ", sockd);
-//			running = false;
-//		}
-//	}
 	
-	
-	/** Starts the reader. This basically creates a new thread which runs the threadFunc(). */
+	/** Starts the reader. If necessary, connects to the endpoint and then does
+	 asynchronous read. */
 	void NetworkReader::start() {
 		Log::getInstance().entry(TAG, "Start reading for data...");
 		running = true;
-		if (!socket.is_open()) {
+		if (!socket->is_open()) {
 			Log::getInstance().entry(TAG, "Opening read socket");
-			socket.connect(boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), port));
+			socket->connect(boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), port));
 		}
-		socket.async_receive_from(boost::asio::buffer(recv_buffer), remote_endpoint,
-										  boost::bind(&NetworkReader::handleReceive, this,
-												boost::asio::placeholders::error,
-												boost::asio::placeholders::bytes_transferred));
+		buffer->fill(0);
+		socket->async_receive_from(boost::asio::buffer(*buffer),
+											*remote_endpoint,
+											boost::bind(&NetworkReader::handleReceive, this,
+															boost::asio::placeholders::error,
+															boost::asio::placeholders::bytes_transferred));
+		
 		Log::getInstance().entry(TAG, "Async recv ongoing");
 	}
 	
-	void NetworkReader::handleReceive(const boost::system::error_code & error,
-												 std::size_t bytes_transferred) {
+	/** Handles the incoming data and possible errors. Places finally another read
+	 to the socket. 
+	 @param error Error code
+	 @param bytes_transferred How many bytes came in. */
+	void NetworkReader::handleReceive(const boost::system::error_code & error, std::size_t bytes_transferred) {
+		Log::getInstance().entry(TAG, "Async recv finished code: %d %s", error.value(), error.message().c_str());
 		if (!error || error == boost::asio::error::message_size)
 		{
-			std::string message(recv_buffer.data());
-			Log::getInstance().entry(TAG, "Received data: %s", message.c_str());
-			if (message.length()>0) {
-				Package p;
-				if (p.parse(message)) {
-					guard.lock();
-					msgQueue.push(p);
-					guard.unlock();
-					// And when data has been received, notify the observer.
-					observer.receivedData();
+			if (buffer->data()) {
+				std::string buf;
+				buf.resize(bytes_transferred);
+				buf.assign(buffer->begin(), bytes_transferred);
+				Log::getInstance().entry(TAG, "Received %d bytes data: %s", bytes_transferred, buf.c_str());
+				if (buf.length()>0) {
+					Package p;
+					if (p.parse(buf)) {
+						guard.lock();
+						msgQueue.push(p);
+						guard.unlock();
+						// And when data has been received, notify the observer.
+						observer.receivedData();
+					}
 				}
+			} else {
+				Log::getInstance().entry(TAG, "Async recv finished but NO data");
 			}
 			if (running)
 			{
 				start();
 			}
-		} else {
-			Log::getInstance().entry(TAG, "Async read error %d %s", error.value(), error.message().c_str());
 		}
 	}
 	
@@ -164,8 +122,8 @@ namespace OHARBase {
 		if (running) {
 			running = false;
 			Log::getInstance().entry(TAG, "Shutting down the socket.");
-			socket.cancel();
-			socket.close();
+			socket->cancel();
+			socket->close();
 		}
 	}
 	
@@ -186,34 +144,5 @@ namespace OHARBase {
 		return result;
 	}
 	
-	
-//	void NetworkReader::getPrimaryIp(char* buffer, socklen_t buflen)
-//	{
-//		assert(buflen >= 16);
-//		
-//		int sock = socket(AF_INET, SOCK_DGRAM, 0);
-//		assert(sock != -1);
-//		
-//		const char* kGoogleDnsIp = "8.8.8.8";
-//		uint16_t kDnsPort = 53;
-//		struct sockaddr_in serv;
-//		memset(&serv, 0, sizeof(serv));
-//		serv.sin_family = AF_INET;
-//		serv.sin_addr.s_addr = inet_addr(kGoogleDnsIp);
-//		serv.sin_port = htons(kDnsPort);
-//		
-//		int err = connect(sock, (const sockaddr*) &serv, sizeof(serv));
-//		assert(err != -1);
-//		
-//		sockaddr_in name;
-//		socklen_t namelen = sizeof(name);
-//		err = getsockname(sock, (sockaddr*) &name, &namelen);
-//		assert(err != -1);
-//		
-//		const char* p = inet_ntop(AF_INET, &name.sin_addr, buffer, buflen);
-//		assert(p);
-//		
-//		close(sock);
-//	}
-	
+
 } //namespace

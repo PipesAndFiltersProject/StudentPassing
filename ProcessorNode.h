@@ -164,6 +164,7 @@ namespace OHARBase {
 		/** Flag which is used to wait for incoming data. */
 		bool hasIncoming;
 		
+		std::string command;
 		/** Logging tag. */
 		const std::string TAG;
 	};

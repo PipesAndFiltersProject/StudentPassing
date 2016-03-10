@@ -43,10 +43,11 @@ bool StudentHandler::consume(OHARBase::Package & data) {
             OHARBase::Log::getInstance().entry(TAG, "Consuming data from network");
             StudentDataItem * containerStudent = findStudent(*newStudent);
             if (containerStudent) {
-               OHARBase::Log::getInstance().entry(TAG, "Student data from file, net merged now.");
+               OHARBase::Log::getInstance().entry(TAG, "Student data from file & net merged now.");
                newStudent->addFrom(*containerStudent);
                dataItems.remove(containerStudent);
                delete containerStudent;
+					node.passToNextHandlers(this, data);
             } else {
                OHARBase::Log::getInstance().entry(TAG, "No matching student data from file yet, hold it in container.");
                dataItems.push_back(newStudent->copy());
@@ -73,9 +74,9 @@ void StudentHandler::handleNewItem(OHARBase::DataItem * item) {
       OHARBase::Package p;
 		p.setType(OHARBase::Package::Data);
       p.setDataItem(newStudent);
+		dataItems.remove(containerStudent);
+		delete containerStudent;
       node.passToNextHandlers(this, p);
-      dataItems.remove(containerStudent);
-      delete containerStudent;
    } else {
       OHARBase::Log::getInstance().entry(TAG, "No matching student data from network, hold it in container.");
       dataItems.push_back(newStudent);

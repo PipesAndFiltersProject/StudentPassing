@@ -95,7 +95,7 @@ namespace OHARBase {
 		}
 		if (hostName.length() && hostName != "null") {
 			Log::getInstance().entry(TAG, "Setting output: %s", hostName.c_str());
-			netOutput = new NetworkWriter(hostName);
+			netOutput = new NetworkWriter(hostName, io_service);
 		}
 	}
 	
@@ -128,7 +128,7 @@ namespace OHARBase {
 		}
 		if (hostName.length() && hostName != "null") {
 			Log::getInstance().entry(TAG, "Setting output: %s:%d", hostName.c_str(), portNumber);
-			netOutput = new NetworkWriter(hostName, portNumber);
+			netOutput = new NetworkWriter(hostName, portNumber, io_service);
 		}
 	}
 	
@@ -197,29 +197,45 @@ namespace OHARBase {
 		
 		new std::thread([this] {return io_service.run();} );
 		
-		std::string command;
+		new std::thread([this] {
+			while (running) {
+				std::cout << "Enter command > ";
+				getline(std::cin, command);
+				if (command == "shutdown") {
+					running = false;
+				}
+				condition.notify_all();
+			}
+		});
+		
 		while (running && ((netInput && netInput->isRunning()) || (netOutput && netOutput->isRunning())))
 		{
-			std::cout << "Enter command > ";
-			getline(std::cin, command);
-			Package p;
-			if (command == "ping") {
-				p.setType(Package::Control);
-				p.setData(command);
-				sendData(p);
-			} else if (command == "readfile") {
-				if (dataFileName.length() > 0) {
-					Log::getInstance().entry(TAG, "Reading data file.. %s", dataFileName.c_str());
+			
+			{
+				std::unique_lock<std::mutex> ulock(guard);
+				condition.wait(ulock, [this] { return !running; });
+			}
+
+			if (running) {
+				Package p;
+				if (command == "ping") {
 					p.setType(Package::Control);
 					p.setData(command);
-					passToHandlers(p);
+					sendData(p);
+				} else if (command == "readfile") {
+					if (dataFileName.length() > 0) {
+						Log::getInstance().entry(TAG, "Reading data file.. %s", dataFileName.c_str());
+						p.setType(Package::Control);
+						p.setData(command);
+						passToHandlers(p);
+					}
+				} else if (command == "shutdown") {
+					p.setType(Package::Control);
+					p.setData(command);
+					sendData(p);
+					std::this_thread::sleep_for(std::chrono::milliseconds(500));
+					stop();
 				}
-			} else if (command == "shutdown") {
-				p.setType(Package::Control);
-				p.setData(command);
-				sendData(p);
-				std::this_thread::sleep_for(std::chrono::milliseconds(500));
-				stop();
 			}
 		}
 	}
@@ -307,7 +323,10 @@ namespace OHARBase {
 						if (package.getType() == Package::Control && package.getData() == "shutdown") {
 							sendData(package);
 							std::this_thread::sleep_for(std::chrono::milliseconds(500));
-							stop();
+							running = false;
+							condition.notify_all();
+							break;
+							// stop();
 							break;
 						} else {
 							passToHandlers(package);
@@ -349,7 +368,7 @@ namespace OHARBase {
 	void ProcessorNode::receivedData() {
 		Log::getInstance().entry(TAG, "Processor has incoming!");
 		hasIncoming = true;
-		condition.notify_one();
+		condition.notify_all();
 	}
 	
 	

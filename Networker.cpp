@@ -24,10 +24,11 @@ namespace OHARBase {
 	 <li>Remote address to send data to: 130.231.99.123:3344</li>
 	 </ul>
 	 */
-	Networker::Networker(const std::string & hostName)
-	: running(false)
+	Networker::Networker(const std::string & hostName, boost::asio::io_service & io_s)
+	:	running(false)
 	{
 		setHost(hostName);
+		buffer = std::shared_ptr<boost::array<char, 2048>>(new boost::array<char, 2048>());
 	}
 	
 	
@@ -42,9 +43,10 @@ namespace OHARBase {
 	 </ul>
 	 @param portNumber The port number to listen to (when receiving) or send to (when sending).
 	 */
-	Networker::Networker(const std::string & hostName, int portNumber)
+	Networker::Networker(const std::string & hostName, int portNumber, boost::asio::io_service & io_s)
 	: host(hostName), port(portNumber), running(false)
 	{
+		buffer = std::shared_ptr<boost::array<char, 2048>>(new boost::array<char, 2048>());
 	}
 	
 	Networker::~Networker() {

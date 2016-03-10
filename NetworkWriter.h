@@ -25,8 +25,8 @@ namespace OHARBase {
 	 */
 	class NetworkWriter : public Networker {
 	public:
-		NetworkWriter(const std::string & hostName);
-		NetworkWriter(const std::string & hostName, int portNumber);
+		NetworkWriter(const std::string & hostName, boost::asio::io_service & io_s);
+		NetworkWriter(const std::string & hostName, int portNumber, boost::asio::io_service & io_s);
 		~NetworkWriter();
 		
 		virtual void start() override;
@@ -41,6 +41,8 @@ namespace OHARBase {
 		
 		void threadFunc();
 		
+		void handleSend(const boost::system::error_code& error,
+							 std::size_t bytes_transferred);
 	private:
 		
 		/** Contains the data which is currenty being sent, in a string. */
@@ -52,8 +54,11 @@ namespace OHARBase {
 		/** The condition variable used to signal the sending thread that new data is available
 		 in the queue. */
 		std::condition_variable condition;
+		std::thread threader;
 		/** Logging tag. */
 		const std::string TAG;
+		
+		boost::asio::io_service & io_service;
 	};
 	
 }

@@ -12,9 +12,6 @@
 #include <queue>
 #include <sys/socket.h>
 
-#include <boost/array.hpp>
-#include <boost/asio.hpp>
-
 #include "Networker.h"
 #include "Package.h"
 
@@ -40,23 +37,16 @@ namespace OHARBase {
 		
 		Package read();
 		
-//		void threadFunc();
-		
 	private:
 		NetworkReader() = delete;
 		NetworkReader(const NetworkReader &) = delete;
 		NetworkReader(const NetworkReader &&) = delete;
 		const NetworkReader & operator =(const NetworkReader &) = delete;
 		
-		void handleReceive(const boost::system::error_code & error,
-								 std::size_t bytes_transferred);
+		void handleReceive(const boost::system::error_code & error, std::size_t bytes_transferred);
 		
 	private:
 		
-		boost::asio::ip::udp::socket socket;
-		boost::asio::ip::udp::endpoint remote_endpoint;
-		boost::array<char, 2048> recv_buffer;
-
 		/** A queue containing the data as Packages, received from the network.
 		 As more data could be received as this node could handle at a time, a queue is necessary to hold
 		 the data so that the node can handle them without loosing any data. */
@@ -64,9 +54,6 @@ namespace OHARBase {
 		/** A mutex guards the access to the queue so that many threads do not manipulate the
 		 queue simultaneously. */
 		std::mutex guard;
-
-		/** The socket descriptor used to read data from network. */
-//		int sockd;
 		
 		/** The observer of the reader. When the reader receives data from the network,
 		 it will notify the reader about the data. The observer can then retrieve the data by using
@@ -76,11 +63,9 @@ namespace OHARBase {
 		/** Tag for logging. */
 		std::string TAG;
 		
-		/** Utility method for getting the local IP address of the node. This address can then
-		 be used to tell other ProcessorNodes in other machines, what is the address of this node.
-		 @param buffer The buffer to where the IP address of the node is written to.
-		 @param buflen The length of the buffer. */
-//		void getPrimaryIp(char* buffer, socklen_t buflen);
+		/** The address to get data from or send to. */
+		std::unique_ptr<boost::asio::ip::udp::endpoint> remote_endpoint;
+
 	};
 	
 	
