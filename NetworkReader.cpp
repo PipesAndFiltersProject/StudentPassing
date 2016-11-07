@@ -35,8 +35,9 @@ namespace OHARBase {
 			observer(obs),
 			TAG("NetworkReader")
 	{
-		remote_endpoint = std::unique_ptr<boost::asio::ip::udp::endpoint>(new boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), port));
-		socket = std::unique_ptr<boost::asio::ip::udp::socket>(new boost::asio::ip::udp::socket(io_s, *remote_endpoint));
+        using namespace boost::asio::ip;
+		remote_endpoint = std::unique_ptr<udp::endpoint>(new boost::asio::ip::udp::endpoint(udp::v4(), port));
+		socket = std::unique_ptr<udp::socket>(new udp::socket(io_s, *remote_endpoint));
 	}
 	
 	/**
@@ -54,8 +55,9 @@ namespace OHARBase {
 			observer(obs),
 			TAG("NetworkReader")
 	{
-		remote_endpoint = std::unique_ptr<boost::asio::ip::udp::endpoint>(new boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), port));
-		socket = std::unique_ptr<boost::asio::ip::udp::socket>(new boost::asio::ip::udp::socket(io_s, *remote_endpoint));
+        using namespace boost::asio::ip;
+		remote_endpoint = std::unique_ptr<udp::endpoint>(new udp::endpoint(udp::v4(), port));
+		socket = std::unique_ptr<udp::socket>(new udp::socket(io_s, *remote_endpoint));
 	}
 	
 	NetworkReader::~NetworkReader() {
