@@ -30,6 +30,9 @@ namespace OHARBase {
 	
 	/** Destructor cleans all the internal objects of the Node when it is destroyed. */
 	ProcessorNode::~ProcessorNode() {
+      
+      //TODO: should call stop instead, then here destroy the objects?
+      
 		Log::getInstance().entry(TAG, "Destroying ProcessorNode.");
 		while (!handlers.empty()) {
 			delete handlers.front();
