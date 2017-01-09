@@ -204,10 +204,10 @@ namespace OHARBase {
 			while (running) {
 				std::cout << "Enter command > ";
 				getline(std::cin, command);
+            condition.notify_all();
 				if (command == "shutdown") {
-					running = false;
+               return; // running = false;
 				}
-				condition.notify_all();
 			}
 		});
 		
@@ -216,29 +216,31 @@ namespace OHARBase {
 			
 			{
 				std::unique_lock<std::mutex> ulock(guard);
-				condition.wait(ulock, [this] { return !running; });
-			}
-
-			if (running) {
-				Package p;
-				if (command == "ping") {
-					p.setType(Package::Control);
-					p.setData(command);
-					sendData(p);
-				} else if (command == "readfile") {
-					if (dataFileName.length() > 0) {
-						Log::getInstance().entry(TAG, "Reading data file.. %s", dataFileName.c_str());
-						p.setType(Package::Control);
-						p.setData(command);
-						passToHandlers(p);
-					}
-				} else if (command == "shutdown") {
-					p.setType(Package::Control);
-					p.setData(command);
-					sendData(p);
-					std::this_thread::sleep_for(std::chrono::milliseconds(500));
-					stop();
-				}
+				condition.wait(ulock, [this] {
+               std::string cmd = command;
+               Package p;
+               if (running) {
+                  if (cmd == "ping") {
+                     p.setType(Package::Control);
+                     p.setData(cmd);
+                     sendData(p);
+                  } else if (cmd == "readfile") {
+                     if (dataFileName.length() > 0) {
+                        Log::getInstance().entry(TAG, "Reading data file.. %s", dataFileName.c_str());
+                        p.setType(Package::Control);
+                        p.setData(cmd);
+                        passToHandlers(p);
+                     }
+                  } else if (cmd == "shutdown") {
+                     p.setType(Package::Control);
+                     p.setData(cmd);
+                     sendData(p);
+                     std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                     stop();
+                  }
+               }
+               return !running;
+            });
 			}
 		}
 	}
@@ -248,17 +250,23 @@ namespace OHARBase {
 	 as well as the main thread loop running in the start() method. */
 	void ProcessorNode::stop() {
 		running = false;
+      Log::getInstance().entry(TAG, "Stopping input...");
 		if (netInput) {
 			netInput->stop();
 		}
+      Log::getInstance().entry(TAG, "Stopped input, now stopping output...");
 		// Close and destroy the sending network object
 		if (netOutput) {
 			netOutput->stop();
 		}
+      Log::getInstance().entry(TAG, "Stopped output, stopping io service...");
 		io_service.stop();
 		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+      Log::getInstance().entry(TAG, "Notify all");
 		condition.notify_all();
-		threader.join();
+      Log::getInstance().entry(TAG, "...joining threads in stop");
+      // threader.join();
+      Log::getInstance().entry(TAG, "...exiting ProcessorNode::stop");
 	}
 	
 	

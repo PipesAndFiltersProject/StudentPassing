@@ -127,8 +127,9 @@ namespace OHARBase {
 			socket->cancel();
 			socket->close();
 			condition.notify_all();
-			threader.join();
+         threader.join();
 		}
+      Log::getInstance().entry(TAG, "Exiting NetworkWriter::stop.");
 	}
 	
 	
