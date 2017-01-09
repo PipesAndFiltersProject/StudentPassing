@@ -196,7 +196,9 @@ namespace OHARBase {
 		}
 		Log::getInstance().entry(TAG, "Start the receive handler thread...");
 		running = true;
-		threader = std::thread(&ProcessorNode::threadFunc, this);
+      if (netInput) {
+         threader = std::thread(&ProcessorNode::threadFunc, this);
+      }
 		
 		new std::thread([this] {return io_service.run();} );
 		
@@ -264,8 +266,6 @@ namespace OHARBase {
 		std::this_thread::sleep_for(std::chrono::milliseconds(500));
       Log::getInstance().entry(TAG, "Notify all");
 		condition.notify_all();
-      Log::getInstance().entry(TAG, "...joining threads in stop");
-      // threader.join();
       Log::getInstance().entry(TAG, "...exiting ProcessorNode::stop");
 	}
 	
@@ -334,11 +334,10 @@ namespace OHARBase {
 						if (package.getType() == Package::Control && package.getData() == "shutdown") {
 							sendData(package);
 							std::this_thread::sleep_for(std::chrono::milliseconds(500));
-							running = false;
-							condition.notify_all();
-							break;
-							// stop();
-							break;
+//							running = false;
+//							condition.notify_all();
+//							break;
+							stop();
 						} else {
 							passToHandlers(package);
 							if (netInput) {
