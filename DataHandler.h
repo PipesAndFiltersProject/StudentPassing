@@ -15,8 +15,8 @@ namespace OHARBase {
 	class Package;
 	
 	/**
-	 DataHandler is an abstract class for handling data arriving to a Filter.
-	 Datahandler consumes data packages the Filter (the ProcessorNode) offers to it.
+	 DataHandler is an abstract class for handling data arriving to a ProcessorNode.
+	 Datahandler consumes data packages the ProcessorNode offers to it.
 	 Create new data handlers by inheriting DataHandler and implementing the consume method.
 	 @author Antti Juustila
 	 */
