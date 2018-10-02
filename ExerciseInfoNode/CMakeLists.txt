@@ -1,0 +1,10 @@
+cmake_minimum_required(VERSION 3.0)
+project(ExerciseInfoNode)
+include_directories(/usr/local/include /usr/local/include/OHARBaseLayer /usr/local/include/OHARStudentLayer)
+set(CMAKE_CXX_FLAGS "-Wall -std=c++11 -pthread ${CMAKE_CXX_FLAGS}")
+add_executable(${PROJECT_NAME} EImain.cpp)
+find_library(BOOSTS boost_system REQUIRED)
+find_library(OHARBASE OHARBaseLayer NAMES libOHARBaseLayer.a REQUIRED)
+find_library(OHARSTUDENT OHARStudentLayer NAMES libOHARStudentlayer.a REQUIRED)
+target_link_libraries(${PROJECT_NAME} ${BOOSTS} ${OHARBASE} ${OHARSTUDENT})
+
