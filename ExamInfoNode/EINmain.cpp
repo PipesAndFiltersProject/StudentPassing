@@ -8,12 +8,12 @@
 
 #include <iostream>
 
-#include "ProcessorNode.h"
-#include "StudentDataItem.h"
-#include "StudentNetInputHandler.h"
-#include "StudentNetOutputHandler.h"
-#include "StudentHandler.h"
-#include "Log.h"
+#include <OHARBaseLayer/ProcessorNode.h>
+#include <OHARBaseLayer/Log.h>
+#include <OHARStudentLayer/StudentDataItem.h>
+#include <OHARStudentLayer/StudentNetInputHandler.h>
+#include <OHARStudentLayer/StudentNetOutputHandler.h>
+#include <OHARStudentLayer/StudentHandler.h>
 
 int main(int argc, const char * argv[])
 {

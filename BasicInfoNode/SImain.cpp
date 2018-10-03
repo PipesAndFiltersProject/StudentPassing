@@ -8,11 +8,12 @@
 
 #include <iostream>
 
-#include "ProcessorNode.h"
-#include "PlainStudentFileHandler.h"
-#include "StudentNetOutputHandler.h"
-#include "StudentDataItem.h"
-#include "Log.h"
+#include <OHARBaseLayer/ProcessorNode.h>
+#include <OHARBaseLayer/Log.h>
+
+#include <OHARStudentLayer/PlainStudentFileHandler.h>
+#include <OHARStudentLayer/StudentNetOutputHandler.h>
+#include <OHARStudentLayer/StudentDataItem.h>
 
 /**
  This is the application for the 1st Node in the student data handling application.
