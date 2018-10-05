@@ -36,25 +36,22 @@
  data elements from each other by using the tabulator. A student object is then
  created and send over the network to next Node which adds more elements to the
  basic student data.
- 
- @todo Implement configuration of the node by using a configuration file, the 
- name of which is given as a startup parameter to the app.
- @todo Implement a Configuration class for handling app config info, using existing
- classes like DataItem, DataFileReader.
- */
+*/
+
 int main(int argc, const char * argv[])
 {
 	using namespace OHARBase;
-	
-   Log::getInstance().entry("main", "Launching %s", argv[0]);
-   Log::getInstance().entry("main", "Arguments: %d", argc);
+   const static std::string TAG = "- main>";
+   
+   Log::get() << TAG << "Launching " << argv[0] << std::endl;
+   Log::get() << TAG << "Arguments: " << argc << ": ";
 	for (int arg = 0; arg < argc; arg++) {
-		std::cout << argv[arg] << std::endl;
+      Log::get() << argv[arg] << " ";
 	}
+   Log::get()<< " " << std::endl;
    std::string configFile;
    if (argc > 1) {
 		ProcessorNode * processor = new ProcessorNode(argv[0]);
-      Log::getInstance().entry("main", "arg1: %s", argv[1]);
       configFile = argv[1];
 		processor->configure(configFile);
 		
@@ -65,7 +62,8 @@ int main(int argc, const char * argv[])
 		processor->start();
 		delete processor;
 	} else {
-		std::cout << "No config file specified! Give config file name as startup parameter." << std::endl;
+      LOG_ERROR(TAG, "No config file specified! Give config file name as startup parameter.");
+      Log::get() << TAG << "No config file specified! Give config file name as startup parameter." << std::endl;
 	}
 	
    return 0;

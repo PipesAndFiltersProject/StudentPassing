@@ -21,13 +21,13 @@ int main(int argc, const char * argv[])
 {
 	using namespace OHARBase;
 	
-   Log::getInstance().entry("main", "Launching %s", argv[0]);
-   Log::getInstance().entry("main", "Arguments: %d", argc);
+   Log::get().entry("main", "Launching %s", argv[0]);
+   Log::get().entry("main", "Arguments: %d", argc);
 	
 	std::string configFile;
 	if (argc > 1) {
 		ProcessorNode * processor = new ProcessorNode(argv[0]);
-		Log::getInstance().entry("main", "arg1: %s", argv[1]);
+		Log::get().entry("main", "arg1: %s", argv[1]);
 		configFile = argv[1];
 		processor->configure(configFile);
 		

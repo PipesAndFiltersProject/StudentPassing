@@ -6,4 +6,5 @@ find_library(BOOSTS boost_system REQUIRED)
 find_library(OHARBASE OHARBaseLayer NAMES libOHARBaseLayer.a REQUIRED)
 find_library(OHARSTUDENT OHARStudentLayer NAMES libOHARStudentlayer.a REQUIRED)
 target_link_libraries(${PROJECT_NAME} ${BOOSTS} ${OHARBASE} ${OHARSTUDENT})
+set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS -Wl,-lpthread)
 
