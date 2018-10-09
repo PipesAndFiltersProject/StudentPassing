@@ -28,9 +28,9 @@ endif()
 
 # target_link_libraries(${PROJECT_NAME} ${OHARBASE} ${OHARSTUDENT})
 include_directories(${OHARBaseLayer_INCLUDE_DIR} ${OHARStudentLayer_INCLUDE_DIR} ${Boost_INCLUDE_DIR})
-target_link_libraries(${BIN_NAME} ${Boost_LIBRARIES} ${OHARBaseLayer_LIBRARIES} ${OHARStudentLayer_LIBRARIES})
-# target_link_libraries(${BIN_NAME} ${Boost_LIBRARIES} )
-# target_link_libraries(${BIN_NAME} OHARBaseLayer::OHARBaseLayer OHARStudentLayer::OHARStudentLayer)
+# target_link_libraries(${BIN_NAME} ${Boost_LIBRARIES} ${OHARBaseLayer_LIBRARIES} ${OHARStudentLayer_LIBRARIES})
+target_link_libraries(${BIN_NAME} ${Boost_LIBRARIES} )
+target_link_libraries(${BIN_NAME} OHARBaseLayer::OHARBaseLayer OHARStudentLayer::OHARStudentLayer)
 
 # target_include_directories(${BIN_NAME} PUBLIC
 #	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
