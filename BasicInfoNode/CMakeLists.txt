@@ -19,5 +19,4 @@ if (OHARStudentLayer_FOUND)
    message(STATUS "Student layer found")
 endif()
 
-target_include_directories(${BIN_NAME} )
 target_link_libraries(${BIN_NAME} ${Boost_LIBRARIES} OHARBaseLayer::OHARBaseLayer OHARStudentLayer::OHARStudentLayer)
