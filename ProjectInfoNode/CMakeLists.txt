@@ -1,10 +1,22 @@
 cmake_minimum_required(VERSION 3.0)
-project(ProjectInfoNode)
-set(CMAKE_CXX_FLAGS "-Wall -std=c++11 ${CMAKE_CXX_FLAGS}")
-add_executable(${PROJECT_NAME} EWINmain.cpp)
-find_library(BOOSTS boost_system REQUIRED)
-find_library(OHARBASE OHARBaseLayer NAMES libOHARBaseLayer.a REQUIRED)
-find_library(OHARSTUDENT OHARStudentLayer NAMES libOHARStudentlayer.a REQUIRED)
-target_include_directories(${PROJECT_NAME} PUBLIC /usr/local/include)
-target_link_libraries(${PROJECT_NAME} ${BOOSTS} ${OHARBASE} ${OHARSTUDENT})
+project(appProjectInfoNode)
+set(BIN_NAME ProjectInfoNode)
+add_executable(${BIN_NAME} EWINmain.cpp)
 
+set_target_properties(${BIN_NAME} PROPERTIES COMPILE_FLAGS -Wall)
+set_target_properties(${BIN_NAME} PROPERTIES LINK_FLAGS -Wl,-lpthread)
+set_target_properties(${BIN_NAME} PROPERTIES CXX_STANDARD 11)
+
+find_package(Boost 1.67.0 REQUIRED COMPONENTS system)
+
+find_package(OHARBaseLayer REQUIRED)
+   if (OHARBaseLayer_FOUND)
+   message(STATUS "Base layer found")
+endif()
+
+find_package(OHARStudentLayer REQUIRED)
+   if (OHARStudentLayer_FOUND)
+   message(STATUS "Student layer found")
+endif()
+
+target_link_libraries(${BIN_NAME} ${Boost_LIBRARIES} OHARBaseLayer::OHARBaseLayer OHARStudentLayer::OHARStudentLayer)
