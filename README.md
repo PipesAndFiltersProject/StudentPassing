@@ -19,7 +19,8 @@ Anyone wishing to know software architectural patterns and design patterns, lear
 
 Packages are sent to network and received from network.
 
-```{ 
+```
+{ 
   "package" : "package id as uuid",
   "type" : "command" | "data",
   "payload" : "command value" | "payload in json"
@@ -28,7 +29,8 @@ Packages are sent to network and received from network.
 
 Payload is in data files and within packages in payload element
 
-```{
+```
+{
    "id" : 12345,
    "name" : "Test Student",
    "studyprogram" : "TOL",
@@ -40,7 +42,8 @@ Payload is in data files and within packages in payload element
 ```
 And combined example (data sent/received):
 
-```{ 
+```
+{ 
   "package" : "package id as uuid",
   "type" : "data",
   "payload" :
@@ -58,7 +61,8 @@ And combined example (data sent/received):
 
 An example of a command:
 
-```{
+```
+{
   "package" : "package id as uuid",
   "type" : "command",
   "payload" : "shutdown"
