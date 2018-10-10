@@ -14,3 +14,50 @@ Anyone wishing to know software architectural patterns and design patterns, lear
 ### Who do I talk to? ###
 
 * Repo is owned by Antti Juustila (antti.juustila@oulu.fi)
+
+## Data structures
+
+Packages are sent to network and received from network.
+
+{ 
+  "package" : "package id as uuid",
+  "type" : "command" | "data",
+  "payload" : "command value" | "payload in json"
+}
+
+Payload is in data files and within packages in payload element
+
+{
+   "id" : 12345,
+   "name" : "Test Student",
+   "studyprogram" : "TOL",
+   "exampoints" : 15,
+   "exercisepoints" : 8,
+   "courseprojectpoints" : 16,
+   "grade" : 3
+}
+
+And combined example (data sent/received):
+
+{ 
+  "package" : "package id as uuid",
+  "type" : "data",
+  "payload" :
+     {
+        "id" : 12345,
+        "name" : "Test Student",
+        "studyprogram" : "TOL",
+        "exampoints" : 15,
+        "exercisepoints" : 8,
+        "courseprojectpoints" : 16,
+        "grade" : 3
+    }
+}
+
+An example of a command:
+
+{
+  "package" : "package id as uuid",
+  "type" : "command",
+  "payload" : "shutdown"
+}
