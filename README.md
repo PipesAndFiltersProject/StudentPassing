@@ -59,6 +59,7 @@ And combined example (data sent/received):
 }
 ```
 
+Note that in the data payload for student data, only student id is compulsory. Different nodes provide different data items, and combine data they received from previous node(s) to the data the node itself produces. This combined data is then sent ahead to the next node(s).
 An example of a command:
 
 ```
