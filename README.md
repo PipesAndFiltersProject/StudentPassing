@@ -19,7 +19,7 @@ Anyone wishing to learn about software architectural patterns and design pattern
 
 ## License ##
 
-(c) Antti Juustila 2014-2018. This software is licensed in GPL version 2 or later.
+(c) Antti Juustila 2014-2018. This software is licensed in [GPL version 2 or later](https://opensource.org/licenses/gpl-2.0.php).
 
 ## Data structures
 
