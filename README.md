@@ -1,6 +1,6 @@
 # README #
 
-Software architectures course exercise work implementation of a distributed software architecture and various design patterns in C++11. Includes datagram networking using boost asio.
+Software architectures course exercise work implementation of a distributed software architecture and various design patterns in C++11. Includes datagram networking using boost asio and JSON handling using nlohmann::json.
 
 This project has been created for eaducational purposes and may have no other value to anyone.
 
@@ -10,8 +10,9 @@ Anyone wishing to learn about software architectural patterns and design pattern
 
 ## How do I get set up? ##
 
-* Download the code, see the wiki page at https://wiki.oulu.fi/pages/viewpage.action?pageId=39977551
+* git clone the code,then see the wiki page at https://wiki.oulu.fi/pages/viewpage.action?pageId=39977551
 * Uses boost library and boost asio, which needs to be build into a library. Uses boost::system as lib, otherwise headers are enough.
+* StudentLayer uses nlohmann::json, and cmake file is configured to integrate to that library. Set up nlohmann::json using cmake or change cmake file accordingly.
 
 ## Who do I talk to? ##
 
