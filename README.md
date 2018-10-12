@@ -1,19 +1,25 @@
 # README #
 
-Software architectures course exercise work implementation of Pipes & Filters architecture and various design patterns in C++11. Includes datagram networking using boost asio.
+Software architectures course exercise work implementation of a distributed software architecture and various design patterns in C++11. Includes datagram networking using boost asio.
 
-## What is this repository for? ###
+This project has been created for eaducational purposes and may have no other value to anyone.
 
-Anyone wishing to know software architectural patterns and design patterns, learning C++.
+## What is this repository for? ##
 
-## How do I get set up? ###
+Anyone wishing to learn about software architectural patterns and design patterns, learning C++.
+
+## How do I get set up? ##
 
 * Download the code, see the wiki page at https://wiki.oulu.fi/pages/viewpage.action?pageId=39977551
 * Uses boost library and boost asio, which needs to be build into a library. Uses boost::system as lib, otherwise headers are enough.
 
-## Who do I talk to? ###
+## Who do I talk to? ##
 
 * Repo is owned by Antti Juustila (antti.juustila@oulu.fi)
+
+## License ##
+
+(c) Antti Juustila 2014-2018. This software is licensed in GPL version 2 or later.
 
 ## Data structures
 
