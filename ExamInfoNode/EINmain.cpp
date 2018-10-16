@@ -18,14 +18,14 @@
 int main(int argc, const char * argv[])
 {
 	using namespace OHARBase;
-	
-   Log::get().entry("main", "Launching %s", argv[0]);
-   Log::get().entry("main", "Arguments: %d", argc);
+   static const std::string TAG("ExamInf");
+   LOG_INFO(TAG, "Launching " << argv[0]);
+   LOG_INFO(TAG, "Arguments: " << argc);
 	
 	std::string configFile;
 	if (argc > 1) {
 		ProcessorNode * processor = new ProcessorNode(argv[0]);
-		Log::get().entry("main", "arg1: %s", argv[1]);
+      LOG_INFO(TAG, "arg1: " << argv[1]);
 		configFile = argv[1];
 		processor->configure(configFile);
 		
@@ -37,9 +37,9 @@ int main(int argc, const char * argv[])
 		processor->start();
 		delete processor;
 	} else {
-		std::cout << "No config file specified! Give config file name as startup parameter." << std::endl;
+      LOG_ERROR(TAG, "No config file specified! Give config file name as startup parameter.");
 	}
-
+   LOG_INFO(TAG, "--- Node closed ---");
 	return 0;
 }
 
