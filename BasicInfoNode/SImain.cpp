@@ -43,6 +43,8 @@ int main(int argc, const char * argv[])
 	using namespace OHARBase;
    const static std::string TAG = "StudInf";
    
+   Log::info(TAG) <<  "Launching " << argv[0];
+   
    LOG_INFO(TAG, "Launching " << argv[0]);
    LOG_INFO(TAG, "Arguments: " << argc);
 
