@@ -8,6 +8,7 @@ set_target_properties(${BIN_NAME} PROPERTIES LINK_FLAGS -Wl,-lpthread)
 set_target_properties(${BIN_NAME} PROPERTIES CXX_STANDARD 11)
 
 find_package(Boost 1.67.0 REQUIRED COMPONENTS system)
+find_package(nlohmann_json 3.2.0 REQUIRED)
 
 find_package(OHARBaseLayer REQUIRED)
 if (OHARBaseLayer_FOUND)
