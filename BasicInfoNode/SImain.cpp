@@ -7,6 +7,10 @@
 //
 
 #include <iostream>
+#include <memory>
+
+#include <g3log/g3log.hpp>
+#include <g3log/logworker.hpp>
 
 #include <OHARBaseLayer/ProcessorNode.h>
 #include <OHARBaseLayer/Log.h>
@@ -40,13 +44,16 @@
 
 int main(int argc, const char * argv[])
 {
+   std::unique_ptr<g3::LogWorker> logworker{ g3::LogWorker::createLogWorker() };
+   g3::initializeLogging(logworker.get());
+   
 	using namespace OHARBase;
    const static std::string TAG = "StudInf";
    
    Log::info(TAG) <<  "Launching " << argv[0];
    
-   LOG_INFO(TAG, "Launching " << argv[0]);
-   LOG_INFO(TAG, "Arguments: " << argc);
+   LOG(INFO) << TAG << "Launching " << argv[0];
+   LOG(INFO) << TAG << "Arguments: " << argc;
 
    std::string configFile;
    if (argc > 1) {
@@ -61,9 +68,9 @@ int main(int argc, const char * argv[])
 		processor->start();
 		delete processor;
 	} else {
-      LOG_ERROR(TAG, "No config file specified! Give config file name as startup parameter.");
+      LOG(WARNING) << TAG << "No config file specified! Give config file name as startup parameter.";
 	}
-   LOG_INFO(TAG, "--- Node closed ---");
+   LOG(INFO) << TAG << "--- Node closed ---";
    return 0;
 }
 

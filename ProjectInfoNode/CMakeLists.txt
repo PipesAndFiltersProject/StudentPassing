@@ -5,7 +5,7 @@ add_executable(${BIN_NAME} EWINmain.cpp)
 
 set_target_properties(${BIN_NAME} PROPERTIES COMPILE_FLAGS -Wall)
 set_target_properties(${BIN_NAME} PROPERTIES LINK_FLAGS -Wl,-lpthread)
-set_target_properties(${BIN_NAME} PROPERTIES CXX_STANDARD 11)
+set_target_properties(${BIN_NAME} PROPERTIES CXX_STANDARD 14)
 
 find_package(Boost 1.67.0 REQUIRED COMPONENTS system)
 find_package(nlohmann_json 3.2.0 REQUIRED)
