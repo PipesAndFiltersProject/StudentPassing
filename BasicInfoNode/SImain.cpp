@@ -50,9 +50,7 @@ int main(int argc, const char * argv[])
    
 	using namespace OHARBase;
    const static std::string TAG = "StudInf ";
-   
-   Log::info(TAG) <<  "Launching " << argv[0];
-   
+      
    LOG(INFO) << TAG << "Launching " << argv[0];
    LOG(INFO) << TAG << "Arguments: " << argc;
 
