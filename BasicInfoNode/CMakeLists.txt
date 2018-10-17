@@ -21,6 +21,6 @@ if (OHARStudentLayer_FOUND)
    message(STATUS "Student layer found")
 endif()
 
-target_include_directories(${BIN_NAME} PUBLIC {Boost_INCLUDE_DIRS} ${g3logger_INCLUDE_DIRS})
+target_include_directories(${BIN_NAME} PUBLIC {Boost_INCLUDE_DIRS} ${G3LOG_INCLUDE_DIRS})
 
-target_link_libraries(${BIN_NAME} ${Boost_LIBRARIES}  ${g3logger_LIBRARIES} OHARBaseLayer::OHARBaseLayer OHARStudentLayer::OHARStudentLayer)
+target_link_libraries(${BIN_NAME} ${Boost_LIBRARIES} ${G3LOG_LIBRARIES} OHARBaseLayer::OHARBaseLayer OHARStudentLayer::OHARStudentLayer)

@@ -9,6 +9,7 @@ set_target_properties(${BIN_NAME} PROPERTIES CXX_STANDARD 14)
 
 find_package(Boost 1.67.0 REQUIRED COMPONENTS system)
 find_package(nlohmann_json 3.2.0 REQUIRED)
+find_package(g3logger REQUIRED)
 
 find_package(OHARBaseLayer REQUIRED)
    if (OHARBaseLayer_FOUND)
@@ -20,4 +21,5 @@ find_package(OHARStudentLayer REQUIRED)
    message(STATUS "Student layer found")
 endif()
 
-target_link_libraries(${BIN_NAME} ${Boost_LIBRARIES} OHARBaseLayer::OHARBaseLayer OHARStudentLayer::OHARStudentLayer)
+target_include_directories(${BIN_NAME} PUBLIC {Boost_INCLUDE_DIRS} ${G3LOG_INCLUDE_DIRS})
+target_link_libraries(${BIN_NAME} ${Boost_LIBRARIES} ${G3LOG_LIBRARIES} OHARBaseLayer::OHARBaseLayer OHARStudentLayer::OHARStudentLayer)

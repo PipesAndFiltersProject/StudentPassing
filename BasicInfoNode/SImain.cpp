@@ -45,10 +45,11 @@
 int main(int argc, const char * argv[])
 {
    std::unique_ptr<g3::LogWorker> logworker{ g3::LogWorker::createLogWorker() };
+   auto defaultHandler = logworker->addDefaultLogger(argv[0], "./");
    g3::initializeLogging(logworker.get());
    
 	using namespace OHARBase;
-   const static std::string TAG = "StudInf";
+   const static std::string TAG = "StudInf ";
    
    Log::info(TAG) <<  "Launching " << argv[0];
    
