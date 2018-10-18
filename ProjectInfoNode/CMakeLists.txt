@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.0)
 project(appProjectInfoNode)
 set(BIN_NAME ProjectInfoNode)
+
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
+
 add_executable(${BIN_NAME} EWINmain.cpp)
 
 set_target_properties(${BIN_NAME} PROPERTIES COMPILE_FLAGS -Wall)

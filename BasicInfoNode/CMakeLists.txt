@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.0)
 project(appBasicInfoNode)
 set(BIN_NAME BasicInfoNode) 
+
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
+
 add_executable(${BIN_NAME} SImain.cpp)
 
 set_target_properties(${BIN_NAME} PROPERTIES COMPILE_FLAGS -Wall)
