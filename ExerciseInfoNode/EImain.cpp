@@ -8,8 +8,10 @@
 
 #include <iostream>
 
+#include <g3log/g3log.hpp>
+#include <g3log/logworker.hpp>
+
 #include <OHARBaseLayer/ProcessorNode.h>
-#include <OHARBaseLayer/Log.h>
 
 #include <OHARStudentLayer/StudentDataItem.h>
 #include <OHARStudentLayer/StudentNetInputHandler.h>
@@ -18,15 +20,19 @@
 
 int main(int argc, const char * argv[])
 {
+   std::unique_ptr<g3::LogWorker> logworker{ g3::LogWorker::createLogWorker() };
+   auto defaultHandler = logworker->addDefaultLogger(argv[0], "./");
+   g3::initializeLogging(logworker.get());
+   
 	using namespace OHARBase;
-   static const std::string TAG("ExerInf");
-   LOG_INFO(TAG, "Launching " << argv[0]);
-   LOG_INFO(TAG, "Arguments: " << argc);
+   static const std::string TAG("ExerInf ");
+   LOG(INFO) << TAG << "Launching " << argv[0];
+   LOG(INFO) << TAG << "Arguments: " << argc;
    
 	std::string configFile;
 	if (argc > 1) {
 		ProcessorNode * processor = new ProcessorNode(argv[0]);
-		LOG_INFO(TAG, "arg1: " << argv[1]);
+		LOG(INFO) << TAG << "arg1: " << argv[1];
       configFile = argv[1];
 		processor->configure(configFile);
 		
@@ -38,9 +44,9 @@ int main(int argc, const char * argv[])
 		processor->start();
 		delete processor;
 	} else {
-      LOG_ERROR(TAG, "No config file specified! Give config file name as startup parameter.");
+      LOG(WARNING) << TAG << "No config file specified! Give config file name as startup parameter.";
 	}
-   LOG_INFO(TAG, "--- Node closed ---");
+   LOG(INFO) << TAG << "--- Node closed ---";
    return 0;
 }
 
