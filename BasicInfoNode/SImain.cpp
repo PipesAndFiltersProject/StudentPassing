@@ -13,7 +13,6 @@
 #include <g3log/logworker.hpp>
 
 #include <OHARBaseLayer/ProcessorNode.h>
-#include <OHARBaseLayer/Log.h>
 
 #include <OHARStudentLayer/PlainStudentFileHandler.h>
 #include <OHARStudentLayer/StudentNetOutputHandler.h>
