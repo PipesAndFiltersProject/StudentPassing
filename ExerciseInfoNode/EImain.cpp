@@ -31,18 +31,24 @@ int main(int argc, const char * argv[])
    
 	std::string configFile;
 	if (argc > 1) {
-		ProcessorNode * processor = new ProcessorNode(argv[0]);
-		LOG(INFO) << TAG << "arg1: " << argv[1];
-      configFile = argv[1];
-		processor->configure(configFile);
-		
-		using namespace OHARStudent;
-		processor->addHandler(new StudentNetInputHandler());
-		processor->addHandler(new StudentHandler(*processor));
-		processor->addHandler(new StudentNetOutputHandler(*processor));
-		
-		processor->start();
-		delete processor;
+      try {
+         ProcessorNode * processor = new ProcessorNode(argv[0]);
+         LOG(INFO) << TAG << "arg1: " << argv[1];
+         configFile = argv[1];
+         processor->configure(configFile);
+         
+         using namespace OHARStudent;
+         processor->addHandler(new StudentNetInputHandler());
+         processor->addHandler(new StudentHandler(*processor));
+         processor->addHandler(new StudentNetOutputHandler(*processor));
+         
+         processor->start();
+         LOG(INFO) << TAG << "Returned from processor->start(), now deleting processor";
+         delete processor;
+         LOG(INFO) << TAG << "processor deleted";
+      } catch (std::exception & e) {
+         LOG(WARNING) << "EXCEPTION: " << e.what();
+      }
 	} else {
       LOG(WARNING) << TAG << "No config file specified! Give config file name as startup parameter.";
 	}
