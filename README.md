@@ -1,18 +1,37 @@
 # README #
 
-Software architectures course exercise work implementation of a distributed software architecture and various design patterns in C++11. Includes datagram networking using boost asio and JSON handling using nlohmann::json.
+Software architectures course exercise work StudentPassing is an implementation of a distributed software architecture and various design patterns in C++14. Includes datagram networking using boost asio and JSON for handling data received and sent between components.
 
 This project has been created for eaducational purposes and may have no other value to anyone.
 
 ## What is this repository for? ##
 
-Anyone wishing to learn about software architectural patterns and design patterns, learning C++.
+Anyone wishing to learn about software architectural patterns and design patterns, learning C++, creating and using libraries.
+
+## Dependencies ##
+
+Uses the following components:
+* boost 1.68.0 or newer. You need to build system library from boost. Build using c++14 (e.g. b2 cxxflags="-std=c++14".). For more information, see boost getting started guide.
+* nlohmann::json for parsing and creating JSON.
+* g3logger for logging events in all components of this software
+* cmake for building the system in different platforms and with different compilers.
 
 ## How do I get set up? ##
 
+You need to have the following tools:
+* git for cloning the project and for your own development work version control
+* cmake for creating environment specific makefiles
+* a C++ compiler/linker that support c++14
+* an IDE for developing or studying the code
+
+What to do:
 * git clone the code,then see the wiki page at https://wiki.oulu.fi/pages/viewpage.action?pageId=39977551
-* Uses boost library and boost asio, which needs to be build into a library. Uses boost::system as lib, otherwise headers are enough.
-* StudentLayer uses nlohmann::json, and cmake file is configured to integrate to that library. Set up nlohmann::json using cmake or change cmake file accordingly.
+* Uses boost system library and boost asio, which needs to be build into a library.
+  * use bootstrap.sh (.bat) to set up boost, then b2 cxxflags="-std=c++14" to build boost (system library at least), then b2 install to install boost headers and lib(s).
+* Uses nlohmann::json, and cmake file is configured to integrate to that library.
+  * Set up nlohmann::json using cmake or change cmake file accordingly.
+* Uses also g3logger, which needs to be build and package made (make package)
+* Check out the CMakeLists.txt files in different components of StudentPassing to see the package dependencies of the system. 
 
 ## Who do I talk to? ##
 
