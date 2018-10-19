@@ -10,8 +10,17 @@
     <height>300</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>Arial</family>
+    <pointsize>11</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Basic Information Dialog</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
   <widget class="QPushButton" name="startButton">
    <property name="geometry">
@@ -88,8 +97,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>401</width>
-     <height>261</height>
+     <width>400</width>
+     <height>230</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -98,8 +107,24 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+     <pointsize>11</pointsize>
+     <kerning>false</kerning>
+    </font>
+   </property>
+   <property name="acceptDrops">
+    <bool>false</bool>
+   </property>
+   <property name="autoFillBackground">
+    <bool>true</bool>
+   </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="sizeAdjustPolicy">
-    <enum>QAbstractScrollArea::AdjustToContents</enum>
+    <enum>QAbstractScrollArea::AdjustIgnored</enum>
    </property>
    <property name="undoRedoEnabled">
     <bool>false</bool>
@@ -112,7 +137,4 @@
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
  <connections/>
- <slots>
-  <slot>testingSlot()</slot>
- </slots>
 </ui>

@@ -21,7 +21,6 @@ BIDialog::BIDialog(QWidget *parent) :
 
     connect(ui->startButton, SIGNAL(clicked()), this, SLOT(onStartButtonClicked()));
     connect(ui->pingButton, SIGNAL(clicked()), this, SLOT(onPingButtonClicked()));
-    connect(this, SIGNAL(showMessage(QString)), ui->logView, SLOT(update()));
 
     node = new OHARBase::ProcessorNode("BasicInfo", this);
     using namespace OHARStudent;
@@ -106,6 +105,4 @@ void BIDialog::NodeEventHappened(EventType e, const std::string & message)
 void BIDialog::showMessage(const QString & message)
 {
     ui->logView->appendPlainText(message);
-    // emit()
-    ui->logView->update();
 }
