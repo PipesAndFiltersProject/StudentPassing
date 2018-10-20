@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>522</width>
     <height>300</height>
    </rect>
   </property>
@@ -79,7 +79,7 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>310</x>
+     <x>420</x>
      <y>260</y>
      <width>91</width>
      <height>32</height>
@@ -90,47 +90,13 @@
    </property>
   </widget>
   <widget class="QPlainTextEdit" name="logView">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>400</width>
-     <height>230</height>
+     <x>2</x>
+     <y>2</y>
+     <width>520</width>
+     <height>240</height>
     </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="font">
-    <font>
-     <family>Arial</family>
-     <pointsize>11</pointsize>
-     <kerning>false</kerning>
-    </font>
-   </property>
-   <property name="acceptDrops">
-    <bool>false</bool>
-   </property>
-   <property name="autoFillBackground">
-    <bool>true</bool>
-   </property>
-   <property name="locale">
-    <locale language="English" country="UnitedStates"/>
-   </property>
-   <property name="sizeAdjustPolicy">
-    <enum>QAbstractScrollArea::AdjustIgnored</enum>
-   </property>
-   <property name="undoRedoEnabled">
-    <bool>false</bool>
-   </property>
-   <property name="readOnly">
-    <bool>true</bool>
    </property>
   </widget>
  </widget>
