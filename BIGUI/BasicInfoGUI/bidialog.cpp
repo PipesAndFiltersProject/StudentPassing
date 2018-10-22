@@ -1,7 +1,7 @@
 #include "bidialog.h"
 #include "ui_bidialog.h"
-#include "QDir.h"
-#include "QMessageBox.h"
+#include "qdir.h"
+#include "qmessagebox.h"
 
 #include <g3log/g3log.hpp>
 
