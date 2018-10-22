@@ -11,6 +11,7 @@ Anyone wishing to learn about software architectural patterns and design pattern
 ## Dependencies ##
 
 Uses the following components:
+
 * boost 1.68.0 or newer. You need to build system library from boost. Build using c++14 (e.g. b2 cxxflags="-std=c++14".). For more information, see boost getting started guide.
 * nlohmann::json for parsing and creating JSON.
 * g3logger for logging events in all components of this software
@@ -19,12 +20,14 @@ Uses the following components:
 ## How do I get set up? ##
 
 You need to have the following tools:
+
 * git for cloning the project and for your own development work version control
 * cmake for creating environment specific makefiles
 * a C++ compiler/linker that support c++14
 * an IDE for developing or studying the code
 
 What to do:
+
 * git clone the code,then see the wiki page at https://wiki.oulu.fi/pages/viewpage.action?pageId=39977551
 * Uses boost system library and boost asio, which needs to be build into a library.
   * use bootstrap.sh (.bat) to set up boost, then b2 cxxflags="-std=c++14" to build boost (system library at least), then b2 install to install boost headers and lib(s).
