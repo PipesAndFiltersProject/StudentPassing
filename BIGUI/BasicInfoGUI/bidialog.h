@@ -34,6 +34,7 @@ private slots:
     void onPingButtonClicked();
     void onReadFileButtonClicked();
     void onShutdownButtonClicked();
+    void onAddStudentButtonClicked();
 
 private:
     Ui::BIDialog *ui;

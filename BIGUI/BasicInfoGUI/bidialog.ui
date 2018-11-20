@@ -180,7 +180,10 @@
      <string>Study program:</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="addStudentButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>426</x>
@@ -190,7 +193,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>&amp;Add</string>
+     <string>S&amp;end</string>
     </property>
    </widget>
   </widget>

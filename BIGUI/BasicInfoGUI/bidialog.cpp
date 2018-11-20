@@ -21,6 +21,7 @@ BIDialog::BIDialog(QWidget *parent) :
 
     connect(ui->startButton, SIGNAL(clicked()), this, SLOT(onStartButtonClicked()));
     connect(ui->pingButton, SIGNAL(clicked()), this, SLOT(onPingButtonClicked()));
+    connect(ui->addStudentButton, SIGNAL(clicked()), this, SLOT(onAddStudentButtonClicked()));
 
     node = new OHARBase::ProcessorNode("BasicInfo", this);
     using namespace OHARStudent;
@@ -47,6 +48,7 @@ void BIDialog::onStartButtonClicked()
             ui->pingButton->setDisabled(false);
             ui->readfileButton->setDisabled(false);
             ui->shutdownButton->setDisabled(false);
+            ui->addStudentButton->setDisabled(false);
             ui->startButton->setText("Stop");
         } else {
             LOG(INFO) << "Configuration failed, cannot start node.";
@@ -64,6 +66,7 @@ void BIDialog::onStartButtonClicked()
         ui->pingButton->setDisabled(true);
         ui->readfileButton->setDisabled(true);
         ui->shutdownButton->setDisabled(true);
+        ui->addStudentButton->setDisabled(true);
         ui->startButton->setText("Start");
     }
 }
@@ -87,6 +90,30 @@ void BIDialog::onReadFileButtonClicked()
 void BIDialog::onShutdownButtonClicked()
 {
 
+}
+
+void BIDialog::onAddStudentButtonClicked()
+{
+    QString id = ui->studentId->text();
+    if (id.length() > 0)
+    {
+        QString name = ui->studentName->text();
+        if (name.length() > 0)
+        {
+            QString studyProgram = ui->studyProgram->text();
+            if (studyProgram.length() > 0)
+            {
+                OHARBase::Package p;
+                p.setType((OHARBase::Package::Data));
+                std::shared_ptr<OHARStudent::StudentDataItem> student(new OHARStudent::StudentDataItem());
+                student->setId(id.toStdString());
+                student->setName(name.toStdString());
+                student->setStudyProgram(studyProgram.toStdString());
+                p.setDataItem(student.get());
+                node->passToHandlers(p);
+            }
+        }
+    }
 }
 
 bool BIDialog::configureNode()
