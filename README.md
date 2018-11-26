@@ -10,21 +10,16 @@ Anyone wishing to learn about software architectural patterns and design pattern
 
 ## Dependencies ##
 
-Uses the following components:
+Uses the following components and tools:
 
+* A C++ compiler supporting C++ 14.
 * boost 1.68.0 or newer. You need to build system library from boost. Build using c++14 (e.g. b2 cxxflags="-std=c++14".). For more information, see boost getting started guide.
-* nlohmann::json for parsing and creating JSON.
+* nlohmann::json for parsing and creating JSON. Also requires C++ v 14.
 * g3logger for logging events in all components of this software
+* Qt for the GUI apps using the other components of the system.
 * cmake for building the system in different platforms and with different compilers.
 
 ## How do I get set up? ##
-
-You need to have the following tools:
-
-* git for cloning the project and for your own development work version control
-* cmake for creating environment specific makefiles
-* a C++ compiler/linker that support c++14
-* an IDE for developing or studying the code
 
 What to do:
 
