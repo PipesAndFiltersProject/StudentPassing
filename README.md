@@ -14,8 +14,8 @@ Uses the following components and tools:
 
 * A C++ compiler supporting C++ 14.
 * boost 1.68.0 or newer. You need to build system library from boost. Build using c++14 (e.g. b2 cxxflags="-std=c++14".). For more information, see boost getting started guide.
-* nlohmann::json for parsing and creating JSON. Also requires C++ v 14.
-* g3logger for logging events in all components of this software
+* nlohmann::json for parsing and creating JSON.
+* g3logger for logging events in all components of this software. Also requires C++ v 14.
 * Qt for the GUI apps using the other components of the system.
 * cmake for building the system in different platforms and with different compilers.
 
