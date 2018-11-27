@@ -22,6 +22,7 @@ BIDialog::BIDialog(QWidget *parent) :
     connect(ui->startButton, SIGNAL(clicked()), this, SLOT(onStartButtonClicked()));
     connect(ui->pingButton, SIGNAL(clicked()), this, SLOT(onPingButtonClicked()));
     connect(ui->addStudentButton, SIGNAL(clicked()), this, SLOT(onAddStudentButtonClicked()));
+    connect(ui->readfileButton, SIGNAL(clicked()), this, SLOT(onReadFileButtonClicked()));
 
     node = new OHARBase::ProcessorNode("BasicInfo", this);
     using namespace OHARStudent;
@@ -45,11 +46,6 @@ void BIDialog::onStartButtonClicked()
             LOG(INFO) << "***** Configured, starting the node";
             showMessage("Node configured, starting the node.");
             node->start();
-            ui->pingButton->setDisabled(false);
-            ui->readfileButton->setDisabled(false);
-            ui->shutdownButton->setDisabled(false);
-            ui->addStudentButton->setDisabled(false);
-            ui->startButton->setText("Stop");
         } else {
             LOG(INFO) << "Configuration failed, cannot start node.";
             showMessage("Node configuration failed, cannot start node.");
@@ -63,11 +59,6 @@ void BIDialog::onStartButtonClicked()
         LOG(INFO) << "***** Stopping the node";
         node->stop();
         showMessage("Node stopped");
-        ui->pingButton->setDisabled(true);
-        ui->readfileButton->setDisabled(true);
-        ui->shutdownButton->setDisabled(true);
-        ui->addStudentButton->setDisabled(true);
-        ui->startButton->setText("Start");
     }
 }
 
@@ -76,15 +67,14 @@ void BIDialog::onPingButtonClicked()
 {
     showMessage("Sending ping");
     LOG(INFO) << "***** Ping button clicked";
-    OHARBase::Package p;
-    p.setType(OHARBase::Package::Control);
-    p.setData("ping");
-    node->sendData(p);
+    node->handleCommand("ping");
 }
 
 void BIDialog::onReadFileButtonClicked()
 {
-
+    QString dataFile = QDir::homePath() + "/StudentPassing/basic-student-info.txt";
+    showMessage("Reading data from " + dataFile);
+    node->handleCommand("readfile");
 }
 
 void BIDialog::onShutdownButtonClicked()
@@ -124,12 +114,30 @@ bool BIDialog::configureNode()
 }
 
 
-void BIDialog::NodeEventHappened(EventType e, const std::string & message)
+void BIDialog::NodeEventHappened(EventType /*event*/, const std::string & message)
 {
     showMessage(QString::fromStdString(message));
+    refreshUI();
 }
 
 void BIDialog::showMessage(const QString & message)
 {
     ui->logView->appendPlainText(message);
+}
+
+void BIDialog::refreshUI()
+{
+    if (node->isRunning()) {
+        ui->pingButton->setDisabled(false);
+        ui->readfileButton->setDisabled(false);
+        ui->shutdownButton->setDisabled(false);
+        ui->addStudentButton->setDisabled(false);
+        ui->startButton->setText("&Stop");
+    } else {
+        ui->pingButton->setDisabled(true);
+        ui->readfileButton->setDisabled(true);
+        ui->shutdownButton->setDisabled(true);
+        ui->addStudentButton->setDisabled(true);
+        ui->startButton->setText("&Start");
+    }
 }
