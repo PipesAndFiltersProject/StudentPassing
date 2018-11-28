@@ -29,6 +29,8 @@ private:
 
     void showMessage(const QString & message);
 
+    void refreshUI();
+
 private slots:
     void onStartButtonClicked();
     void onPingButtonClicked();
