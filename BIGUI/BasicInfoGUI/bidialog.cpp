@@ -84,6 +84,7 @@ void BIDialog::onShutdownButtonClicked()
 
 void BIDialog::onAddStudentButtonClicked()
 {
+     LOG(INFO) << "***** Add student button clicked";
     QString id = ui->studentId->text();
     if (id.length() > 0)
     {
@@ -93,13 +94,17 @@ void BIDialog::onAddStudentButtonClicked()
             QString studyProgram = ui->studyProgram->text();
             if (studyProgram.length() > 0)
             {
+                LOG(INFO) << "Creating a data Package to send...";
                 OHARBase::Package p;
                 p.setType((OHARBase::Package::Data));
+                LOG(INFO) << "Creating a student object...";
                 std::shared_ptr<OHARStudent::StudentDataItem> student(new OHARStudent::StudentDataItem());
                 student->setId(id.toStdString());
                 student->setName(name.toStdString());
                 student->setStudyProgram(studyProgram.toStdString());
+                LOG(INFO) << "Handing over the student to the Package...";
                 p.setDataItem(student.get());
+                LOG(INFO) << "Telling node to pass to handlers";
                 node->passToHandlers(p);
             }
         }
