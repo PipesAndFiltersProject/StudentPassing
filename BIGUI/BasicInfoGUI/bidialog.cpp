@@ -77,7 +77,7 @@ void BIDialog::onPingButtonClicked()
 
 void BIDialog::onReadFileButtonClicked()
 {
-    //TODO: get data file name from node configuration.
+    //TODO: add a data path property to ProcessorNode and set it from here. ProcessorNode uses this path for all data files.
     QString dataFile = QDir::homePath() + "/StudentPassing/basic-student-info.txt";
     showMessage("Reading data from " + dataFile);
     node->handleCommand("readfile");
