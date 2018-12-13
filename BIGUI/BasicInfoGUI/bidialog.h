@@ -41,6 +41,7 @@ private slots:
 private:
     Ui::BIDialog *ui;
     OHARBase::ProcessorNode * node;
+    QString config;
 };
 
 #endif // BIDIALOG_H

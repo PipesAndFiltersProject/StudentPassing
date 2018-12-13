@@ -24,6 +24,11 @@ BIDialog::BIDialog(QWidget *parent) :
     connect(ui->addStudentButton, SIGNAL(clicked()), this, SLOT(onAddStudentButtonClicked()));
     connect(ui->readfileButton, SIGNAL(clicked()), this, SLOT(onReadFileButtonClicked()));
 
+    if (QApplication::arguments().count() > 1) {
+        config = QApplication::arguments().at(1);
+    }
+    //TODO: modify UI element names based on configuration.
+
     node = new OHARBase::ProcessorNode("BasicInfo", this);
     using namespace OHARStudent;
     node->addHandler(new PlainStudentFileHandler(*node));
@@ -72,6 +77,7 @@ void BIDialog::onPingButtonClicked()
 
 void BIDialog::onReadFileButtonClicked()
 {
+    //TODO: get data file name from node configuration.
     QString dataFile = QDir::homePath() + "/StudentPassing/basic-student-info.txt";
     showMessage("Reading data from " + dataFile);
     node->handleCommand("readfile");
@@ -94,6 +100,7 @@ void BIDialog::onAddStudentButtonClicked()
             QString studyProgram = ui->studyProgram->text();
             if (studyProgram.length() > 0)
             {
+                //TODO: set proper student data items based on configuration.
                 LOG(INFO) << "Creating a data Package to send...";
                 OHARBase::Package p;
                 p.setType((OHARBase::Package::Data));
@@ -113,9 +120,8 @@ void BIDialog::onAddStudentButtonClicked()
 
 bool BIDialog::configureNode()
 {
-    if (QApplication::arguments().count() > 1) {
-        QString param = QApplication::arguments().at(1) + ".txt";
-        QString configFile = QDir::homePath() + "/StudentPassing/" + param;
+    if (config.length() > 0) {
+        QString configFile = QDir::homePath() + "/StudentPassing/" + config + ".txt";
         showMessage("Reading configuration from " + configFile);
         return node->configure(configFile.toStdString());
     } else {
