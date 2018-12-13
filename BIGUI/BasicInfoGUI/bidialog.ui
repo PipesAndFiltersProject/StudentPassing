@@ -205,6 +205,17 @@
   <zorder>logView</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>startButton</tabstop>
+  <tabstop>pingButton</tabstop>
+  <tabstop>readfileButton</tabstop>
+  <tabstop>shutdownButton</tabstop>
+  <tabstop>studentId</tabstop>
+  <tabstop>studentName</tabstop>
+  <tabstop>studyProgram</tabstop>
+  <tabstop>addStudentButton</tabstop>
+  <tabstop>logView</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
