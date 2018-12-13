@@ -13,6 +13,9 @@ int main(int argc, char *argv[])
     g3::initializeLogging(logworker.get());
 
     LOG(INFO) << "Launching Qt GUI app node for StudentPassing";
+    if (argc > 1) {
+        LOG(INFO) << "Startup parameter is: " << argv[1];
+    }
     QApplication a(argc, argv);
     BIDialog w;
     w.show();

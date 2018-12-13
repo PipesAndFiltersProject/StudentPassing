@@ -113,9 +113,15 @@ void BIDialog::onAddStudentButtonClicked()
 
 bool BIDialog::configureNode()
 {
-    QString configFile = QDir::homePath() + "/StudentPassing/BasicInfoConfig.txt";
-    showMessage("Reading configuration from " + configFile);
-    return node->configure(configFile.toStdString());
+    if (QApplication::arguments().count() > 1) {
+        QString param = QApplication::arguments().at(1) + ".txt";
+        QString configFile = QDir::homePath() + "/StudentPassing/" + param;
+        showMessage("Reading configuration from " + configFile);
+        return node->configure(configFile.toStdString());
+    } else {
+        showMessage("No configuration file name in startup parameters!");
+        return false;
+    }
 }
 
 
