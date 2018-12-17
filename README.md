@@ -59,7 +59,7 @@ Payload is in data files and within packages in payload element
    "name" : "Test Student",
    "studyprogram" : "TOL",
    "exampoints" : 15,
-   "exercisepoints" : 8,
+   "exercisepoints" : [8,10,3,1,8,0,11],
    "courseprojectpoints" : 16,
    "grade" : 3
 }
@@ -76,7 +76,7 @@ And combined example (data sent/received):
         "name" : "Test Student",
         "studyprogram" : "TOL",
         "exampoints" : 15,
-        "exercisepoints" : 8,
+        "exercisepoints" : [8,10,3,1,8,0,11],
         "courseprojectpoints" : 16,
         "grade" : 3
     }
