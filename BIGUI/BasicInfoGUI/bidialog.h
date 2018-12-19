@@ -25,7 +25,7 @@ public:
     void NodeEventHappened(EventType e, const std::string & message);
 
 private:
-    bool configureApp();
+    void configureApp();
     bool configureNode();
 
     void showMessage(const QString & message);

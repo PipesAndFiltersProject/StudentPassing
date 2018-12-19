@@ -31,10 +31,8 @@ BIDialog::BIDialog(QWidget *parent) :
     if (QApplication::arguments().count() > 1) {
         config = QApplication::arguments().at(1);
     }
-    //TODO: modify UI element names based on configuration.
 
     configureApp();
-    refreshUI();
 }
 
 BIDialog::~BIDialog()
@@ -44,33 +42,12 @@ BIDialog::~BIDialog()
 }
 
 
-bool BIDialog::configureApp()
+void BIDialog::configureApp()
 {
-    bool success = false;
-
     node = new OHARBase::ProcessorNode(config.toStdString(), this);
-    setWindowTitle(config);
-    using namespace OHARStudent;
-    if (config =="BasicInfoConfig") {
-        node->addHandler(new PlainStudentFileHandler(*node));
-        node->addHandler(new StudentNetOutputHandler(*node));
-        success = true;
-    } else if (config == "ExerciseInfoConfig") {
-        node->addHandler(new StudentNetInputHandler());
-        node->addHandler(new StudentHandler(*node));
-        node->addHandler(new StudentNetOutputHandler(*node));
-        success = true;
-    } else if (config == "ExamInfoConfig") {
-        node->addHandler(new StudentNetInputHandler());
-        node->addHandler(new StudentHandler(*node));
-        node->addHandler(new StudentNetOutputHandler(*node));
-        success = true;
-    } else if (config == "ProjectInfoConfig") {
-        node->addHandler(new StudentNetInputHandler());
-        node->addHandler(new StudentHandler(*node));
-        node->addHandler(new GradingHandler(*node));
-        node->addHandler(new StudentWriterHandler(*node));
-        success = true;
+    if (configureNode()) {
+        setWindowTitle(config);
+        //TODO: modify UI element names based on configuration.
     } else {
         delete node;
         node = nullptr;
@@ -80,7 +57,7 @@ bool BIDialog::configureApp()
         box.setText("Use a configuration file for the node. See user guide for details.");
         box.exec();
     }
-    return success;
+    refreshUI();
 }
 
 void BIDialog::onStartButtonClicked()
@@ -149,14 +126,39 @@ void BIDialog::onAddDataButtonClicked()
 
 bool BIDialog::configureNode()
 {
+    bool success = false;
     if (config.length() > 0) {
         QString configFile = QDir::homePath() + "/StudentPassing/" + config + ".txt";
         showMessage("Reading configuration from " + configFile);
-        return node->configure(configFile.toStdString());
+        if (node->configure(configFile.toStdString())) {
+            using namespace OHARStudent;
+            if (config =="BasicInfoConfig") {
+                node->addHandler(new PlainStudentFileHandler(*node));
+                node->addHandler(new StudentNetOutputHandler(*node));
+                success = true;
+            } else if (config == "ExerciseInfoConfig") {
+                node->addHandler(new StudentNetInputHandler());
+                node->addHandler(new StudentHandler(*node));
+                node->addHandler(new StudentNetOutputHandler(*node));
+                success = true;
+            } else if (config == "ExamInfoConfig") {
+                node->addHandler(new StudentNetInputHandler());
+                node->addHandler(new StudentHandler(*node));
+                node->addHandler(new StudentNetOutputHandler(*node));
+                success = true;
+            } else if (config == "ProjectInfoConfig") {
+                node->addHandler(new StudentNetInputHandler());
+                node->addHandler(new StudentHandler(*node));
+                node->addHandler(new GradingHandler(*node));
+                node->addHandler(new StudentWriterHandler(*node));
+                success = true;
+            }
+
+        }
     } else {
         showMessage("No configuration file name in startup parameters!");
-        return false;
     }
+    return success;
 }
 
 
