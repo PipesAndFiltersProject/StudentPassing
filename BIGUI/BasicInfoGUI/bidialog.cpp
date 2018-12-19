@@ -8,7 +8,11 @@
 #include <OHARBaseLayer/ProcessorNode.h>
 
 #include <OHARStudentLayer/PlainStudentFileHandler.h>
+#include <OHARStudentLayer/StudentNetInputHandler.h>
 #include <OHARStudentLayer/StudentNetOutputHandler.h>
+#include <OHARStudentLayer/StudentHandler.h>
+#include <OHARStudentLayer/GradingHandler.h>
+#include <OHARStudentLayer/StudentWriterHandler.h>
 #include <OHARStudentLayer/StudentDataItem.h>
 
 
@@ -21,7 +25,7 @@ BIDialog::BIDialog(QWidget *parent) :
 
     connect(ui->startButton, SIGNAL(clicked()), this, SLOT(onStartButtonClicked()));
     connect(ui->pingButton, SIGNAL(clicked()), this, SLOT(onPingButtonClicked()));
-    connect(ui->addStudentButton, SIGNAL(clicked()), this, SLOT(onAddStudentButtonClicked()));
+    connect(ui->addStudentButton, SIGNAL(clicked()), this, SLOT(onAddDataButtonClicked()));
     connect(ui->readfileButton, SIGNAL(clicked()), this, SLOT(onReadFileButtonClicked()));
 
     if (QApplication::arguments().count() > 1) {
@@ -29,10 +33,7 @@ BIDialog::BIDialog(QWidget *parent) :
     }
     //TODO: modify UI element names based on configuration.
 
-    node = new OHARBase::ProcessorNode("BasicInfo", this);
-    using namespace OHARStudent;
-    node->addHandler(new PlainStudentFileHandler(*node));
-    node->addHandler(new StudentNetOutputHandler(*node));
+    configureApp();
 }
 
 BIDialog::~BIDialog()
@@ -42,28 +43,55 @@ BIDialog::~BIDialog()
 }
 
 
+bool BIDialog::configureApp()
+{
+    bool success = false;
+
+    node = new OHARBase::ProcessorNode(config.toStdString(), this);
+    using namespace OHARStudent;
+    if (config =="BasicInfoConfig") {
+        node->addHandler(new PlainStudentFileHandler(*node));
+        node->addHandler(new StudentNetOutputHandler(*node));
+        success = true;
+    } else if (config == "ExerciseInfoConfig") {
+        node->addHandler(new StudentNetInputHandler());
+        node->addHandler(new StudentHandler(*node));
+        node->addHandler(new StudentNetOutputHandler(*node));
+        success = true;
+    } else if (config == "ExamInfoConfig") {
+        node->addHandler(new StudentNetInputHandler());
+        node->addHandler(new StudentHandler(*node));
+        node->addHandler(new StudentNetOutputHandler(*node));
+        success = true;
+    } else if (config == "ProjectInfoConfig") {
+        node->addHandler(new StudentNetInputHandler());
+        node->addHandler(new StudentHandler(*node));
+        node->addHandler(new GradingHandler(*node));
+        node->addHandler(new StudentWriterHandler(*node));
+        success = true;
+    } else {
+        delete node;
+        node = nullptr;
+        showMessage("Unknown configuration, cannot configure node!");
+        QMessageBox box;
+        box.setText("Use a configuration file for the node!");
+        box.exec();
+    }
+    return success;
+}
+
 void BIDialog::onStartButtonClicked()
 {
     LOG(INFO) << "Start/stop button clicked.";
-    if (!node->isRunning()) {
-        if (configureNode())
-        {
-            LOG(INFO) << "***** Configured, starting the node";
-            showMessage("Node configured, starting the node.");
+    if (node != nullptr) {
+        if (!node->isRunning()) {
+            showMessage("Starting the node.");
             node->start();
         } else {
-            LOG(INFO) << "Configuration failed, cannot start node.";
-            showMessage("Node configuration failed, cannot start node.");
-            QMessageBox box;
-            box.setText("Create configuration file for the node first!");
-            box.exec();
+            showMessage("Stopping the node...");
+            node->stop();
+            showMessage("Node stopped");
         }
-
-
-    } else {
-        LOG(INFO) << "***** Stopping the node";
-        node->stop();
-        showMessage("Node stopped");
     }
 }
 
@@ -71,7 +99,6 @@ void BIDialog::onStartButtonClicked()
 void BIDialog::onPingButtonClicked()
 {
     showMessage("Sending ping");
-    LOG(INFO) << "***** Ping button clicked";
     node->handleCommand("ping");
 }
 
@@ -86,9 +113,9 @@ void BIDialog::onShutdownButtonClicked()
 
 }
 
-void BIDialog::onAddStudentButtonClicked()
+void BIDialog::onAddDataButtonClicked()
 {
-     LOG(INFO) << "***** Add student button clicked";
+    LOG(INFO) << "***** Add student button clicked";
     QString id = ui->studentId->text();
     if (id.length() > 0)
     {
@@ -99,6 +126,7 @@ void BIDialog::onAddStudentButtonClicked()
             if (studyProgram.length() > 0)
             {
                 //TODO: set proper student data items based on configuration.
+                //TODO: create a json object, not a student object.
                 LOG(INFO) << "Creating a data Package to send...";
                 OHARBase::Package p;
                 p.setType((OHARBase::Package::Data));
@@ -137,6 +165,7 @@ void BIDialog::NodeEventHappened(EventType /*event*/, const std::string & messag
 
 void BIDialog::showMessage(const QString & message)
 {
+    LOG(INFO) << "User message: " << message.toStdString();
     ui->logView->appendPlainText(message);
 }
 

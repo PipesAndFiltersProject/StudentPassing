@@ -25,6 +25,7 @@ public:
     void NodeEventHappened(EventType e, const std::string & message);
 
 private:
+    bool configureApp();
     bool configureNode();
 
     void showMessage(const QString & message);
@@ -36,7 +37,7 @@ private slots:
     void onPingButtonClicked();
     void onReadFileButtonClicked();
     void onShutdownButtonClicked();
-    void onAddStudentButtonClicked();
+    void onAddDataButtonClicked();
 
 private:
     Ui::BIDialog *ui;
