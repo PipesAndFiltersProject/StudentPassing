@@ -34,6 +34,7 @@ BIDialog::BIDialog(QWidget *parent) :
     //TODO: modify UI element names based on configuration.
 
     configureApp();
+    refreshUI();
 }
 
 BIDialog::~BIDialog()
@@ -48,6 +49,7 @@ bool BIDialog::configureApp()
     bool success = false;
 
     node = new OHARBase::ProcessorNode(config.toStdString(), this);
+    setWindowTitle(config);
     using namespace OHARStudent;
     if (config =="BasicInfoConfig") {
         node->addHandler(new PlainStudentFileHandler(*node));
@@ -72,9 +74,10 @@ bool BIDialog::configureApp()
     } else {
         delete node;
         node = nullptr;
+        this->setWindowTitle("No configuration provided");
         showMessage("Unknown configuration, cannot configure node!");
         QMessageBox box;
-        box.setText("Use a configuration file for the node!");
+        box.setText("Use a configuration file for the node. See user guide for details.");
         box.exec();
     }
     return success;
@@ -171,17 +174,22 @@ void BIDialog::showMessage(const QString & message)
 
 void BIDialog::refreshUI()
 {
-    if (node->isRunning()) {
-        ui->pingButton->setDisabled(false);
-        ui->readfileButton->setDisabled(false);
-        ui->shutdownButton->setDisabled(false);
-        ui->addStudentButton->setDisabled(false);
-        ui->startButton->setText("&Stop");
+    if (node) {
+        ui->startButton->setDisabled(false);
+        if (node->isRunning()) {
+            ui->pingButton->setDisabled(false);
+            ui->readfileButton->setDisabled(false);
+            ui->shutdownButton->setDisabled(false);
+            ui->addStudentButton->setDisabled(false);
+            ui->startButton->setText("&Stop");
+        } else {
+            ui->pingButton->setDisabled(true);
+            ui->readfileButton->setDisabled(true);
+            ui->shutdownButton->setDisabled(true);
+            ui->addStudentButton->setDisabled(true);
+            ui->startButton->setText("&Start");
+        }
     } else {
-        ui->pingButton->setDisabled(true);
-        ui->readfileButton->setDisabled(true);
-        ui->shutdownButton->setDisabled(true);
-        ui->addStudentButton->setDisabled(true);
-        ui->startButton->setText("&Start");
+        ui->startButton->setDisabled(true);
     }
 }
