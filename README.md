@@ -55,7 +55,7 @@ Payload is in data files and within packages in payload element
 
 ```JSON
 {
-   "id" : 12345,
+   "id" : "12345",
    "name" : "Test Student",
    "studyprogram" : "TOL",
    "exampoints" : 15,
@@ -72,7 +72,7 @@ And combined example (data sent/received):
   "type" : "data",
   "payload" :
      {
-        "id" : 12345,
+        "id" : "12345",
         "name" : "Test Student",
         "studyprogram" : "TOL",
         "exampoints" : 15,
