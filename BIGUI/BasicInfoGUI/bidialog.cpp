@@ -111,52 +111,51 @@ void BIDialog::onShutdownButtonClicked()
 
 void BIDialog::onAddDataButtonClicked()
 {
+    bool willSend = false;
+
     LOG(INFO) << "***** Add data button clicked";
     QString id = ui->studentId->text();
     if (id.length() > 0)
     {
+        LOG(INFO) << "Creating a data Package to send...";
+        OHARBase::Package p;
+        p.setType((OHARBase::Package::Data));
+        LOG(INFO) << "Creating a json student structure with proper elements...";
+        std::string json("{ \"id\" : \"");
+        json += id.toStdString() + "\", ";
+
         QString element2ndText = ui->edit2nd->text();
         if (element2ndText.length() > 0)
         {
-            QString studyProgram = ui->studyProgram->text();
-            if (studyProgram.length() > 0)
-            {
-                LOG(INFO) << "Creating a data Package to send...";
-                OHARBase::Package p;
-                p.setType((OHARBase::Package::Data));
-                LOG(INFO) << "Creating a json student structure with proper elements...";
-                std::string json("{ \"id\" : \"");
-                json += id.toStdString() + "\", ";
-                if (config =="BasicInfoConfig") {
+            if (config =="BasicInfoConfig") {
+                QString studyProgram = ui->studyProgram->text();
+                if (studyProgram.length() > 0)
+                {
                     json += " \"name\" : \"" + element2ndText.toStdString() + "\",";
                     json += " \"studyprogram\" : \"" + studyProgram.toStdString() + "\"";
-                } else if (config == "ExerciseInfoConfig") {
-                    json += "\"exercisepoints\" : [" + element2ndText.toStdString() + "]";
-                } else if (config == "ExamInfoConfig") {
-                    json += "\"exampoints\" : " + element2ndText.toStdString();
-                } else if (config == "ProjectInfoConfig") {
-                    json += "\"courseprojectpoints\" : " + element2ndText.toStdString();
+                    willSend = true;
                 }
-                json += " }";
-                LOG(INFO) << "JSON data is: " + json;
-                LOG(INFO) << "Handing over the json data string to the Package...";
-                p.setData(json);
-
-/*
- {
-   "id" : 12345,
-   "name" : "Test Student",
-   "studyprogram" : "TOL",
-   "exampoints" : 15,
-   "exercisepoints" : 8,
-   "courseprojectpoints" : 16,
-   "grade" : 3
-}
- */
-                LOG(INFO) << "Telling node to pass to handlers";
-                node->passToHandlers(p);
+            } else if (config == "ExerciseInfoConfig") {
+                json += "\"exercisepoints\" : [" + element2ndText.toStdString() + "]";
+                willSend = true;
+            } else if (config == "ExamInfoConfig") {
+                json += "\"exampoints\" : " + element2ndText.toStdString();
+                willSend = true;
+            } else if (config == "ProjectInfoConfig") {
+                json += "\"courseprojectpoints\" : " + element2ndText.toStdString();
+                willSend = true;
             }
+            json += " }";
+            LOG(INFO) << "JSON data is: " + json;
+            LOG(INFO) << "Handing over the json data string to the Package...";
+            p.setData(json);
+
+            LOG(INFO) << "Telling node to pass to handlers";
+            node->passToHandlers(p);
         }
+    }
+    if (!willSend) {
+        showMessage("Check your input, no data was sent!");
     }
 }
 
