@@ -109,7 +109,7 @@
     </rect>
    </property>
    <property name="title">
-    <string>Add new student</string>
+    <string>Add new data</string>
    </property>
    <widget class="QLineEdit" name="studyProgram">
     <property name="geometry">
@@ -131,7 +131,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="studentName">
+   <widget class="QLineEdit" name="edit2nd">
     <property name="geometry">
      <rect>
       <x>130</x>
@@ -144,7 +144,7 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>12</x>
       <y>20</y>
       <width>91</width>
       <height>16</height>
@@ -154,12 +154,12 @@
      <string>Student id:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="label2ndItem">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>132</x>
       <y>20</y>
-      <width>59</width>
+      <width>173</width>
       <height>16</height>
      </rect>
     </property>
@@ -167,10 +167,10 @@
      <string>Name:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="label3rdItem">
     <property name="geometry">
      <rect>
-      <x>310</x>
+      <x>312</x>
       <y>20</y>
       <width>111</width>
       <height>16</height>
@@ -211,7 +211,7 @@
   <tabstop>readfileButton</tabstop>
   <tabstop>shutdownButton</tabstop>
   <tabstop>studentId</tabstop>
-  <tabstop>studentName</tabstop>
+  <tabstop>edit2nd</tabstop>
   <tabstop>studyProgram</tabstop>
   <tabstop>addStudentButton</tabstop>
   <tabstop>logView</tabstop>

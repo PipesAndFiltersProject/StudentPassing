@@ -13,7 +13,7 @@
 
 #include <OHARBaseLayer/ProcessorNode.h>
 
-#include <OHARStudentLayer/StudentNetInputHandler.h>
+#include <OHARStudentLayer/StudentInputHandler.h>
 #include <OHARStudentLayer/StudentDataItem.h>
 #include <OHARStudentLayer/StudentHandler.h>
 #include <OHARStudentLayer/GradingHandler.h>
@@ -40,7 +40,7 @@ int main(int argc, const char * argv[])
 		processor->configure(configFile);
 		
 		using namespace OHARStudent;
-		processor->addHandler(new StudentNetInputHandler());
+		processor->addHandler(new StudentInputHandler());
 		processor->addHandler(new StudentHandler(*processor));
 		processor->addHandler(new GradingHandler(*processor));
 		processor->addHandler(new StudentWriterHandler(*processor));
