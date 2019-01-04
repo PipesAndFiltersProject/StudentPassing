@@ -45,7 +45,7 @@ Packages are sent to network and received from network.
 
 ```JSON
 { 
-  "package" : "package id as uuid",
+  "package" : "123e4567-e89b-12d3-a456-426655440000",
   "type" : "command" | "data",
   "payload" : "command value" | "payload in json"
 }
@@ -68,7 +68,7 @@ And combined example (data sent/received):
 
 ```JSON
 { 
-  "package" : "package id as uuid",
+  "package" : "123e4567-e89b-12d3-a456-426655440000",
   "type" : "data",
   "payload" :
      {
@@ -89,7 +89,7 @@ An example of a command:
 
 ```JSON
 {
-  "package" : "package id as uuid",
+  "package" : "123e4567-e89b-12d3-a456-426655440000",
   "type" : "command",
   "payload" : "shutdown"
 }
