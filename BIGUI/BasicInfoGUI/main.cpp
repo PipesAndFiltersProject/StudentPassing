@@ -1,6 +1,6 @@
 #include "bidialog.h"
 #include <QApplication>
-#include "qdir.h"
+#include <qdir.h>
 
 #include <iostream>
 

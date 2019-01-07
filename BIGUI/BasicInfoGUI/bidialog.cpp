@@ -1,7 +1,5 @@
-#include "bidialog.h"
-#include "ui_bidialog.h"
-#include "qdir.h"
-#include "qmessagebox.h"
+#include <qdir.h>
+#include <qmessagebox.h>
 
 #include <string>
 
@@ -16,6 +14,9 @@
 #include <OHARStudentLayer/GradingHandler.h>
 #include <OHARStudentLayer/StudentWriterHandler.h>
 #include <OHARStudentLayer/StudentDataItem.h>
+
+#include "bidialog.h"
+// #include "ui_bidialog.h"
 
 
 BIDialog::BIDialog(QWidget *parent) :
