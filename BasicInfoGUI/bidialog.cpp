@@ -16,7 +16,7 @@
 #include <OHARStudentLayer/StudentDataItem.h>
 
 #include "bidialog.h"
-// #include "ui_bidialog.h"
+#include "ui_bidialog.h"
 
 
 BIDialog::BIDialog(QWidget *parent) :
