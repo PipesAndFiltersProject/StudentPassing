@@ -1,5 +1,6 @@
 #include <qdir.h>
 #include <qmessagebox.h>
+#include <qthread.h>
 
 #include <string>
 
@@ -30,6 +31,8 @@ BIDialog::BIDialog(QWidget *parent) :
     connect(ui->pingButton, SIGNAL(clicked()), this, SLOT(onPingButtonClicked()));
     connect(ui->addStudentButton, SIGNAL(clicked()), this, SLOT(onAddDataButtonClicked()));
     connect(ui->readfileButton, SIGNAL(clicked()), this, SLOT(onReadFileButtonClicked()));
+    connect(ui->shutdownButton, SIGNAL(clicked()), this, SLOT(onShutdownButtonClicked()));
+    //connect(this, SIGNAL(NodeEventHappened()), this, SLOT(handleNodeEvent()));
 
     if (QApplication::arguments().count() > 1) {
         config = QApplication::arguments().at(1);
@@ -95,7 +98,7 @@ void BIDialog::onStartButtonClicked()
 
 void BIDialog::onPingButtonClicked()
 {
-    showMessage("Sending ping");
+    showMessage("Sending ping.");
     node->handleCommand("ping");
 }
 
@@ -107,7 +110,10 @@ void BIDialog::onReadFileButtonClicked()
 
 void BIDialog::onShutdownButtonClicked()
 {
-
+    showMessage("Sending shutdown.");
+    node->handleCommand("shutdown");
+    QThread::sleep(2);
+    QCoreApplication::quit();
 }
 
 void BIDialog::onAddDataButtonClicked()
@@ -198,11 +204,17 @@ bool BIDialog::configureNode()
 }
 
 
-void BIDialog::NodeEventHappened(EventType /*event*/, const std::string & message)
+void BIDialog::NodeEventHappened(EventType event, const std::string & message)
 {
-    showMessage(QString::fromStdString(message));
+    emit handleNodeEvent(event, QString::fromStdString(message));
+}
+
+void BIDialog::handleNodeEvent(EventType /*event*/, QString message)
+{
+    showMessage(message);
     refreshUI();
 }
+
 
 void BIDialog::showMessage(const QString & message)
 {

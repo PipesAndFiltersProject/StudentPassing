@@ -13,7 +13,7 @@ set(BasicInfoGUI_SRCS
     main.cpp
 )
 
-set(CMAKE_PREFIX_PATH "/Users/antti/Qt/5.11.2/clang_64/lib/cmake/Qt5Widgets/")
+set(CMAKE_PREFIX_PATH "/Users/antti/Qt/5.11.2/clang_64/lib/cmake/")
 
 # Instruct CMake to run moc automatically when needed
 set(CMAKE_AUTOMOC ON)
@@ -29,6 +29,8 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # Find the QtWidgets library
 find_package(Qt5Widgets CONFIG REQUIRED)
+find_package(Qt5Core CONFIG REQUIRED)
+find_package(Qt5Gui CONFIG REQUIRED)
 
 find_package(g3logger REQUIRED)
 find_package(nlohmann_json 3.2.0 REQUIRED)
@@ -46,6 +48,6 @@ endif()
 # Use the Widgets module from Qt 5
 target_link_libraries(${BIN_NAME} Qt5::Widgets)
 
-target_include_directories(${BIN_NAME} PUBLIC {Boost_INCLUDE_DIRS} ${G3LOG_INCLUDE_DIRS} ${Qt5Widgets_INCLUDE_DIRS})
+target_include_directories(${BIN_NAME} PUBLIC {Boost_INCLUDE_DIRS} ${G3LOG_INCLUDE_DIRS} ${Qt5Widgets_INCLUDE_DIRS} ${Qt5Core_INCLUDE_DIRS} ${Qt5Gui_INCLUDE_DIRS})
 
-target_link_libraries(${BIN_NAME} ${Boost_LIBRARIES} ${G3LOG_LIBRARIES} ${Qt5Widgets_LIBRARIES} OHARBaseLayer::OHARBaseLayer OHARStudentLayer::OHARStudentLayer)
+target_link_libraries(${BIN_NAME} ${Boost_LIBRARIES} ${G3LOG_LIBRARIES} ${Qt5Widgets_LIBRARIES} ${Qt5Core_LIBRARIES} ${Qt5Gui_LIBRARIES} OHARBaseLayer::OHARBaseLayer OHARStudentLayer::OHARStudentLayer)

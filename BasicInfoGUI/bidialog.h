@@ -35,9 +35,10 @@ private:
 private slots:
     void onStartButtonClicked();
     void onPingButtonClicked();
+    void onAddDataButtonClicked();
     void onReadFileButtonClicked();
     void onShutdownButtonClicked();
-    void onAddDataButtonClicked();
+    void handleNodeEvent(EventType e, QString message);
 
 private:
     Ui::BIDialog *ui;
