@@ -1,8 +1,8 @@
 # README #
 
-Software architectures course exercise work StudentPassing is an implementation of a distributed software architecture and various design patterns in C++14. Includes datagram networking using boost asio and JSON for handling data received and sent between components.
+Software architectures course exercise work StudentPassing is an implementation of a distributed software architecture and various design patterns in C++14. Includes datagram networking using boost asio, JSON for handling data received and sent between components, g3logger for logging the activities of the system, as well as a Qt GUI for the app.
 
-This project has been created for eaducational purposes and may have no other value to anyone.
+This project has been created for educational purposes and may have no other value to anyone.
 
 ## What is this repository for? ##
 
