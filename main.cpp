@@ -9,13 +9,12 @@
 
 int main(int argc, char *argv[])
 {
-    LOG(INFO) << "Launching Qt GUI app node for StudentPassing";
     if (argc > 1) {
         std::unique_ptr<g3::LogWorker> logworker{ g3::LogWorker::createLogWorker() };
         QString logDir = QDir::homePath() + "/StudentPassing/Logs";
         auto defaultHandler = logworker->addDefaultLogger(argv[1], logDir.toStdString());
         g3::initializeLogging(logworker.get());
-
+        LOG(INFO) << "Launching Qt GUI app node for StudentPassing";
         LOG(INFO) << "Startup parameter is: " << argv[1];
         QApplication a(argc, argv);
         BIDialog w;
