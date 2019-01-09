@@ -29,7 +29,7 @@ BIDialog::BIDialog(QWidget *parent) :
 
     connect(ui->startButton, SIGNAL(clicked()), this, SLOT(onStartButtonClicked()));
     connect(ui->pingButton, SIGNAL(clicked()), this, SLOT(onPingButtonClicked()));
-    connect(ui->addStudentButton, SIGNAL(clicked()), this, SLOT(onAddDataButtonClicked()));
+    connect(ui->addDataButton, SIGNAL(clicked()), this, SLOT(onAddDataButtonClicked()));
     connect(ui->readfileButton, SIGNAL(clicked()), this, SLOT(onReadFileButtonClicked()));
     connect(ui->shutdownButton, SIGNAL(clicked()), this, SLOT(onShutdownButtonClicked()));
     //connect(this, SIGNAL(NodeEventHappened()), this, SLOT(handleNodeEvent()));
@@ -87,6 +87,7 @@ void BIDialog::onStartButtonClicked()
         if (!node->isRunning()) {
             showMessage("Starting the node.");
             node->start();
+            showMessage("Node started");
         } else {
             showMessage("Stopping the node...");
             node->stop();
@@ -110,7 +111,7 @@ void BIDialog::onReadFileButtonClicked()
 
 void BIDialog::onShutdownButtonClicked()
 {
-    showMessage("Sending shutdown.");
+    showMessage("Sending shutdown.... wait for shutdown...");
     node->handleCommand("shutdown");
     QThread::sleep(2);
     QCoreApplication::quit();
@@ -218,7 +219,7 @@ void BIDialog::handleNodeEvent(EventType /*event*/, QString message)
 
 void BIDialog::showMessage(const QString & message)
 {
-    LOG(INFO) << "User message: " << message.toStdString();
+    LOG(INFO) << "Shown in GUI: " << message.toStdString();
     ui->logView->appendPlainText(message);
 }
 
@@ -230,13 +231,13 @@ void BIDialog::refreshUI()
             ui->pingButton->setDisabled(false);
             ui->readfileButton->setDisabled(false);
             ui->shutdownButton->setDisabled(false);
-            ui->addStudentButton->setDisabled(false);
+            ui->addDataButton->setDisabled(false);
             ui->startButton->setText("&Stop");
         } else {
             ui->pingButton->setDisabled(true);
             ui->readfileButton->setDisabled(true);
             ui->shutdownButton->setDisabled(true);
-            ui->addStudentButton->setDisabled(true);
+            ui->addDataButton->setDisabled(true);
             ui->startButton->setText("&Start");
         }
     } else {
