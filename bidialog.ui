@@ -180,7 +180,7 @@
      <string>Study program:</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="addStudentButton">
+   <widget class="QPushButton" name="addDataButton">
     <property name="enabled">
      <bool>false</bool>
     </property>
@@ -213,7 +213,7 @@
   <tabstop>studentId</tabstop>
   <tabstop>edit2nd</tabstop>
   <tabstop>studyProgram</tabstop>
-  <tabstop>addStudentButton</tabstop>
+  <tabstop>addDataButton</tabstop>
   <tabstop>logView</tabstop>
  </tabstops>
  <resources/>
