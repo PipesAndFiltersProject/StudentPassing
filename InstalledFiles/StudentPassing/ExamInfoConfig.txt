@@ -1,0 +1,5 @@
+nodeconfiguration
+input	127.0.0.1:3333
+output	127.0.0.1:4444
+filein	/Users/anttijuustila/StudentPassing/exam-info.txt
+

@@ -1,0 +1,5 @@
+nodeconfiguration
+input	null
+output	127.0.0.1:3333
+filein	/Users/anttijuustila/StudentPassing/basic-student-info.txt
+

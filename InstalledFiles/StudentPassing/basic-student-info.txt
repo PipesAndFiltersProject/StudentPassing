@@ -1,0 +1,5 @@
+studentdata
+123456	Antti Juustila	TOL
+123457	Tiina Tomera	SO
+123458	Leevi Laiskimus	KT
+123459	Hillevi Hiiri	LM
