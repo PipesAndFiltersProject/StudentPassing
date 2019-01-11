@@ -32,6 +32,8 @@ private:
 
     void refreshUI();
 
+    void doShutdown();
+
 private slots:
     void onStartButtonClicked();
     void onPingButtonClicked();
