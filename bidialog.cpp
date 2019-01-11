@@ -113,6 +113,12 @@ void BIDialog::onShutdownButtonClicked()
 {
     showMessage("Sending shutdown.... wait for shutdown...");
     node->handleCommand("shutdown");
+    doShutdown();
+}
+
+
+void BIDialog::doShutdown()
+{
     QThread::sleep(2);
     QCoreApplication::quit();
 }
@@ -180,12 +186,12 @@ bool BIDialog::configureNode()
                 node->addHandler(new StudentInputHandler());
                 node->addHandler(new StudentNetOutputHandler(*node));
                 success = true;
-            } else if (config == "ExerciseInfoConfig") { // middle node
+            } else if (config == "ExamInfoConfig") { // middle node
                 node->addHandler(new StudentInputHandler());
                 node->addHandler(new StudentHandler(*node));
                 node->addHandler(new StudentNetOutputHandler(*node));
                 success = true;
-            } else if (config == "ExamInfoConfig") { // middle node
+            } else if (config == "ExerciseInfoConfig") { // middle node
                 node->addHandler(new StudentInputHandler());
                 node->addHandler(new StudentHandler(*node));
                 node->addHandler(new StudentNetOutputHandler(*node));
@@ -210,10 +216,14 @@ void BIDialog::NodeEventHappened(EventType event, const std::string & message)
     emit handleNodeEvent(event, QString::fromStdString(message));
 }
 
-void BIDialog::handleNodeEvent(EventType /*event*/, QString message)
+void BIDialog::handleNodeEvent(EventType event, QString message)
 {
+    // TODO: handle shutdown event (should be generated from the node first, not done yet).
     showMessage(message);
     refreshUI();
+    if (event == ProcessorNodeObserver::EventType::ShutDownCommand) {
+        doShutdown();
+    }
 }
 
 

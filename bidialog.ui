@@ -193,7 +193,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>S&amp;end</string>
+     <string>&amp;Add</string>
     </property>
    </widget>
   </widget>
