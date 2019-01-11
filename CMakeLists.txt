@@ -13,7 +13,7 @@ set(BasicInfoGUI_SRCS
     main.cpp
 )
 
-set(CMAKE_PREFIX_PATH "/Users/antti/Qt/5.11.2/clang_64/lib/cmake/")
+set(CMAKE_PREFIX_PATH "/Users/anttijuustila/Qt/5.11.2/clang_64/lib/cmake/")
 
 # Instruct CMake to run moc automatically when needed
 set(CMAKE_AUTOMOC ON)
