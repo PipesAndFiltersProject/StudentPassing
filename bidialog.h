@@ -22,7 +22,7 @@ public:
     explicit BIDialog(QWidget *parent = nullptr);
     ~BIDialog();
 
-    void NodeEventHappened(OHARBase::ProcessorNodeObserver::EventType e, const std::string & message);
+    void NodeEventHappened(OHARBase::ProcessorNodeObserver::EventType e, const std::string & message) override;
 
 //signals:
 //    void nodeEvent(OHARBase::ProcessorNodeObserver::EventType e, QString message);
