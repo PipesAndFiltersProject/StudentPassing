@@ -1,8 +1,8 @@
 .DS_Store
-build/
+/build*
+./cccc*
 *.pro.user
 *.o
 *.lib
 *.a
 *.log
-
