@@ -1,7 +1,7 @@
 .DS_Store
-/build*
-./cccc*
-*.pro.user
+build/
+.cccc/
+*.pro.user*
 *.o
 *.lib
 *.a
