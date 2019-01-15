@@ -13,8 +13,6 @@ set(BasicInfoGUI_SRCS
     main.cpp
 )
 
-set(CMAKE_PREFIX_PATH "/Users/anttijuustila/Qt/5.11.2/clang_64/lib/cmake/")
-
 # Instruct CMake to run moc automatically when needed
 set(CMAKE_AUTOMOC ON)
 # Create code from a list of Qt designer ui files
@@ -23,6 +21,7 @@ set(CMAKE_AUTOUIC ON)
 add_executable(${BIN_NAME} ${BasicInfoGUI_SRCS})
 
 set_target_properties(${BIN_NAME} PROPERTIES CXX_STANDARD 14)
+set_target_properties(${BIN_NAME} PROPERTIES LINK_FLAGS -pthread)
 
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
