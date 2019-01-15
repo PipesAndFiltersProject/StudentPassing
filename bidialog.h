@@ -22,7 +22,10 @@ public:
     explicit BIDialog(QWidget *parent = nullptr);
     ~BIDialog();
 
-    void NodeEventHappened(EventType e, const std::string & message);
+    void NodeEventHappened(OHARBase::ProcessorNodeObserver::EventType e, const std::string & message) override;
+
+//signals:
+//    void nodeEvent(OHARBase::ProcessorNodeObserver::EventType e, QString message);
 
 private:
     void configureApp();
@@ -40,7 +43,7 @@ private slots:
     void onAddDataButtonClicked();
     void onReadFileButtonClicked();
     void onShutdownButtonClicked();
-    void handleNodeEvent(EventType e, QString message);
+    void handleNodeEvent(OHARBase::ProcessorNodeObserver::EventType e, QString message);
 
 private:
     Ui::BIDialog *ui;
