@@ -9,8 +9,6 @@
 #ifndef __PipesAndFiltersFramework__PlainStudentFileHandler__
 #define __PipesAndFiltersFramework__PlainStudentFileHandler__
 
-#include <list>
-
 #include <OHARBaseLayer/DataHandler.h>
 #include <OHARBaseLayer/DataReaderObserver.h>
 
@@ -30,10 +28,10 @@ namespace OHARStudent {
       PlainStudentFileHandler(OHARBase::ProcessorNode & myNode);
       virtual ~PlainStudentFileHandler();
       
-      bool consume(OHARBase::Package & data);
+      bool consume(OHARBase::Package & data) override;
       
       // From DataReaderObserver
-      void handleNewItem(OHARBase::DataItem * item);
+      void handleNewItem(OHARBase::DataItem * item) override;
       
    private:
       void readFile();

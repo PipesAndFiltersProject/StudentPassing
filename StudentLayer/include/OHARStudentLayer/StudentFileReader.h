@@ -10,7 +10,6 @@
 #define __PipesAndFiltersFramework__StudentFileReader__
 
 #include <string>
-#include <list>
 
 #include <OHARBaseLayer/DataFileReader.h>
 
@@ -30,7 +29,7 @@ namespace OHARStudent {
       virtual ~StudentFileReader();
       
    protected:
-      OHARBase::DataItem * parse(const std::string & str, const std::string & contentType);
+      OHARBase::DataItem * parse(const std::string & str, const std::string & contentType) override;
       
    private:
       const std::string TAG;

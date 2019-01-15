@@ -1,8 +1,9 @@
 .DS_Store
 build/
-*.pro.user
+.cccc/
+*.pro.user*
 *.o
 *.lib
 *.a
 *.log
-
+docs/

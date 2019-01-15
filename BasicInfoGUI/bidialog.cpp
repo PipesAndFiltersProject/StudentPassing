@@ -25,6 +25,7 @@ BIDialog::BIDialog(QWidget *parent) :
     ui(new Ui::BIDialog),
     node(nullptr)
 {
+    LOG(INFO) << "Setting up GUI";
     ui->setupUi(this);
 
     connect(ui->startButton, SIGNAL(clicked()), this, SLOT(onStartButtonClicked()));
@@ -32,19 +33,21 @@ BIDialog::BIDialog(QWidget *parent) :
     connect(ui->addDataButton, SIGNAL(clicked()), this, SLOT(onAddDataButtonClicked()));
     connect(ui->readfileButton, SIGNAL(clicked()), this, SLOT(onReadFileButtonClicked()));
     connect(ui->shutdownButton, SIGNAL(clicked()), this, SLOT(onShutdownButtonClicked()));
-    //connect(this, SIGNAL(NodeEventHappened()), this, SLOT(handleNodeEvent()));
 
     if (QApplication::arguments().count() > 1) {
         config = QApplication::arguments().at(1);
     }
 
+    LOG(INFO) << "Configuring app.";
     configureApp();
 }
 
 BIDialog::~BIDialog()
 {
-    delete ui;
+    LOG(INFO) << "Destroying Node";
     delete node;
+    LOG(INFO) << "Destroying GUI";
+    delete ui;
 }
 
 
@@ -94,6 +97,7 @@ void BIDialog::onStartButtonClicked()
             showMessage("Node stopped");
         }
     }
+    refreshUI();
 }
 
 
@@ -120,6 +124,7 @@ void BIDialog::onShutdownButtonClicked()
 void BIDialog::doShutdown()
 {
     QThread::sleep(2);
+    LOG(INFO) << "Stop and destroy node since shutdown asked.";
     QCoreApplication::quit();
 }
 
@@ -203,6 +208,8 @@ bool BIDialog::configureNode()
                 node->addHandler(new StudentWriterHandler(*node));
                 success = true;
             }
+        } else {
+            showMessage("Node could not be configured! Check your startup parameters and config file contents!");
         }
     } else {
         showMessage("No configuration file name in startup parameters!");
@@ -211,17 +218,18 @@ bool BIDialog::configureNode()
 }
 
 
-void BIDialog::NodeEventHappened(EventType event, const std::string & message)
+void BIDialog::NodeEventHappened(OHARBase::ProcessorNodeObserver::EventType event, const std::string & message)
 {
+    LOG(INFO) << "Node event came with message " << message;
     emit handleNodeEvent(event, QString::fromStdString(message));
 }
 
-void BIDialog::handleNodeEvent(EventType event, QString message)
+void BIDialog::handleNodeEvent(OHARBase::ProcessorNodeObserver::EventType event, QString message)
 {
-    // TODO: handle shutdown event (should be generated from the node first, not done yet).
+    LOG(INFO) << "Handling node event";
     showMessage(message);
     refreshUI();
-    if (event == ProcessorNodeObserver::EventType::ShutDownCommand) {
+    if (event == ProcessorNodeObserver::EventType::ShutDownEvent) {
         doShutdown();
     }
 }
@@ -229,8 +237,9 @@ void BIDialog::handleNodeEvent(EventType event, QString message)
 
 void BIDialog::showMessage(const QString & message)
 {
-    LOG(INFO) << "Shown in GUI: " << message.toStdString();
-    ui->logView->appendPlainText(message);
+    if (message.length() > 0) {
+            ui->logView->appendPlainText(message);
+    }
 }
 
 void BIDialog::refreshUI()
