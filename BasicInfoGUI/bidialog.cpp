@@ -25,6 +25,8 @@ BIDialog::BIDialog(QWidget *parent) :
     ui(new Ui::BIDialog),
     node(nullptr)
 {
+    qRegisterMetaType<OHARBase::ProcessorNodeObserver::EventType> ();
+
     LOG(INFO) << "Setting up GUI";
     ui->setupUi(this);
 
@@ -33,6 +35,7 @@ BIDialog::BIDialog(QWidget *parent) :
     connect(ui->addDataButton, SIGNAL(clicked()), this, SLOT(onAddDataButtonClicked()));
     connect(ui->readfileButton, SIGNAL(clicked()), this, SLOT(onReadFileButtonClicked()));
     connect(ui->shutdownButton, SIGNAL(clicked()), this, SLOT(onShutdownButtonClicked()));
+    connect(this, SIGNAL(nodeEvent(OHARBase::ProcessorNodeObserver::EventType, QString)), this, SLOT(handleNodeEvent(OHARBase::ProcessorNodeObserver::EventType, QString)));
 
     if (QApplication::arguments().count() > 1) {
         config = QApplication::arguments().at(1);
@@ -44,10 +47,10 @@ BIDialog::BIDialog(QWidget *parent) :
 
 BIDialog::~BIDialog()
 {
-    LOG(INFO) << "Destroying Node";
-    delete node;
     LOG(INFO) << "Destroying GUI";
     delete ui;
+    LOG(INFO) << "Destroying Node";
+    delete node;
 }
 
 
@@ -221,7 +224,7 @@ bool BIDialog::configureNode()
 void BIDialog::NodeEventHappened(OHARBase::ProcessorNodeObserver::EventType event, const std::string & message)
 {
     LOG(INFO) << "Node event came with message " << message;
-    emit handleNodeEvent(event, QString::fromStdString(message));
+    emit nodeEvent(event, QString::fromStdString(message));
 }
 
 void BIDialog::handleNodeEvent(OHARBase::ProcessorNodeObserver::EventType event, QString message)

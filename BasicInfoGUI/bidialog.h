@@ -14,18 +14,20 @@ namespace OHARBase {
 class ProcessorNode;
 }
 
+Q_DECLARE_METATYPE(OHARBase::ProcessorNodeObserver::EventType)
+
 class BIDialog : public QDialog, public OHARBase::ProcessorNodeObserver
 {
     Q_OBJECT
 
 public:
     explicit BIDialog(QWidget *parent = nullptr);
-    ~BIDialog();
+    virtual ~BIDialog() override;
 
     void NodeEventHappened(OHARBase::ProcessorNodeObserver::EventType e, const std::string & message) override;
 
-//signals:
-//    void nodeEvent(OHARBase::ProcessorNodeObserver::EventType e, QString message);
+signals:
+    void nodeEvent(OHARBase::ProcessorNodeObserver::EventType e, QString message);
 
 private:
     void configureApp();
@@ -36,6 +38,8 @@ private:
     void refreshUI();
 
     void doShutdown();
+
+
 
 private slots:
     void onStartButtonClicked();
