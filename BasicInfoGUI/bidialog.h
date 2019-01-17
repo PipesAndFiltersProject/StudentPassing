@@ -39,8 +39,6 @@ private:
 
     void doShutdown();
 
-
-
 private slots:
     void onStartButtonClicked();
     void onPingButtonClicked();
