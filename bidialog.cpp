@@ -223,16 +223,16 @@ bool BIDialog::configureNode()
 
 void BIDialog::NodeEventHappened(OHARBase::ProcessorNodeObserver::EventType event, const std::string & message)
 {
-    LOG(INFO) << "Node event came with message " << message;
     emit nodeEvent(event, QString::fromStdString(message));
 }
 
 void BIDialog::handleNodeEvent(OHARBase::ProcessorNodeObserver::EventType event, QString message)
 {
-    LOG(INFO) << "Handling node event";
+    LOG_IF(INFO, event != EventType::ENullEvent) << "Handling node event" << event << " " << message.toStdString();
     showMessage(message);
     refreshUI();
     if (event == ProcessorNodeObserver::EventType::ShutDownEvent) {
+        LOG(INFO) << "Got shutdown event, initiating shutdown.";
         doShutdown();
     }
 }
@@ -240,8 +240,9 @@ void BIDialog::handleNodeEvent(OHARBase::ProcessorNodeObserver::EventType event,
 
 void BIDialog::showMessage(const QString & message)
 {
+    // TODO: examine also event (notification, warning, error) and display each differently.
     if (message.length() > 0) {
-            ui->logView->appendPlainText(message);
+        ui->logView->appendPlainText(message);
     }
 }
 
