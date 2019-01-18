@@ -1,4 +1,4 @@
 cd build
-cmake -G Xcode -DCMAKE_PREFIX_PATH=/Users/anttijuustila/workspace/json/build ..
+cmake -GXcode -DCMAKE_INSTALL_PREFIX=/Users/anttijuustila/Qt/5.11.2/clang_64/lib/cmake/ ..
 cd ..
 
