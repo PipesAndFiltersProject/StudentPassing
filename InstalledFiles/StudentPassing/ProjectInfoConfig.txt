@@ -1,5 +1,5 @@
 nodeconfiguration
-input	127.0.0.1:5555
+input	127.0.0.1:50003
 output	null
 filein	/Users/anttijuustila/StudentPassing/project-info.txt
 fileout /Users/anttijuustila/StudentPassing/OHAR-2019-grades.txt

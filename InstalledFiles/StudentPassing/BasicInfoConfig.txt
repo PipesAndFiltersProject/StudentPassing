@@ -1,5 +1,5 @@
 nodeconfiguration
 input	null
-output	127.0.0.1:3333
+output	127.0.0.1:50001
 filein	/Users/anttijuustila/StudentPassing/basic-student-info.txt
 

@@ -1,5 +1,5 @@
 nodeconfiguration
-input	127.0.0.1:3333
-output	127.0.0.1:4444
+input	127.0.0.1:50001
+output	127.0.0.1:50002
 filein	/Users/anttijuustila/StudentPassing/exam-info.txt
 
