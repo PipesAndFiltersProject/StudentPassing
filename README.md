@@ -23,6 +23,9 @@ Uses the following components and tools:
 
 What to do:
 
+You can view demonstration videos (in Finnish, no subtitles) of installing the external libraries and the system itself and running the system from [here](https://wiki.oulu.fi/display/OHAR/Demonstraatiovideot).
+
+
 * git clone the code,then see the wiki page at https://wiki.oulu.fi/pages/viewpage.action?pageId=39977551
 * Uses boost system library and boost asio, which needs to be build into a library.
   * use bootstrap.sh (.bat) to set up boost, then b2 cxxflags="-std=c++14" to build boost (system library at least), then b2 install to install boost headers and lib(s).
