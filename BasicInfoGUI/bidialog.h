@@ -24,6 +24,7 @@ public:
     explicit BIDialog(QWidget *parent = nullptr);
     virtual ~BIDialog() override;
 
+    /** Implements the ProcessorNodeObserver interface. */
     void NodeEventHappened(OHARBase::ProcessorNodeObserver::EventType e, const std::string & message) override;
 
 signals:
@@ -49,7 +50,9 @@ private slots:
 
 private:
     Ui::BIDialog *ui;
+    /** The processor node this GUI is running. */
     OHARBase::ProcessorNode * node;
+    /** The name of the configuration this node is running. */
     QString config;
 };
 
