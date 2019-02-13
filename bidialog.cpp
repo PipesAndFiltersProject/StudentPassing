@@ -59,7 +59,6 @@ void BIDialog::configureApp()
     node = new OHARBase::ProcessorNode(config.toStdString(), this);
     if (configureNode()) {
         setWindowTitle(config);
-        //TODO: modify UI element names based on configuration.
         if (config =="BasicInfoConfig") {
             // labels in .ui file are for Basic config, no need to change anything here.
         } else {
