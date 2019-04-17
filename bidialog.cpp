@@ -169,7 +169,7 @@ void BIDialog::onAddDataButtonClicked()
             json += " }";
             LOG(INFO) << "JSON data is: " + json;
             LOG(INFO) << "Handing over the json data string to the Package...";
-            p.setData(json);
+            p.setPayload(json);
 
             LOG(INFO) << "Telling node to pass to handlers";
             node->passToHandlers(p);

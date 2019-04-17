@@ -20,7 +20,7 @@ set(CMAKE_AUTOUIC ON)
 
 add_executable(${BIN_NAME} ${BasicInfoGUI_SRCS})
 
-set_target_properties(${BIN_NAME} PROPERTIES CXX_STANDARD 14)
+set_target_properties(${BIN_NAME} PROPERTIES CXX_STANDARD 17)
 set_target_properties(${BIN_NAME} PROPERTIES LINK_FLAGS -pthread)
 
 # Find includes in corresponding build directories
