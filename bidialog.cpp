@@ -227,8 +227,12 @@ void BIDialog::NodeEventHappened(OHARBase::ProcessorNodeObserver::EventType even
 
 void BIDialog::handleNodeEvent(OHARBase::ProcessorNodeObserver::EventType event, QString message)
 {
-    LOG_IF(INFO, event != EventType::ENullEvent) << "Handling node event" << event << " " << message.toStdString();
-    showMessage(message);
+    LOG_IF(INFO, event != EventType::ENullEvent) << "Handling node event " << event << " " << message.toStdString();
+    if (event == ProcessorNodeObserver::EventType::QueueStatusEvent) {
+       showQueueInfo(message);
+    } else {
+       showMessage(message);
+    }
     refreshUI();
     if (event == ProcessorNodeObserver::EventType::ShutDownEvent) {
         LOG(INFO) << "Got shutdown event, initiating shutdown.";
@@ -243,6 +247,11 @@ void BIDialog::showMessage(const QString & message)
     if (message.length() > 0) {
         ui->logView->appendPlainText(message);
     }
+}
+
+void BIDialog::showQueueInfo(const QString & message) {
+   ui->queueInfo->setText(message);
+   // QStringList items = message.split(" ");
 }
 
 void BIDialog::refreshUI()

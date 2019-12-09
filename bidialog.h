@@ -40,6 +40,8 @@ private:
 
     void doShutdown();
 
+    void showQueueInfo(const QString & message);
+
 private slots:
     void onStartButtonClicked();
     void onPingButtonClicked();

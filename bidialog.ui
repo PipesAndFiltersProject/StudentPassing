@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>523</width>
-    <height>384</height>
+    <height>401</height>
    </rect>
   </property>
   <property name="font">
@@ -197,12 +197,26 @@
     </property>
    </widget>
   </widget>
+  <widget class="QLabel" name="queueInfo">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>380</y>
+     <width>491</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Queue statuses</string>
+   </property>
+  </widget>
   <zorder>groupBox</zorder>
   <zorder>startButton</zorder>
   <zorder>pingButton</zorder>
   <zorder>readfileButton</zorder>
   <zorder>shutdownButton</zorder>
   <zorder>logView</zorder>
+  <zorder>queueInfo</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
