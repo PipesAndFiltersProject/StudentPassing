@@ -251,7 +251,11 @@ void BIDialog::showMessage(const QString & message)
 
 void BIDialog::showQueueInfo(const QString & message) {
    ui->queueInfo->setText(message);
-   // QStringList items = message.split(" ");
+//   QStringList items = message.split(" ");
+//   for (QString item : items) {
+//      QStringList elements = item.split(":");
+
+//   }
 }
 
 void BIDialog::refreshUI()
