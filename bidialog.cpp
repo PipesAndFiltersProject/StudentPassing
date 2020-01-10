@@ -228,7 +228,6 @@ void BIDialog::NodeEventHappened(OHARBase::ProcessorNodeObserver::EventType even
 
 void BIDialog::handleNodeEvent(OHARBase::ProcessorNodeObserver::EventType event, QString message)
 {
-   LOG_IF(INFO, event != EventType::ENullEvent) << "Handling node event " << event << " " << message.toStdString();
    if (event == ProcessorNodeObserver::EventType::QueueStatusEvent) {
       showQueueInfo(message);
    } else {
