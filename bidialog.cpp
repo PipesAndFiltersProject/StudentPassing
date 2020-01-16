@@ -106,6 +106,7 @@ void BIDialog::onStartButtonClicked()
 
 void BIDialog::onPingButtonClicked()
 {
+   LOG(INFO) << "Ping button clicked.";
    showMessage("Sending ping.");
    node->handleCommand("ping");
 }
