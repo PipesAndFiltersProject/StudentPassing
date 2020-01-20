@@ -1,0 +1,7 @@
+nodeconfiguration
+name	Project & Grade
+config-in	10001
+config-out	yes
+input	50003
+filein	/Users/juustila/StudentPassing/project-info.txt
+fileout	/Users/juustila/StudentPassing/OHAR-2019-grades.txt

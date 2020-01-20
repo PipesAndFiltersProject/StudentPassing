@@ -1,0 +1,6 @@
+nodeconfiguration
+name	Exam Information
+config-in	10001
+input	50001
+output	192.168.1.165:50002
+filein	/Users/juustila/StudentPassing/exam-info.txt

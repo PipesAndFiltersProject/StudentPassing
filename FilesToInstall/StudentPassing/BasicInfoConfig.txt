@@ -1,0 +1,7 @@
+nodeconfiguration
+name	Basic Information
+config-in	10001
+input	50000
+output	192.168.1.165:50001
+filein	/Users/juustila/StudentPassing/basic-student-info.txt
+
