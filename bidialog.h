@@ -4,7 +4,7 @@
 #include <QDialog>
 #include <string>
 
-#include <OHARBaseLayer/ProcessorNodeObserver.h>
+#include <ProcessorNode/ProcessorNodeObserver.h>
 
 namespace Ui {
 class BIDialog;

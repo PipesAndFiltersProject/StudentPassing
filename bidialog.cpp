@@ -6,15 +6,15 @@
 
 #include <g3log/g3log.hpp>
 
-#include <OHARBaseLayer/ProcessorNode.h>
+#include <ProcessorNode/ProcessorNode.h>
 
-#include <OHARStudentLayer/PlainStudentFileHandler.h>
-#include <OHARStudentLayer/StudentInputHandler.h>
-#include <OHARStudentLayer/StudentNetOutputHandler.h>
-#include <OHARStudentLayer/StudentHandler.h>
-#include <OHARStudentLayer/GradingHandler.h>
-#include <OHARStudentLayer/StudentWriterHandler.h>
-#include <OHARStudentLayer/StudentDataItem.h>
+#include <StudentNodeElements/PlainStudentFileHandler.h>
+#include <StudentNodeElements/StudentInputHandler.h>
+#include <StudentNodeElements/StudentNetOutputHandler.h>
+#include <StudentNodeElements/StudentHandler.h>
+#include <StudentNodeElements/GradingHandler.h>
+#include <StudentNodeElements/StudentWriterHandler.h>
+#include <StudentNodeElements/StudentDataItem.h>
 
 #include "bidialog.h"
 #include "ui_bidialog.h"
