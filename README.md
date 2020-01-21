@@ -15,19 +15,24 @@ This repository contains an application build on top of a specific "things". Mor
 Uses the following components and tools:
 
 Tools:
+
 * A C++ compiler supporting C++ 17. GCC or clang are OK. If you install a C++ IDE, you will get also a C++ compiler.
 * [CMake](https://cmake.org) for building the system in different platforms and with different compilers.
 * An IDE that CMake supports for viewing code ([Visual Studio](https://visualstudio.microsoft.com), [Eclipse for C/C++](https://www.eclipse.org/downloads/packages/release/2019-12/r/eclipse-ide-cc-developers), [Xcode](https://developer.apple.com/xcode/),...)
 
 External components:
+
 * [Boost](https://boost.org) 1.70.0 or newer. You need to build system library from boost. Build using c++17 (e.g. b2 cxxflags="-std=c++17".). For more information, see boost getting started guide.
 * [nlohmann::json](https://github.com/nlohmann/json) for parsing and creating JSON.
 * [g3logger](https://github.com/KjellKod/g3log) for logging events in all components of this software. Requires at least C++ v 14.
 * [Qt](https://www.qt.io) for the GUI apps using the other components of the system.
 
 Components related to StudentPassing, OHAR course exercise work system:
+
 * [ProcessorNode](https://bitbucket.org/anttijuu/processornode), a library supporting development of distributed apps based on an architectural style we do not reveal here because educational purposes... ;) 
 * [StudentNodeElements](https://bitbucket.org/anttijuu/studentnodeelements), based on ProcessorNode, of which we do not talk more here, because of educational purposes.... ;) 
+
+Instuctions on how to get and build all the components are below.
 
 ## How do I get set up?
 
@@ -52,21 +57,31 @@ Step 1 is *recommended minimum* for all students, others are optional. You will 
 Starting from Boost, building happens like this:
 
 1. In Boost directory you get when unzipping the downloaded zip file:
+
   * use `bootstrap.sh` (.bat in Windows) to set up Boost, then run `b2 cxxflags="-std=c++17"` to build boost (system library at least), then run again `b2 install` (may require admin / sudo rights) to install boost headers and lib(s).
+  
 2. Set up nlohmann::json using cmake in the json directory:
+
    * `mkdir build && cd build`, 
    * then `cmake ..` and 
    * finally install json: `sudo make install` to copy the headers to system include diretories. Obviously in Windows sudo is not sudo or may not be needed.
+   
 3. Set up g3logger, which needs to be build and package made (make package)
+
    * again `mkdir build && cd build`,
    * then `cmake ..` and 
-   * finally install g3logger: `sudo make install` -- this installs the headers and the library needed in linking to the component. 
+   * finally install g3logger: `sudo make install` -- this installs the headers and the library needed in linking to the component.
+   
 4. Do the same steps for ProcessorNode component and then 
 5. StudentNodeElements component -- with similar cmake commands as above.
 6. Finally build the executable in *this* repository project. This project uses all of the above so it must be build last.
+
    * The app has a GUI implemented in Qt, so you must install Qt (the Open Source version) before doing this final step. 
    * After you have installed Qt, you can build this GUI app. Note that you need to tell CMake from where the Qt libraries are found. In the build directory, do (after `mkdir build && cd build`):
    * `cmake -DCMAKE_INSTALL_PREFIX=/path/to/qt/directory/where/cmake ..`
+
+After this you should have all setup for configuring (see below) and running the StudentPassing system.
+
 
 ## Generate IDE projects for convenient viewing
 
