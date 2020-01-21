@@ -6,10 +6,10 @@ set(BIN_NAME spgui)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
-IF(APPLE)
-    # Fix linking on 10.14+. See https://stackoverflow.com/questions/54068035
-    LINK_DIRECTORIES(/usr/local/lib)
-ENDIF()
+# IF(APPLE)
+#     # Fix linking on 10.14+. See https://stackoverflow.com/questions/54068035
+#     LINK_DIRECTORIES(/usr/local/lib)
+# ENDIF()
 
 # Populate a CMake variable with the sources
 set(StudentPassingGUI_SRCS
