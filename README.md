@@ -94,10 +94,10 @@ cmake -GXcode ..
 And for those components which use Qt, you also need to specify in cmake command, where Qt libraries' cmake files are to be found. Change the path to where Qt is installed in *your* machine.
 
 ```
-cmake -DCMAKE_INSTALL_PREFIX=/Users/juustila/Qt/5.12.1/clang_64/lib/cmake ..
+cmake -GXcode -DCMAKE_INSTALL_PREFIX=/Users/juustila/Qt/5.12.1/clang_64/lib/cmake ..
 ```
 
-If you do not have Xcode, you must specify the [IDE you are using](https://cmake.org/cmake/help/v3.0/manual/cmake-generators.7.html). 
+If you do not have Xcode, you must specify the [IDE you are using](https://cmake.org/cmake/help/v3.0/manual/cmake-generators.7.html) by providing something else than Xcode as value in the -G option. 
 
 ## Running the system
 
