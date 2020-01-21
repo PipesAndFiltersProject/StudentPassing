@@ -15,7 +15,7 @@ The files are generated to the directory where the generator is executed. After 
 
 ## Building
 
-GenerateTextData uses [Sarge](https://github.com/MayaPosch/Sarge) for parsing command line options. Get Sarge and copy `Sarge.cpp` and `Sarge.h` where the generator's `main.cpp` is located. 
+GenerateTextData uses [Sarge](https://github.com/MayaPosch/Sarge) for parsing command line options. Get Sarge and copy `Sarge.cpp` and `Sarge.h` where the generator's `main.cpp` is located. A version is included in this project for convenience.
 
 Test data generator CMake file can be used to build it. In the root directory of the TestDataGenerator, do:
 
@@ -24,9 +24,9 @@ Test data generator CMake file can be used to build it. In the root directory of
 3. cmake ..
 4. make
 
-Obviously you need to have the CMake and a C++11 compiler installed.
+Obviously you need to have the CMake and a C++17 compiler installed.
 
-There are no other dependencies (e.g. boost, StudentPassing), only C++11 with STL is used in the implementation.
+There are no other dependencies (e.g. boost, StudentPassing), only C++17 with STL is used in the implementation.
 
 ## Running
 
@@ -64,12 +64,12 @@ You could e.g. generate test data:
 
 Where you get data for *5000 students* and *ten (10) exercise points* for each student in the `exercise-info.txt` data file, with detailed log printed out. 
 
-Then copy the generated data files to the directory where StudentPassing nodes have been configured to read them. In the StudentPassing's BasicInfoGUI, press the Read file button to start processing the test data files.
+Then copy the generated data files to the directory where StudentPassing nodes have been configured to read them. In the StudentPassing's spgui app, press the "Read file" button to start processing the test data files.
 
-Check the output file of the last Node to see if everything is there. It is easy to copy the tab separated results with grade to a spreadsheet app (Excel, Apple Numbers, Google Sheet) to check if all the students are there.
+Check the output file of the last Node to see if everything is there. It is easy to copy the tab separated results with grade to a spreadsheet app (Excel, Apple Numbers, Google Sheet) to check if all the students are there. Someone should create a test bech for this, which automatically compares the source and end files to see if all data passed all the Nodes until the end.
 
 ## Who to contact
 
-(c) 2019  Antti Juustila, firstname dot lastname at oulu dot fi
+(c) 2019-2020  Antti Juustila, firstname dot lastname at oulu dot fi
 
-Sarge is Copyright (c) 2019, Maya Posch, All rights reserved.
+[Sarge](https://github.com/MayaPosch/Sarge)  is Copyright (c) 2019, Maya Posch, All rights reserved.

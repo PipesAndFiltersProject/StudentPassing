@@ -1,6 +1,6 @@
-# Installed files
+# Files to install
 
-This directory contains files which should be installed with the BasicInfoGUI binary to the computer where the node is executed. If the computer runs only one node, only the corresponding data and configuration files should be installed. If you run all the nodes in the same computer, install all the data and configuration files.
+This directory contains files which should be installed with the StudentPassing gui binary to the computer where the node is executed. If the computer runs only one node, only the corresponding data and configuration files should be installed. If you run all the nodes in the same computer, install all the data and configuration files.
 
 Node expects to find a directory named *StudentPassing* in the *home directory* of the user running the Node app. So *copy* the StudentPassing directory into the user's home directory, with the configuration and data files. You may then edit the files in that directory, according to your preferences, and remove unnecessary files from the computer if you run only one node on the computer.
 
@@ -23,7 +23,7 @@ Study the contents of the configuration and data files. If you decide to run the
 
 You configure the node by starting the node with the cofiguration file as the startup parameter of the node (on Linux and Mac):
 
-    ./BasicInfoGUI ExerciseInfoConfig
+    ./spgui ExerciseInfoConfig
 
 Note that you must not give the file extension in the parameter, just the name without the extension. If the node does not start, then the configuration file does not exist or some other problem prevents reading it. See the log files (below) to find out what the problem is.
 
