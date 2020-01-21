@@ -74,6 +74,8 @@ Starting from Boost, building happens like this:
     * After you have installed Qt, you can build this GUI app. Note that you need to tell CMake from where the Qt libraries are found. In the build directory, do (after `mkdir build && cd build`):
     * `cmake -DCMAKE_INSTALL_PREFIX=/path/to/qt/directory/where/cmake ..`
 
+For an example, see the [script](createXcodeProject.sh) which creates an Xcode project of the GUI app.
+
 After this you should have all setup for configuring (see below) and running the StudentPassing system.
 
 
@@ -88,6 +90,11 @@ For IDEs that do not support CMake, you must generate the IDE project files from
 ```
 mkdir xcode && cd xcode
 cmake -GXcode ..
+```
+And for those components which use Qt, you also need to specify in cmake command, where Qt libraries' cmake files are to be found. Change the path to where Qt is installed in *your* machine.
+
+```
+cmake -DCMAKE_INSTALL_PREFIX=/Users/juustila/Qt/5.12.1/clang_64/lib/cmake ..
 ```
 
 If you do not have Xcode, you must specify the [IDE you are using](https://cmake.org/cmake/help/v3.0/manual/cmake-generators.7.html). 
