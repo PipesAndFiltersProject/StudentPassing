@@ -1,5 +1,7 @@
 # StudentPassing
 
+![SketchyArch](PF-sketchy.png "Sketch of the structure")
+
 Software architectures course (OHAR) exercise work "StudentPassing" is an implementation of a distributed software architecture and various design patterns in C++17.
 
 This project has been created for educational purposes and may have no other value to anyone.
@@ -8,7 +10,9 @@ This project has been created for educational purposes and may have no other val
 
 Anyone wishing to learn about software architectural patterns and design patterns, learning C++, creating and building own and using external libraries.
 
-This repository contains an application build on top of a specific "things". More details below.
+This repository produces a distributed GUI application, build on top of a specific "things". The applications enable handling of student passing data by several teachers, combining the various course points into a final grade.
+
+![StudentPassing GUI](StudentPassingNode.png "StudentNode running and configured")
 
 ## Dependencies
 
