@@ -18,6 +18,8 @@ This repository produces a distributed GUI application, build on top of a specif
 
 ![StudentPassing GUI](StudentPassingNode.png "Screenshot of StudentPassing GUI")
 
+*StudentPassing Node running and configured*
+
 ## Dependencies
 
 In this project,  following components and tools are used:
