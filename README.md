@@ -41,7 +41,9 @@ Components related to StudentPassing, OHAR course exercise work system:
 
 * [ProcessorNode](https://bitbucket.org/anttijuu/processornode), a library supporting development of distributed apps based on an architectural style we do not reveal here because educational purposes... ;) 
 * [StudentNodeElements](https://bitbucket.org/anttijuu/studentnodeelements), based on ProcessorNode, of which we do not talk more here, because of educational purposes.... ;) 
-* and this component here.
+* and this component, the StudentPassing app, here.
+
+The architecture of StudentPassing is based on the ProcessorNode component, using also domain specific layer StudentNodeElements build on top of ProcessorNode. For more details on these, see each component's documentation and code.
 
 Instuctions on how to get started and build all the components are below.
 
@@ -69,6 +71,8 @@ After the files and repositories are on your machine you can either:
 Step 1 is *recommended minimum* for all students, others are optional. You will learn a lot if you do 2-3.
 
 ## Building
+
+For the course work, building is *optional*. 
 
 Starting from Boost, building happens like this, assuming you use make for buiilding:
 

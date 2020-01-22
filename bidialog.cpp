@@ -57,7 +57,7 @@ BIDialog::~BIDialog()
 
 void BIDialog::configureApp()
 {
-   node = new OHARBase::ProcessorNode(config.toStdString(), this);
+   node = new OHARBase::ProcessorNode(this);
    if (configureNode()) {
       setWindowTitle(config);
       if (config =="BasicInfoConfig") {
