@@ -6,6 +6,8 @@ Software architectures course (OHAR) exercise work "StudentPassing" is an implem
 
 This project has been created for educational purposes and may have no other value to anyone.
 
+**Table of contents**
+
 [TOC]
 
 ## What is this repository for?
@@ -28,7 +30,7 @@ Tools:
 
 External components:
 
-* [Boost](https://boost.org) 1.70.0 or newer. You need to build system library from boost. Build using c++17 (e.g. b2 cxxflags="-std=c++17".). For more information, see boost getting started guide.
+* [Boost](https://boost.org) 1.70.0 or newer for network programming and various other utilities from Boost.
 * [nlohmann::json](https://github.com/nlohmann/json) for parsing and creating JSON.
 * [g3logger](https://github.com/KjellKod/g3log) for logging events in all components of this software. Requires at least C++ v 14.
 * [Qt](https://www.qt.io) for the GUI apps using the other components of the system.
@@ -45,18 +47,20 @@ Instuctions on how to get started and build all the components are below.
 
 For the OHAR course project, you can view the code in BitBucket using your browser, but it is *very* inconvenient. It is strongly recommended to download / git clone the projects to your own machine and view the code using an IDE (Visual Studio, Eclipse, or similar).
 
-> You can also use the [provided script](getAllComponents.sh) to download **all** needed
-> libraries, including this project you are looking at here. So **copy this script file** to your
-> machine, and then **run the script in some empty directory outside this or any other
-> project directory**! Otherwise you will create a mess.
+---
+You can also use the [provided script](getAllComponents.sh) to download **all** needed libraries, including this project you are looking at here. So **copy this script file** to your machine, and then **run the script in some empty directory outside this or any other project directory**! Otherwise you will create a mess.
 
 The script downloads Boost 1.72.0 as a zip file and git clones other libraries and project components from GitHub and BitBucket. wget and git must be installed to use this script.
 
-Alternatively, download / clone the components manually; addresses are available in the script file and linked in Dependencies.
+Script should work also on Windows with wget and git, just rename it to .bat and execute it.
+
+---
+
+Alternatively, download / clone the components manually; URLs are available in the script file and linked in Dependencies.
 
 After the files and repositories are on your machine you can either:
 
-1. Clone the repositories and view the code by opening the source files as needed, *using an IDE*, or
+1. View the code by opening the source files as needed, *using an IDE*, or
 2. Generate *IDE projects* from the components to view them in an organized way, 
 3. and/or actually build the libraries and apps to see how the system works 
 
@@ -64,10 +68,11 @@ Step 1 is *recommended minimum* for all students, others are optional. You will 
 
 ## Building
 
-Starting from Boost, building happens like this:
+Starting from Boost, building happens like this, assuming you use make for buiilding:
 
-1. In Boost directory you get when unzipping the downloaded zip file:
+1. In the Boost directory you get when unzipping the downloaded zip file:
     * use `bootstrap.sh` (.bat in Windows) to set up Boost, then run `b2 cxxflags="-std=c++17"` to build boost (system library at least), then run again `b2 install` (may require admin / sudo rights) to install boost headers and lib(s).
+    * For more information, see boost getting started guide for your OS.
 2. Set up nlohmann::json using cmake in the json directory:
     * `mkdir build && cd build`, 
     * then `cmake ..` and 
@@ -94,7 +99,7 @@ If you are using an IDE that supports CMake (like new Visual Studio), you may op
 
 Note however, that you must build and install the components so that when component A requires component B, the B project must be built and installed first, only then you can use the A component (without VS complaining about errors). The above list of ordering is the correct one.
 
-For IDEs that do not support CMake, you must generate the IDE project files from command line. For example, to generate project file for Xcode on macOS, do this:
+For IDEs that do not support opening CMake files as projects, you must generate the IDE project files from command line. For example, to generate project file for Xcode on macOS, do this:
 
 ```bash
 mkdir xcode && cd xcode
@@ -112,10 +117,10 @@ If you do not have Xcode, you must specify the [IDE you are using](https://cmake
 
 If you managed to build and install all the components, you can also run them to see how they work. For this, check out the [FilesToInstall readme](./FilesToInstall/README.md), which explains how to configure and setup the configuration and data files needed to run the Nodes. There are four nodes configured there, for handling:
 
-1. Basic student data (id, name and study program):
-2. Exam points students got from the course exam;
-3. Exercise points, from one or several exercises, and;
-4. Course project points, after which the course grade can finally be calculated.
+1. basic student data (id, name and study program):
+2. exam points students got from the course exam;
+3. exercise points, from one or several exercises, and;
+4. course project points, after which the course grade can finally be calculated.
 
 The Nodes use datafiles to read student data as a batch. You can generate random student data for testing reliability and performance using the [TestDataGenerator](TestDataGenerator) command line app. Just run it, adjusting the test data generation with command line parameters. After test data generation, you can copy the data files to the location instructed in the [FilesToInstall readme](./FilesToInstall/README.md).
 
