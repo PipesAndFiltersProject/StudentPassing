@@ -1,12 +1,12 @@
 # StudentPassing
 
-<p align="center">
-<img source="https://bitbucket.org/anttijuu/studentpassing/src/master/PF-sketchy.png" alt="Sketchy view of the structure"/>
-</p>
+![Sketchy structure image](PF-sketchy.png "Sketchy structure of StudentPassing)
 
 Software architectures course (OHAR) exercise work "StudentPassing" is an implementation of a distributed software architecture and various design patterns in C++17.
 
 This project has been created for educational purposes and may have no other value to anyone.
+
+[TOC]
 
 ## What is this repository for?
 
@@ -14,17 +14,15 @@ Anyone wishing to learn about software architectural patterns and design pattern
 
 This repository produces a distributed GUI application, build on top of a specific "things". The applications enable handling of student passing data by several teachers, combining the various course points into a final grade.
 
-<p align="center">
-<img source="https://bitbucket.org/anttijuu/studentpassing/src/master/StudentPassingNode.png" alt="StudentPassing GUI up and running"/>
-</p>
+![StudentPassing GUI](PF-sketchy.png "Screenshot of StudentPassing GUI")
 
 ## Dependencies
 
-Uses the following components and tools:
+In this project,  following components and tools are used:
 
 Tools:
 
-* A C++ compiler supporting C++ 17. GCC or clang are OK. If you install a C++ IDE, you will get also a C++ compiler.
+* A C++ compiler supporting C++ 17. GCC or clang are OK, for example. If you install a C++ IDE, you will get also a C++ compiler.
 * [CMake](https://cmake.org) for building the system in different platforms and with different compilers.
 * An IDE that CMake supports for viewing code ([Visual Studio](https://visualstudio.microsoft.com), [Eclipse for C/C++](https://www.eclipse.org/downloads/packages/release/2019-12/r/eclipse-ide-cc-developers), [Xcode](https://developer.apple.com/xcode/),...)
 
@@ -39,23 +37,27 @@ Components related to StudentPassing, OHAR course exercise work system:
 
 * [ProcessorNode](https://bitbucket.org/anttijuu/processornode), a library supporting development of distributed apps based on an architectural style we do not reveal here because educational purposes... ;) 
 * [StudentNodeElements](https://bitbucket.org/anttijuu/studentnodeelements), based on ProcessorNode, of which we do not talk more here, because of educational purposes.... ;) 
+* and this component here.
 
-Instuctions on how to get and build all the components are below.
+Instuctions on how to get started and build all the components are below.
 
 ## How do I get set up?
 
-For the learning project, you can view the code in BitBucket using your browser, but it is *very* inconvenient. It is strongly recommended to download / git clone the projects to your own machine and view the code using an IDE (Visual Studio, Eclipse, or similar).
+For the OHAR course project, you can view the code in BitBucket using your browser, but it is *very* inconvenient. It is strongly recommended to download / git clone the projects to your own machine and view the code using an IDE (Visual Studio, Eclipse, or similar).
 
-You can also use the [accompanied script](getAllComponents.sh) to download **all** needed libraries, including this project you are looking at here. So **copy this script file** to your machine, and then **run the script in some empty directory outside this or any other project directory**! Otherwise you will create a mess.
+> You can also use the [provided script](getAllComponents.sh) to download **all** needed
+> libraries, including this project you are looking at here. So **copy this script file** to your
+> machine, and then **run the script in some empty directory outside this or any other
+> project directory**! Otherwise you will create a mess.
 
 The script downloads Boost 1.72.0 as a zip file and git clones other libraries and project components from GitHub and BitBucket. wget and git must be installed to use this script.
 
-Alternatively, download / clone the components manually; addresses are available in the script file and linked above.
+Alternatively, download / clone the components manually; addresses are available in the script file and linked in Dependencies.
 
 After the files and repositories are on your machine you can either:
 
-1. Just view the code by opening the source files as needed, or
-2. Generate IDE projects from the components to view them in an organized way, 
+1. Clone the repositories and view the code by opening the source files as needed, *using an IDE*, or
+2. Generate *IDE projects* from the components to view them in an organized way, 
 3. and/or actually build the libraries and apps to see how the system works 
 
 Step 1 is *recommended minimum* for all students, others are optional. You will learn a lot if you do 2-3.
@@ -66,7 +68,6 @@ Starting from Boost, building happens like this:
 
 1. In Boost directory you get when unzipping the downloaded zip file:
     * use `bootstrap.sh` (.bat in Windows) to set up Boost, then run `b2 cxxflags="-std=c++17"` to build boost (system library at least), then run again `b2 install` (may require admin / sudo rights) to install boost headers and lib(s).
-  
 2. Set up nlohmann::json using cmake in the json directory:
     * `mkdir build && cd build`, 
     * then `cmake ..` and 
@@ -82,7 +83,7 @@ Starting from Boost, building happens like this:
     * After you have installed Qt, you can build this GUI app. Note that you need to tell CMake from where the Qt libraries are found. In the build directory, do (after `mkdir build && cd build`):
     * `cmake -DCMAKE_INSTALL_PREFIX=/path/to/qt/directory/where/cmake ..`
 
-For an example, see the [script](createXcodeProject.sh) which creates an Xcode project of the GUI app.
+For an example what the Qt path looks like, see the [script](createXcodeProject.sh) which creates an Xcode project of the GUI app.
 
 After this you should have all setup for configuring (see below) and running the StudentPassing system.
 
@@ -95,13 +96,13 @@ Note however, that you must build and install the components so that when compon
 
 For IDEs that do not support CMake, you must generate the IDE project files from command line. For example, to generate project file for Xcode on macOS, do this:
 
-```
+```bash
 mkdir xcode && cd xcode
 cmake -GXcode ..
 ```
 And for those components which use Qt, you also need to specify in cmake command, where Qt libraries' cmake files are to be found. Change the path to where Qt is installed in *your* machine.
 
-```
+```bash
 cmake -GXcode -DCMAKE_INSTALL_PREFIX=/Users/juustila/Qt/5.12.1/clang_64/lib/cmake ..
 ```
 
@@ -120,7 +121,7 @@ The Nodes use datafiles to read student data as a batch. You can generate random
 
 ## Who do I talk to? ##
 
-* Repo is owned and maintained by Antti Juustila (antti.juustila at oulu.fi)
+Repo is owned and maintained by Antti Juustila (antti.juustila at oulu.fi)
 
 ## License ##
 
