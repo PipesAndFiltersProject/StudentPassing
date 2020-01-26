@@ -92,7 +92,7 @@ Starting from Boost, building happens like this, assuming you use make for buiil
 6. Finally build the executable in *this* repository project. This project uses all of the above so it must be build last.
     * The app has a GUI implemented in Qt, so you must install Qt (the Open Source version) before doing this final step. 
     * After you have installed Qt, you can build this GUI app. Note that you need to tell CMake from where the Qt libraries are found. In the build directory, do (after `mkdir build && cd build`):
-    * `cmake -DCMAKE_INSTALL_PREFIX=/path/to/qt/directory/where/cmake ..`
+    * `cmake -DCMAKE_PREFIX_PATH=/path/to/qt/directory/where/cmake ..`
 
 For an example what the Qt path looks like, see the [script](createXcodeProject.sh) which creates an Xcode project of the GUI app.
 
@@ -114,7 +114,7 @@ cmake -GXcode ..
 And for those components which use Qt, you also need to specify in cmake command, where Qt libraries' cmake files are to be found. Change the path to where Qt is installed in *your* machine.
 
 ```bash
-cmake -GXcode -DCMAKE_INSTALL_PREFIX=/Users/juustila/Qt/5.12.1/clang_64/lib/cmake ..
+cmake -GXcode -DCMAKE_PREFIX_PATH=/Users/juustila/Qt/5.12.1/clang_64/lib/cmake ..
 ```
 
 If you do not have Xcode, you must specify the [IDE you are using](https://cmake.org/cmake/help/v3.0/manual/cmake-generators.7.html) by providing something else than Xcode as value in the -G option. 
