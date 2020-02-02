@@ -46,19 +46,25 @@ std::mutex fillBufferMutex;
 std::condition_variable launchWrite;
 std::condition_variable writeFinished;
 
+// Thread function saving data in parallel when notified that buffers are full.
 void threadFuncSavingData(std::atomic<int> & finishCount, const std::string & fileName, std::vector<std::string> & buffer) {
    bool firstRound = true;
    while (running) {
+      // Wait for the main thread to notify the buffers are ready to be written to disk.
       std::unique_lock<std::mutex> ulock(writeMutex);
       launchWrite.wait(ulock, [&] {
          return startWriting || !running;
       });
+      // We are still running and writing, so do it.
       if (buffer.size() > 0 && startWriting && running) {
          saveBuffer(firstRound, fileName, buffer);
          buffer.clear();
          firstRound = false;
+         // Update the counter that this thread is now ready.
+         // Main thread waits that four threads have finished (count is 4).
          finishCount++;
       }
+      // Notify the main thread.
       writeFinished.notify_one();
    }
 }
@@ -150,6 +156,7 @@ int main(int argc, char ** argv) {
    if (verbose) std::cout << "Generating names used in data..." << std::endl;
    generateNames();
    
+   // Prepare the memory buffers.
    std::vector<std::string> basicInfoBuffer;
    std::vector<std::string> examInfoBuffer;
    std::vector<std::string> exerciseInfoBuffer;
@@ -159,9 +166,8 @@ int main(int argc, char ** argv) {
    exerciseInfoBuffer.resize(bufSize);
    projectInfoBuffer.resize(bufSize);
 
-
+   // For coordination between main thread and writer threads
    std::atomic<int> threadsFinished{0};
-   //{false, false, false, false};
    // Prepare four threads that save the data.
    std::vector<std::thread> savers;
    savers.push_back(std::thread(&threadFuncSavingData, std::ref(threadsFinished), std::cref(STUDENT_BASIC_INFO_FILE), std::ref(basicInfoBuffer)));
@@ -172,13 +178,17 @@ int main(int argc, char ** argv) {
    if (verbose) std::cout << "Starting the test data generating process..." << std::endl;
    int bufferCounter = 0;
    running = true;
+
    while (!generatedStudentNumbers.empty()) {
-      
+
+      // Are buffers full?
       if (bufferCounter >= bufSize) {
          if (verbose) std::cout << std::endl << "Activating buffer writing threads..." << std::endl;
+         // Prepare variables for the file saving threads.
          startWriting = true;
          threadsFinished = 0;
          int currentlyFinished = 0;
+         // And launch the file writing threads.
          launchWrite.notify_all();
          
          // Wait for the writer threads to finish.
@@ -196,6 +206,7 @@ int main(int argc, char ** argv) {
          exerciseInfoBuffer.resize(bufSize);
          projectInfoBuffer.resize(bufSize);
       } else {
+         // Memory buffers need filling.
          startWriting = false;
          const std::string studentNumber(generateStudentNumber());
          if (verbose) std::cout << studentNumber << " ";
@@ -224,6 +235,8 @@ int main(int argc, char ** argv) {
          bufferCounter++;
       }
    }
+   
+   // Check if there are still data to be written in the buffers.
    if (basicInfoBuffer.size() > 0) {
       if (verbose) std::cout << std::endl << "Writing rest of the buffers in threads..." << std::endl;
       startWriting = true;
@@ -247,6 +260,7 @@ int main(int argc, char ** argv) {
    startWriting = false;
    running = false;
    if (verbose) std::cout << std::endl << "Stopping buffer writing threads..." << std::endl;
+   // Make sure the writer threads are finishing and wait for them.
    launchWrite.notify_all();
    for (std::thread & thread : savers) {
       thread.join();

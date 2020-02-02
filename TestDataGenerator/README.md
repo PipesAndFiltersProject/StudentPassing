@@ -89,7 +89,7 @@ if (bufferCounter >= bufSize) {
 ```
 With these parameters, it meant that for each file, with 5000 students and memory buffer size of 500 == 10 threads were created and executed, totalling 40 (10 for each four files) threads were created when running the tool.
 
-Creating a thread *takes time*. Lots of time, thousands of processor cycles, depending on your setup (see e.g. this [blog post](https://lemire.me/blog/2020/01/30/cost-of-a-thread-in-c-under-linux/).
+Creating a thread *takes time*. Lots of time, thousands of processor cycles, depending on your setup (see e.g. this [blog post](https://lemire.me/blog/2020/01/30/cost-of-a-thread-in-c-under-linux/)).
 
 I changed the implementation to create the four threads *only once*, and then woken up every time the data buffers were full.
 
@@ -119,9 +119,9 @@ And then the main thread waits for the writers to finish their job before fillin
    currentlyFinished = threadsFinished;
    }
 ```
-Obviously the file saving threads notify the main thread about them finishing the file ops using a condition variable.
+Obviously the file saving threads notify the main thread about them finishing the file operations using a condition variable.
 
-Condition variables and mutexes were used for this. This resulted in more complicated but still faster implementation, taking usually less than 130ms to execute the tool. Another 25% off execution time, compared to first implementation using threads, and 50% faster compared to the original, one thread implementation doing all file writing in sequence.
+Condition variables and mutexes were used for this. This resulted in *much* more complicated but faster implementation, taking usually less than 130ms to execute the tool. Another 25% off execution time, compared to first implementation using threads, and 50% faster compared to the original, one thread implementation doing all file writing in sequence.
 
 | Execution | Time | Faster than sequential |
 |---------|----------|---------|
@@ -129,7 +129,7 @@ Condition variables and mutexes were used for this. This resulted in more compli
 | Threads, created | ~170ms | ~30% |
 | Threads, created once | <130ms | ~50% |
 
-Summarizing; I surely managed to make it faster with threads, but at least with these data numbers and machine, it actually doesn't matter.
+Summarizing; I surely managed to make it faster with threads, but at least with these data numbers and machine, it actually doesn't matter. In some other context, it could matter.
 
 ## Who to contact
 
