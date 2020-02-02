@@ -25,6 +25,7 @@ std::vector<std::string> lastNames;
 std::vector<std::string> studyPrograms;
 std::vector<int> generatedStudentNumbers;
 
+// For randomizing data.
 std::random_device rd;
 std::default_random_engine generator(rd());
 
@@ -36,19 +37,33 @@ const std::string & getFirstName();
 const std::string & getLastName();
 const std::string & getStudyProgram();
 void saveBuffer(bool isFirstRound, const std::string &fileName, std::vector<std::string> & buffer);
-std::mutex waitMutex;
-std::condition_variable launch;
 
-//void threadFunc() {
-//   std::unique_lock<std::mutex> ulock(waitMutex);
-//   launch.wait(ulock, [] {
-//      
-//   });
-//}
+// Threading support
+std::atomic<bool> running {true};
+std::atomic<bool> startWriting {false};
+std::mutex writeMutex;
+std::mutex fillBufferMutex;
+std::condition_variable launchWrite;
+std::condition_variable writeFinished;
+
+void threadFuncSavingData(std::atomic<int> & finishCount, const std::string & fileName, std::vector<std::string> & buffer) {
+   bool firstRound = true;
+   while (running) {
+      std::unique_lock<std::mutex> ulock(writeMutex);
+      launchWrite.wait(ulock, [&] {
+         return startWriting || !running;
+      });
+      if (buffer.size() > 0 && startWriting && running) {
+         saveBuffer(firstRound, fileName, buffer);
+         buffer.clear();
+         firstRound = false;
+         finishCount++;
+      }
+      writeFinished.notify_one();
+   }
+}
 
 int main(int argc, char ** argv) {
-   
-   std::chrono::system_clock::time_point started = std::chrono::system_clock::now();
 
    //MARK: Handling command line options.
    Sarge sarge;
@@ -117,6 +132,7 @@ int main(int argc, char ** argv) {
    }
 
    //MARK: Start generating data.
+   std::chrono::system_clock::time_point started = std::chrono::system_clock::now();
    std::cout << std::endl << "Generating test data for : " << studentCount << " students, " << exerciseCount << " exercises. " << std::endl;
    
    const std::string SEPARATOR = {"\t"};
@@ -125,7 +141,7 @@ int main(int argc, char ** argv) {
    const std::string EXERCISE_INFO_FILE = {"exercise-info.txt"};
    const std::string PROJECT_INFO_FILE = {"project-info.txt"};
    
-   if (verbose) std::cout << "Creating numbers for students..." << std::endl;
+   if (verbose) std::cout << "Creating " << studentCount << " numbers for students..." << std::endl;
    generatedStudentNumbers.resize(studentCount);
    // Generate student numbers starting from one to studentCount.
    std::iota(generatedStudentNumbers.begin(), generatedStudentNumbers.end(), 1);
@@ -143,45 +159,49 @@ int main(int argc, char ** argv) {
    exerciseInfoBuffer.resize(bufSize);
    projectInfoBuffer.resize(bufSize);
 
+
+   std::atomic<int> threadsFinished{0};
+   //{false, false, false, false};
+   // Prepare four threads that save the data.
+   std::vector<std::thread> savers;
+   savers.push_back(std::thread(&threadFuncSavingData, std::ref(threadsFinished), std::cref(STUDENT_BASIC_INFO_FILE), std::ref(basicInfoBuffer)));
+   savers.push_back(std::thread(&threadFuncSavingData, std::ref(threadsFinished), std::cref(EXAM_INFO_FILE), std::ref(examInfoBuffer)));
+   savers.push_back(std::thread(&threadFuncSavingData, std::ref(threadsFinished), std::cref(EXERCISE_INFO_FILE), std::ref(exerciseInfoBuffer)));
+   savers.push_back(std::thread(&threadFuncSavingData, std::ref(threadsFinished), std::cref(PROJECT_INFO_FILE), std::ref(projectInfoBuffer)));
+
    if (verbose) std::cout << "Starting the test data generating process..." << std::endl;
-   std::atomic<bool> isFirstWrite{true};
    int bufferCounter = 0;
+   running = true;
    while (!generatedStudentNumbers.empty()) {
       
       if (bufferCounter >= bufSize) {
-         if (verbose) std::cout << std::endl << "Saving basic info buffer " << std::endl;
-         std::thread thread1( [&isFirstWrite, &STUDENT_BASIC_INFO_FILE, &basicInfoBuffer] {
-            saveBuffer(isFirstWrite, STUDENT_BASIC_INFO_FILE, basicInfoBuffer);
-         } );
-         if (verbose) std::cout << "Saving exam info buffer " << std::endl;
-         std::thread thread2( [&isFirstWrite, &EXAM_INFO_FILE, &examInfoBuffer] {
-            saveBuffer(isFirstWrite, EXAM_INFO_FILE, examInfoBuffer);
-         } );
-         if (verbose) std::cout << "Saving exercise info buffer " << std::endl;
-         std::thread thread3( [&isFirstWrite, &EXERCISE_INFO_FILE, &exerciseInfoBuffer] {
-            saveBuffer(isFirstWrite, EXERCISE_INFO_FILE, exerciseInfoBuffer);
-         } );
-         if (verbose) std::cout << "Saving project info buffer " << std::endl;
-         std::thread thread4( [&isFirstWrite, &PROJECT_INFO_FILE, &projectInfoBuffer] {
-            saveBuffer(isFirstWrite, PROJECT_INFO_FILE, projectInfoBuffer);
-         } );
-         thread1.join(); thread2.join(); thread3.join(); thread4.join();
-         isFirstWrite = false;
-         basicInfoBuffer.clear();
-         examInfoBuffer.clear();
-         exerciseInfoBuffer.clear();
-         projectInfoBuffer.clear();
+         if (verbose) std::cout << std::endl << "Activating buffer writing threads..." << std::endl;
+         startWriting = true;
+         threadsFinished = 0;
+         int currentlyFinished = 0;
+         launchWrite.notify_all();
+         
+         // Wait for the writer threads to finish.
+         while (threadsFinished < 4) {
+            std::unique_lock<std::mutex> ulock(fillBufferMutex);
+            writeFinished.wait(ulock, [&] {
+               return currentlyFinished != threadsFinished;
+            });
+            currentlyFinished = threadsFinished;
+         }
+         startWriting = false;
          bufferCounter = 0;
          basicInfoBuffer.resize(bufSize);
          examInfoBuffer.resize(bufSize);
          exerciseInfoBuffer.resize(bufSize);
          projectInfoBuffer.resize(bufSize);
       } else {
+         startWriting = false;
          const std::string studentNumber(generateStudentNumber());
          if (verbose) std::cout << studentNumber << " ";
-         std::string firstName = getFirstName();
-         std::string lastName = getLastName();
-         std::string studyProgram = getStudyProgram();
+         const std::string firstName = getFirstName();
+         const std::string lastName = getLastName();
+         const std::string studyProgram = getStudyProgram();
          
          // Generate basic info
          std::string entry = studentNumber + SEPARATOR + lastName + " " + firstName + SEPARATOR + studyProgram;
@@ -205,36 +225,41 @@ int main(int argc, char ** argv) {
       }
    }
    if (basicInfoBuffer.size() > 0) {
-      if (verbose) std::cout << std::endl << "Saving basic info buffer " << std::endl;
-      std::thread thread1( [&isFirstWrite, &STUDENT_BASIC_INFO_FILE, &basicInfoBuffer] {
-         saveBuffer(isFirstWrite, STUDENT_BASIC_INFO_FILE, basicInfoBuffer);
-      } );
-      if (verbose) std::cout << "Saving exam info buffer " << std::endl;
-      std::thread thread2( [&isFirstWrite, &EXAM_INFO_FILE, &examInfoBuffer] {
-         saveBuffer(isFirstWrite, EXAM_INFO_FILE, examInfoBuffer);
-      } );
-      if (verbose) std::cout << "Saving exercise info buffer " << std::endl;
-      std::thread thread3( [&isFirstWrite, &EXERCISE_INFO_FILE, &exerciseInfoBuffer] {
-         saveBuffer(isFirstWrite, EXERCISE_INFO_FILE, exerciseInfoBuffer);
-      } );
-      if (verbose) std::cout << "Saving project info buffer " << std::endl;
-      std::thread thread4( [&isFirstWrite, &PROJECT_INFO_FILE, &projectInfoBuffer] {
-         saveBuffer(isFirstWrite, PROJECT_INFO_FILE, projectInfoBuffer);
-      } );
-      thread1.join(); thread2.join(); thread3.join(); thread4.join();
+      if (verbose) std::cout << std::endl << "Writing rest of the buffers in threads..." << std::endl;
+      startWriting = true;
+      threadsFinished = 0;
+      int currentlyFinished = 0;
+      launchWrite.notify_all();
+      
+      // Wait for the writer threads to finish.
+      while (threadsFinished < 4) {
+         std::unique_lock<std::mutex> ulock(fillBufferMutex);
+         writeFinished.wait(ulock, [&] {
+            return currentlyFinished != threadsFinished;
+         });
+         currentlyFinished = threadsFinished;
+      }
    }
    std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
    std::cout <<std::endl << "***** Test data generation finished." << std::endl;
    std::cout << "      Generation took "
          << std::chrono::duration_cast<std::chrono::milliseconds>(now-started).count() << "ms" << std::endl << std::endl;
-   return 0;
+   startWriting = false;
+   running = false;
+   if (verbose) std::cout << std::endl << "Stopping buffer writing threads..." << std::endl;
+   launchWrite.notify_all();
+   for (std::thread & thread : savers) {
+      thread.join();
+   }
+   std::cout << "Exit generator." << std::endl;
+   return EXIT_SUCCESS;
 }
 
 //MARK: - Generators
 void generateNames() {
    firstNames = {"Antti", "Tiina", "Pentti", "Risto", "Päivi", "Jaana", "Jani", "Esko", "Hanna", "Oskari"};
    lastNames = {"Virtanen", "Korhonen", "Putkonen", "Karjalainen", "Muttonen", "Suihkari", "Ali Baba", "Johnson", "Ingridsdottir", "Neponen", "Lumikasa"};
-   studyPrograms = {"TOL","SO","TT","ENF","TUTA"};
+   studyPrograms = {"TOL","SO","TT","ENF","TUT"};
 }
 
 int  generateInt(int maxValue) {
@@ -266,7 +291,6 @@ const std::string & getStudyProgram() {
    int index = generateInt(studyPrograms.size()-1);
    return studyPrograms[index];
 }
-
 
 void saveBuffer(bool isFirstRound, const std::string &fileName, std::vector<std::string> & buffer) {
    std::ofstream datafile(fileName, isFirstRound ? std::ios::trunc : std::ios::app);
