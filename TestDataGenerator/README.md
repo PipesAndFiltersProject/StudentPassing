@@ -123,7 +123,6 @@ Obviously the file saving threads notify the main thread about them finishing th
 
 Condition variables and mutexes were used for this. This resulted in more complicated but still faster implementation, taking usually less than 130ms to execute the tool. Another 25% off execution time, compared to first implementation using threads, and 50% faster compared to the original, one thread implementation doing all file writing in sequence.
 
-|---------|----------|---------|
 | Execution | Time | Faster than sequential |
 |---------|----------|---------|
 | Sequential | ~250ms |   n/a  |
