@@ -125,6 +125,7 @@ Condition variables and mutexes were used for this. This resulted in more compli
 
 |---------|----------|---------|
 | Execution | Time | Faster than sequential |
+|---------|----------|---------|
 | Sequential | ~250ms |   n/a  |
 | Threads, created | ~170ms | ~30% |
 | Threads, created once | <130ms | ~50% |
