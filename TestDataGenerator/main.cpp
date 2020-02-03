@@ -73,13 +73,13 @@ int main(int argc, char ** argv) {
 
    //MARK: Handling command line options.
    Sarge sarge;
-   sarge.setUsage("./GenerateTestData -[hv]s <number> [-e <number>]");
+   sarge.setUsage("./GenerateTestData -[hv]s <number> [-e <number>] -b <number>");
    sarge.setDescription("A test data generator for StudentPassing system. (c) Antti Juustila, 2019.\nUses Sarge Copyright (c) 2019, Maya Posch All rights reserved.");
    sarge.setArgument("h", "help", "Display help for using GenerateTestData.", false);
    sarge.setArgument("v", "verbose", "Display detailed messages of test data generation process.", false);
    sarge.setArgument("s", "students", "Number of students to generate in test data files.", true);
    sarge.setArgument("e", "exercises", "Number of exercises generated, default is 6 if option not provided.", true);
-   sarge.setArgument("b", "bufsize", "Size of the buffer used in generating data", true);
+   sarge.setArgument("b", "bufsize", "Size of the buffer used in generating data (min: 5)", true);
    if (!sarge.parseArguments(argc, argv)) {
       std::cout << "Could not parse arguments" << std::endl;
       return EXIT_FAILURE;
@@ -130,7 +130,7 @@ int main(int argc, char ** argv) {
       sarge.getFlag("bufsize", strValue);
       try {
          bufSize = std::stoi(strValue);
-         if (bufSize < 1) bufSize = 1;
+         if (bufSize < 5) bufSize = 5;
       } catch (...) {
          std::cout << "Could not parse argument" << std::endl;
          return EXIT_FAILURE;
