@@ -5,6 +5,10 @@
 #include <iomanip>
 #include <fstream>
 #include <thread>
+#include <atomic>
+#include <mutex>
+#include <numeric>
+#include <algorithm>
 
 #include "sarge.h"
 
