@@ -70,66 +70,12 @@ Check the output file of the last Node to see if everything is there. It is easy
 
 ## About threading
 
-The generator uses threads to write to the data files. This is absolutely *not* needed: generating 5000 students takes about 250ms using my MacBook Pro (13-inch, 2018), 2,3 GHz four core Intel Core i5, 1 Tb SSD disk. Machines with HDDs would be slower.
+The generator uses threads to write to the data files. This is absolutely *not* needed: generating 5000 students takes about 250ms (without threading) using my MacBook Pro (13-inch, 2018), 2,3 GHz four core Intel Core i5, 1 Tb SSD disk. Machines with HDDs could be slower.
 
-However, I wanted to see how much of that 250ms I can squeeze off with four threads, each writing  to their own data file from the RAM buffers.
+However, I wanted to see if data file writing is faster with four threads, each writing  to their own data file from the RAM buffers. Currently the experimentation is still ongoing, and measurements in different systems give a bit different results. Depending, for example, if the machine has a HDD or SDD.
 
-When the code was not using threads, I run test runs with parameters ` ./GenerateTestData -s 5000 -e 10 -b 500`. On average, the time to generate the data took around 250ms.
+By default, the tool uses threads. If you want to test file writing without threads, sequentially, give a `-z` as startup parameter to the tool.
 
-When I implemented the four data writing threads, it took around 170ms in average to run the tool. So this was about 30% faster. 
-
-*But* -- I had an implementation where the threads were *created* and executed when the memory buffer was full, and saving the file done in a lambda function:
-
-```C++
-if (bufferCounter >= bufSize) {
-   std::thread thread1( [&isFirstWrite, &STUDENT_BASIC_INFO_FILE, &basicInfoBuffer] {
-     saveBuffer(isFirstWrite, STUDENT_BASIC_INFO_FILE, basicInfoBuffer);
-   });
-// ...
-```
-With these parameters, it meant that for each file, with 5000 students and memory buffer size of 500 == 10 threads were created and executed, totalling 40 (10 for each four files) threads were created when running the tool.
-
-Creating a thread *takes time*. Lots of time, thousands of processor cycles, depending on your setup (see e.g. this [blog post](https://lemire.me/blog/2020/01/30/cost-of-a-thread-in-c-under-linux/)).
-
-I changed the implementation to create the four threads *only once*, and then woken up every time the data buffers were full.
-
-```C++
-std::vector<std::thread> savers;
-savers.push_back(std::thread(&threadFuncSavingData, std::ref(threadsFinished), std::cref(STUDENT_BASIC_INFO_FILE), std::ref(basicInfoBuffer)));
-
-//...
-
-if (bufferCounter >= bufSize) {
-   if (verbose) std::cout << std::endl << "Activating buffer writing threads..." << std::endl;
-   startWriting = true;
-   threadsFinished = 0;
-   int currentlyFinished = 0;
-   launchWrite.notify_all(); // <<<< Activating the threads waiting for the condition variable...
-
-```
-And then the main thread waits for the writers to finish their job before filling the memory buffers again.
-
-```C++
-   // Wait for the writer threads to finish.
-   while (threadsFinished < 4) {
-      std::unique_lock<std::mutex> ulock(fillBufferMutex);
-      writeFinished.wait(ulock, [&] {
-         return currentlyFinished != threadsFinished;
-      });
-   currentlyFinished = threadsFinished;
-   }
-```
-Obviously the file saving threads notify the main thread about them finishing the file operations using a condition variable.
-
-Condition variables and mutexes were used for this. This resulted in *much* more complicated but faster implementation, taking usually less than 130ms to execute the tool. Another 25% off execution time, compared to first implementation using threads, and 50% faster compared to the original, one thread implementation doing all file writing in sequence.
-
-| Execution | Time | Faster than sequential |
-|---------|----------|---------|
-| Sequential | ~250ms |   n/a  |
-| Threads, created | ~170ms | ~30% |
-| Threads, created once | <130ms | ~50% |
-
-Summarizing; I surely managed to make it faster with threads, but at least with these data numbers and machine, it actually doesn't matter. In some other context, it could matter.
 
 ## Who to contact
 
