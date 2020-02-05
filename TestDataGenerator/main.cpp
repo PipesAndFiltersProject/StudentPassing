@@ -57,6 +57,7 @@ const std::string & getStudyProgram();
 void saveSerialized(bool isFirstWrite);
 void saveThreaded();
 void launchSaveThreadsAndWait();
+void threadFuncSavingData(std::atomic<int> & finishCount, const std::string & fileName, std::vector<std::string> & buffer);
 void saveBuffer(bool isFirstRound, const std::string &fileName, std::vector<std::string> & buffer);
 
 // Threading support
@@ -68,33 +69,21 @@ std::mutex fillBufferMutex;
 std::condition_variable launchWrite;
 std::condition_variable writeFinished;
 
-// Thread function saving data in parallel when notified that buffers are full.
-void threadFuncSavingData(std::atomic<int> & finishCount, const std::string & fileName, std::vector<std::string> & buffer) {
-   bool firstRound = true;
-   while (running) {
-      // Wait for the main thread to notify the buffers are ready to be written to disk.
-      std::unique_lock<std::mutex> ulock(writeMutex);
-      launchWrite.wait(ulock, [&] {
-         return startWriting || !running;
-      });
-      // We are still running and writing, so do it.
-      if (buffer.size() > 0 && startWriting && running) {
-         saveBuffer(firstRound, fileName, buffer);
-         firstRound = false;
-         // Update the counter that this thread is now ready.
-         // Main thread waits that four threads have finished (count is 4).
-         finishCount++;
-      }
-      // Notify the main thread.
-      writeFinished.notify_one();
-   }
-}
 
 int main(int argc, char ** argv) {
 
    //MARK: Handling command line options.
    if (parseArgs(argc, argv) == EXIT_FAILURE) {
       return EXIT_FAILURE;
+   }
+   
+   // Prepare four threads that save the data.
+   std::vector<std::thread> savers;
+   if (threading) {
+      savers.push_back(std::thread(&threadFuncSavingData, std::ref(threadsFinished), std::cref(STUDENT_BASIC_INFO_FILE), std::ref(basicInfoBuffer)));
+      savers.push_back(std::thread(&threadFuncSavingData, std::ref(threadsFinished), std::cref(EXAM_INFO_FILE), std::ref(examInfoBuffer)));
+      savers.push_back(std::thread(&threadFuncSavingData, std::ref(threadsFinished), std::cref(EXERCISE_INFO_FILE), std::ref(exerciseInfoBuffer)));
+      savers.push_back(std::thread(&threadFuncSavingData, std::ref(threadsFinished), std::cref(PROJECT_INFO_FILE), std::ref(projectInfoBuffer)));
    }
 
    //MARK: Start generating data.
@@ -116,14 +105,6 @@ int main(int argc, char ** argv) {
    exerciseInfoBuffer.resize(bufSize);
    projectInfoBuffer.resize(bufSize);
 
-   // Prepare four threads that save the data.
-   std::vector<std::thread> savers;
-   if (threading) {
-      savers.push_back(std::thread(&threadFuncSavingData, std::ref(threadsFinished), std::cref(STUDENT_BASIC_INFO_FILE), std::ref(basicInfoBuffer)));
-      savers.push_back(std::thread(&threadFuncSavingData, std::ref(threadsFinished), std::cref(EXAM_INFO_FILE), std::ref(examInfoBuffer)));
-      savers.push_back(std::thread(&threadFuncSavingData, std::ref(threadsFinished), std::cref(EXERCISE_INFO_FILE), std::ref(exerciseInfoBuffer)));
-      savers.push_back(std::thread(&threadFuncSavingData, std::ref(threadsFinished), std::cref(PROJECT_INFO_FILE), std::ref(projectInfoBuffer)));
-   }
    if (verbose) std::cout << "Starting the test data generating process..." << std::endl;
    int bufferCounter = 0;
    running = true;
@@ -324,6 +305,28 @@ void launchSaveThreadsAndWait() {
       currentlyFinished = threadsFinished;
    }
    startWriting = false;
+}
+
+// Thread function saving data in parallel when notified that buffers are full.
+void threadFuncSavingData(std::atomic<int> & finishCount, const std::string & fileName, std::vector<std::string> & buffer) {
+   bool firstRound = true;
+   while (running) {
+      // Wait for the main thread to notify the buffers are ready to be written to disk.
+      std::unique_lock<std::mutex> ulock(writeMutex);
+      launchWrite.wait(ulock, [&] {
+         return startWriting || !running;
+      });
+      // We are still running and writing, so do it.
+      if (buffer.size() > 0 && startWriting && running) {
+         saveBuffer(firstRound, fileName, buffer);
+         firstRound = false;
+         // Update the counter that this thread is now ready.
+         // Main thread waits that four threads have finished (count is 4).
+         finishCount++;
+      }
+      // Notify the main thread.
+      writeFinished.notify_one();
+   }
 }
 
 void saveSerialized(bool isFirstWrite) {

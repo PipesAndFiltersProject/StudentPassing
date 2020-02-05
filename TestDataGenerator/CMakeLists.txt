@@ -26,5 +26,7 @@ if (WIN32)
     add_definitions(-D_WIN32_WINNT=${ver})
 endif(WIN32)
 
+message("Generated with config types: ${CMAKE_CONFIGURATION_TYPES}")
+
 add_executable(${APP_NAME} main.cpp Sarge.cpp)
 set_target_properties(${APP_NAME} PROPERTIES CXX_STANDARD 17)
