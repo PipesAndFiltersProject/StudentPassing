@@ -7,6 +7,7 @@
 #include <g3log/g3log.hpp>
 
 #include <ProcessorNode/ProcessorNode.h>
+#include <ProcessorNode/EncryptHandler.h>
 
 #include <StudentNodeElements/PlainStudentFileHandler.h>
 #include <StudentNodeElements/StudentInputHandler.h>
@@ -174,6 +175,12 @@ void BIDialog::onAddDataButtonClicked()
          p.setPayload(json);
          
          LOG(INFO) << "Telling node to pass to handlers";
+         const std::string & crypto = node->getConfigItemValue("encrypt");
+         if (crypto == "rot13") {
+            OHARBase::DataHandler * crypter = new OHARBase::EncryptHandler(OHARBase::EncryptHandler::Mode::Decrypt);
+            crypter->consume(p);
+            delete crypter;
+         }
          node->passToHandlers(p);
       }
    }
@@ -189,23 +196,45 @@ bool BIDialog::configureNode()
       QString configFile = QDir::homePath() + "/StudentPassing/" + config + ".txt";
       showMessage("Reading configuration from " + configFile);
       if (node->configure(configFile.toStdString())) {
+         const std::string & crypto = node->getConfigItemValue("encrypt");
          using namespace OHARStudent;
          if (config =="BasicInfoConfig") { // First node
-            node->addHandler(new PlainStudentFileHandler(*node));
+            if (crypto == "rot13") {
+               node->addHandler(new OHARBase::EncryptHandler(OHARBase::EncryptHandler::Mode::Decrypt));
+            }
             node->addHandler(new StudentInputHandler());
+            node->addHandler(new PlainStudentFileHandler(*node));
             node->addHandler(new StudentNetOutputHandler(*node));
+            if (crypto == "rot13") {
+               node->addHandler(new OHARBase::EncryptHandler(OHARBase::EncryptHandler::Mode::Encrypt));
+            }
             success = true;
          } else if (config == "ExamInfoConfig") { // middle node
+            if (crypto == "rot13") {
+               node->addHandler(new OHARBase::EncryptHandler(OHARBase::EncryptHandler::Mode::Decrypt));
+            }
             node->addHandler(new StudentInputHandler());
             node->addHandler(new StudentHandler(*node));
             node->addHandler(new StudentNetOutputHandler(*node));
+            if (crypto == "rot13") {
+               node->addHandler(new OHARBase::EncryptHandler(OHARBase::EncryptHandler::Mode::Encrypt));
+            }
             success = true;
          } else if (config == "ExerciseInfoConfig") { // middle node
+            if (crypto == "rot13") {
+               node->addHandler(new OHARBase::EncryptHandler(OHARBase::EncryptHandler::Mode::Decrypt));
+            }
             node->addHandler(new StudentInputHandler());
             node->addHandler(new StudentHandler(*node));
             node->addHandler(new StudentNetOutputHandler(*node));
+            if (crypto == "rot13") {
+               node->addHandler(new OHARBase::EncryptHandler(OHARBase::EncryptHandler::Mode::Encrypt));
+            }
             success = true;
          } else if (config == "ProjectInfoConfig") { // last node
+            if (crypto == "rot13") {
+               node->addHandler(new OHARBase::EncryptHandler(OHARBase::EncryptHandler::Mode::Decrypt));
+            }
             node->addHandler(new StudentInputHandler());
             node->addHandler(new StudentHandler(*node));
             node->addHandler(new GradingHandler(*node));

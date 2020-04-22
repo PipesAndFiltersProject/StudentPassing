@@ -3,4 +3,5 @@ name	Exercise Information
 config-in	10001
 input	50002
 output	192.168.1.165:50003
+encrypt	rot13
 filein	/Users/juustila/StudentPassing/exercise-info.txt
