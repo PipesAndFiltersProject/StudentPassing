@@ -64,7 +64,7 @@ set_target_properties(${BIN_NAME} PROPERTIES POSITION_INDEPENDENT_CODE ON)
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-target_include_directories(${BIN_NAME} PRIVATE ${Boost_INCLUDE_DIRS} ${G3LOG_INCLUDE_DIRS} ${Qt5Widgets_INCLUDE_DIRS} ${Qt5Core_INCLUDE_DIRS} ${Qt5Gui_INCLUDE_DIRS} ${ProcessorNode_INCLUDE_DIRS} ${StudentNodeElements_INCLUDE_DIRS})
+target_include_directories(${BIN_NAME} PRIVATE ${Boost_INCLUDE_DIRS} ${G3LOGGER_INCLUDE_DIRS} ${Qt5Widgets_INCLUDE_DIRS} ${Qt5Core_INCLUDE_DIRS} ${Qt5Gui_INCLUDE_DIRS} ${ProcessorNode_INCLUDE_DIRS} ${StudentNodeElements_INCLUDE_DIRS})
 
 target_link_libraries(${BIN_NAME} Qt5::Core Qt5::Gui Qt5::Widgets Boost::system g3logger StudentNodeElements::StudentNodeElements ProcessorNode::ProcessorNode)
 

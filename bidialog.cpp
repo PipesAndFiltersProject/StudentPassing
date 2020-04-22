@@ -204,7 +204,7 @@ bool BIDialog::configureNode()
             }
             node->addHandler(new StudentInputHandler());
             node->addHandler(new PlainStudentFileHandler(*node));
-            node->addHandler(new StudentNetOutputHandler(*node));
+            node->addHandler(new StudentNetOutputHandler());
             if (crypto == "rot13") {
                node->addHandler(new OHARBase::EncryptHandler(OHARBase::EncryptHandler::Mode::Encrypt));
             }
@@ -215,7 +215,7 @@ bool BIDialog::configureNode()
             }
             node->addHandler(new StudentInputHandler());
             node->addHandler(new StudentHandler(*node));
-            node->addHandler(new StudentNetOutputHandler(*node));
+            node->addHandler(new StudentNetOutputHandler());
             if (crypto == "rot13") {
                node->addHandler(new OHARBase::EncryptHandler(OHARBase::EncryptHandler::Mode::Encrypt));
             }
@@ -226,7 +226,7 @@ bool BIDialog::configureNode()
             }
             node->addHandler(new StudentInputHandler());
             node->addHandler(new StudentHandler(*node));
-            node->addHandler(new StudentNetOutputHandler(*node));
+            node->addHandler(new StudentNetOutputHandler());
             if (crypto == "rot13") {
                node->addHandler(new OHARBase::EncryptHandler(OHARBase::EncryptHandler::Mode::Encrypt));
             }
@@ -237,7 +237,7 @@ bool BIDialog::configureNode()
             }
             node->addHandler(new StudentInputHandler());
             node->addHandler(new StudentHandler(*node));
-            node->addHandler(new GradingHandler(*node));
+            node->addHandler(new GradingHandler());
             node->addHandler(new StudentWriterHandler(*node));
             success = true;
          }
