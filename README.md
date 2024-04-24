@@ -6,10 +6,6 @@ Software architectures course (OHAR) exercise work "StudentPassing" is an implem
 
 This project has been created for educational purposes and may have no other value to anyone.
 
-**Table of contents**
-
-[TOC]
-
 ## What is this repository for?
 
 Anyone wishing to learn about software architectural patterns and design patterns, learning C++, creating and building own and using external libraries.
@@ -39,8 +35,8 @@ External components:
 
 Components related to StudentPassing, OHAR course exercise work system:
 
-* [ProcessorNode](https://bitbucket.org/anttijuu/processornode), a library supporting development of distributed apps based on an architectural style we do not reveal here because educational purposes... ;) 
-* [StudentNodeElements](https://bitbucket.org/anttijuu/studentnodeelements), based on ProcessorNode, of which we do not talk more here, because of educational purposes.... ;) 
+* [ProcessorNode](https://github.com/PipesAndFiltersProject/ProcessorNode), a library supporting development of distributed apps based on an architectural style we do not reveal here because educational purposes... ;) 
+* [StudentNodeElements](https://github.com/PipesAndFiltersProject/StudentNodeElements), based on ProcessorNode, of which we do not talk more here, because of educational purposes.... ;) 
 * and this component, the StudentPassing app, here.
 
 The architecture of StudentPassing is based on the ProcessorNode component, using also domain specific layer StudentNodeElements build on top of ProcessorNode. For more details on these, see each component's documentation and code.
@@ -49,12 +45,12 @@ Instuctions on how to get started and build all the components are below.
 
 ## How do I get set up?
 
-For the OHAR course project, you can view the code in BitBucket using your browser, but it is *very* inconvenient. It is strongly recommended to download / git clone the projects to your own machine and view the code using an IDE (Visual Studio, Eclipse, or similar).
+For the OHAR course project, you can view the code in GitHub using your browser, but it is *very* inconvenient. It is strongly recommended to download / git clone the projects to your own machine and view the code using an IDE (Visual Studio, Eclipse, or similar).
 
 ---
 You can also use the [provided script](getAllComponents.sh) to download **all** needed libraries, including this project you are looking at here. So **copy this script file** to your machine, and then **run the script in some empty directory outside this or any other project directory**! Otherwise you will create a mess.
 
-The script downloads Boost 1.72.0 as a zip file and git clones other libraries and project components from GitHub and BitBucket. wget and git must be installed to use this script.
+The script downloads Boost 1.72.0 as a zip file and git clones other libraries and project components from GitHub. wget and git must be installed to use this script.
 
 Script should work also on Windows with wget and git, just rename it to .bat and execute it.
 

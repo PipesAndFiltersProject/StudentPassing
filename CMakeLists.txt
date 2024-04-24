@@ -34,13 +34,13 @@ find_package(ProcessorNode REQUIRED)
 find_package(StudentNodeElements REQUIRED)
 
 find_package(Boost 1.70.0 COMPONENTS system REQUIRED)
-find_package(g3logger REQUIRED)
+find_package(g3log CONFIG REQUIRED)
 find_package(nlohmann_json 3.2.0 REQUIRED)
 
 # Find the Qt libraries
-find_package(Qt5Widgets CONFIG REQUIRED)
-find_package(Qt5Core CONFIG REQUIRED)
-find_package(Qt5Gui CONFIG REQUIRED)
+find_package(Qt6Widgets CONFIG REQUIRED)
+find_package(Qt6Core CONFIG REQUIRED)
+find_package(Qt6Gui CONFIG REQUIRED)
 
 
 # Populate a CMake variable with the sources
@@ -64,7 +64,7 @@ set_target_properties(${BIN_NAME} PROPERTIES POSITION_INDEPENDENT_CODE ON)
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-target_include_directories(${BIN_NAME} PRIVATE ${Boost_INCLUDE_DIRS} ${G3LOGGER_INCLUDE_DIRS} ${Qt5Widgets_INCLUDE_DIRS} ${Qt5Core_INCLUDE_DIRS} ${Qt5Gui_INCLUDE_DIRS} ${ProcessorNode_INCLUDE_DIRS} ${StudentNodeElements_INCLUDE_DIRS})
+target_include_directories(${BIN_NAME} PRIVATE ${Boost_INCLUDE_DIRS} ${G3LOG_INCLUDE_DIRS} ${Qt5Widgets_INCLUDE_DIRS} ${Qt5Core_INCLUDE_DIRS} ${Qt5Gui_INCLUDE_DIRS} ${ProcessorNode_INCLUDE_DIRS} ${StudentNodeElements_INCLUDE_DIRS})
 
-target_link_libraries(${BIN_NAME} Qt5::Core Qt5::Gui Qt5::Widgets Boost::system g3logger StudentNodeElements::StudentNodeElements ProcessorNode::ProcessorNode)
+target_link_libraries(${BIN_NAME} Qt6::Core Qt6::Gui Qt6::Widgets Boost::system g3log StudentNodeElements::StudentNodeElements ProcessorNode::ProcessorNode)
 

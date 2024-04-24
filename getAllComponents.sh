@@ -5,15 +5,15 @@ git clone --depth 1 https://github.com/nlohmann/json.git
 echo "Cloning g3log..."
 git clone --depth 1 https://github.com/KjellKod/g3log.git
 echo "Cloning ProcessorNode..."
-git clone https://bitbucket.org/anttijuu/processornode.git
+git clone https://github.com/PipesAndFiltersProject/ProcessorNode
 echo "Cloning StudentNodeElements..."
-git clone https://bitbucket.org/anttijuu/studentnodeelements.git
+git clone https://github.com/PipesAndFiltersProject/StudentNodeElements
 echo "Cloning StudentPassing..."
-git clone https://bitbucket.org/anttijuu/studentpassing.git
+git clone https://github.com/PipesAndFiltersProject/StudentPassing
 echo "Cloning StudentPassing Configurator..."
-git clone https://bitbucket.org/anttijuu/spconfigurator.git
+git clone https://github.com/PipesAndFiltersProject/SPConfigurator
 echo "Cloning DirWatcher demo app..."
-git clone https://bitbucket.org/anttijuu/dirwatcher
+git clone https://github.com/PipesAndFiltersProject/DirWatcher
 echo "------------------------------------------------------------------"
 echo "DONE, all libraries and apps are here. Now you need to"
 echo "1. Unzip, build and install Boost, see Boost getting started docs."
