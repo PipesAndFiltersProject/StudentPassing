@@ -1,6 +1,6 @@
 # StudentPassing
 
-![Sketchy structure image](PF-sketchy.png "Sketchy structure of StudentPassing)
+![Sketchy structure image](PF-sketchy.png)
 
 Software architectures course (OHAR) exercise work "StudentPassing" is an implementation of a distributed software architecture and various design patterns in C++17.
 
