@@ -12,7 +12,7 @@ Anyone wishing to learn about software architectural patterns and design pattern
 
 This repository produces a distributed GUI application, build on top of a specific "things". The applications enable handling of student passing data by several teachers, combining the various course points into a final grade.
 
-![StudentPassing GUI](StudentPassingNode.png "Screenshot of StudentPassing GUI")
+![StudentPassing GUI](StudentPassingNode.png)
 
 *StudentPassing Node running and configured*
 
